@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 2: Lenguaje XML - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 2: Lenguaje XML</h1>
+            <p>Fundamentos del lenguaje XML y su aplicación en sistemas de bases de datos</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Estructura del XML</h3>
+                    <p>El XML (eXtensible Markup Language) es un lenguaje de marcado que define reglas para codificar documentos de manera legible tanto para humanos como para máquinas.</p>
+                    <div class="concept-details">
+                        <strong>Componentes principales:</strong>
+                        <ul>
+                            <li><strong>Elementos:</strong> Etiquetas que encierran contenido</li>
+                            <li><strong>Atributos:</strong> Información adicional en las etiquetas</li>
+                            <li><strong>Contenido:</strong> Texto entre etiquetas de apertura y cierre</li>
+                            <li><strong>Declaración XML:</strong> Especifica versión y codificación</li>
+                        </ul>
+                        <strong>Reglas:</strong> Etiquetas balanceadas, un elemento raíz, atributos entre comillas
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Esquemas XML (XSD)</h3>
+                    <p>Lenguaje para definir la estructura y restricciones de documentos XML, proporcionando validación y documentación.</p>
+                    <div class="concept-details">
+                        <strong>Elementos de XSD:</strong>
+                        <ul>
+                            <li><strong>Elementos:</strong> Definición de tipos de elementos</li>
+                            <li><strong>Atributos:</strong> Especificación de atributos permitidos</li>
+                            <li><strong>Tipos de Datos:</strong> string, int, date, boolean, etc.</li>
+                            <li><strong>Restricciones:</strong> minOccurs, maxOccurs, pattern</li>
+                        </ul>
+                        <strong>Ventajas:</strong> Validación automática, documentación, interoperabilidad
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>XPath - Navegación en XML</h3>
+                    <p>Lenguaje para localizar elementos y atributos en documentos XML mediante expresiones de ruta.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de expresiones:</strong>
+                        <ul>
+                            <li><strong>Rutas absolutas:</strong> /libro/titulo</li>
+                            <li><strong>Rutas relativas:</strong> ./autor</li>
+                            <li><strong>Predicados:</strong> /libro[@precio > 20]</li>
+                            <li><strong>Funciones:</strong> text(), count(), position()</li>
+                        </ul>
+                        <strong>Aplicaciones:</strong> XSLT, XQuery, validación, extracción de datos
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>XSLT - Transformación de XML</h3>
+                    <p>Lenguaje para transformar documentos XML en otros formatos (HTML, PDF, otros XML).</p>
+                    <div class="concept-details">
+                        <strong>Componentes XSLT:</strong>
+                        <ul>
+                            <li><strong>Templates:</strong> Reglas de transformación</li>
+                            <li><strong>XPath:</strong> Selección de elementos</li>
+                            <li><strong>Funciones:</strong> Manipulación de datos</li>
+                            <li><strong>Condicionales:</strong> xsl:if, xsl:choose</li>
+                        </ul>
+                        <strong>Casos de uso:</strong> Generación de reportes, conversión de formatos, presentación
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Namespaces XML</h3>
+                    <p>Mecanismo para evitar conflictos de nombres en documentos XML que combinan vocabularios de diferentes fuentes.</p>
+                    <div class="concept-details">
+                        <strong>Características:</strong>
+                        <ul>
+                            <li><strong>URI único:</strong> Identificador global del namespace</li>
+                            <li><strong>Prefijos:</strong> Abreviaciones para referenciar namespaces</li>
+                            <li><strong>Scope:</strong> Alcance de la declaración</li>
+                            <li><strong>Default namespace:</strong> Namespace por defecto</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Modularidad, reutilización, interoperabilidad
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Documento XML Básico</h4>
+                        <p><strong>Escenario:</strong> Catálogo de libros con información bibliográfica</p>
+                        <div class="code-block">
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogo xmlns="http://www.ejemplo.com/libros"
+          xmlns:precio="http://www.ejemplo.com/precios">
+    <libro isbn="978-1234567890" categoria="programacion">
+        <titulo>Bases de Datos Avanzadas</titulo>
+        <autor>
+            <nombre>Juan Pérez</nombre>
+            <apellido>García</apellido>
+            <nacionalidad>Española</nacionalidad>
+        </autor>
+        <editorial>Editorial Técnica</editorial>
+        <fecha_publicacion año="2024" mes="enero"/>
+        <precio:precio moneda="EUR">45.50</precio:precio>
+        <descripcion>
+            <resumen>Libro sobre técnicas avanzadas de bases de datos</resumen>
+            <palabras_clave>base de datos, SQL, NoSQL, optimización</palabras_clave>
+        </descripcion>
+        <disponibilidad stock="150" ubicacion="Madrid"/>
+    </libro>
+    
+    <libro isbn="978-0987654321" categoria="programacion">
+        <titulo>XML y Bases de Datos</titulo>
+        <autor>
+            <nombre>María</nombre>
+            <apellido>López</apellido>
+            <nacionalidad>Mexicana</nacionalidad>
+        </autor>
+        <editorial>Editorial Digital</editorial>
+        <fecha_publicacion año="2023" mes="diciembre"/>
+        <precio:precio moneda="USD">39.99</precio:precio>
+        <descripcion>
+            <resumen>Guía completa de XML en sistemas de bases de datos</resumen>
+            <palabras_clave>XML, XPath, XSLT, bases de datos</palabras_clave>
+        </descripcion>
+        <disponibilidad stock="75" ubicacion="Barcelona"/>
+    </libro>
+</catalogo>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Esquema XSD</h4>
+                        <p><strong>Escenario:</strong> Definición de esquema para validar el catálogo de libros</p>
+                        <div class="code-block">
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.ejemplo.com/libros"
+           xmlns:libros="http://www.ejemplo.com/libros"
+           elementFormDefault="qualified">
+
+    <!-- Definición del elemento raíz -->
+    <xs:element name="catalogo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="libro" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="titulo" type="xs:string"/>
+                            <xs:element name="autor">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="nombre" type="xs:string"/>
+                                        <xs:element name="apellido" type="xs:string"/>
+                                        <xs:element name="nacionalidad" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="editorial" type="xs:string"/>
+                            <xs:element name="fecha_publicacion">
+                                <xs:complexType>
+                                    <xs:attribute name="año" type="xs:gYear" use="required"/>
+                                    <xs:attribute name="mes" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="descripcion">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="resumen" type="xs:string"/>
+                                        <xs:element name="palabras_clave" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="disponibilidad">
+                                <xs:complexType>
+                                    <xs:attribute name="stock" type="xs:positiveInteger" use="required"/>
+                                    <xs:attribute name="ubicacion" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="isbn" type="xs:string" use="required"/>
+                        <xs:attribute name="categoria" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Consultas XPath</h4>
+                        <p><strong>Escenario:</strong> Extracción de información específica del catálogo</p>
+                        <div class="code-block">
+-- XPath para obtener títulos de libros
+//titulo
+
+-- XPath para libros de programación
+//libro[@categoria='programacion']
+
+-- XPath para autores españoles
+//autor[nacionalidad='Española']
+
+-- XPath para libros con precio mayor a 40
+//libro[precio:precio > 40]
+
+-- XPath para libros publicados en 2024
+//libro[fecha_publicacion/@año='2024']
+
+-- XPath para contar libros por categoría
+count(//libro[@categoria='programacion'])
+
+-- XPath para obtener el primer libro
+//libro[1]
+
+-- XPath para libros con stock mayor a 100
+//libro[disponibilidad/@stock > 100]
+
+-- XPath para obtener todos los nombres de autores
+//autor/nombre
+
+-- XPath para libros con ISBN específico
+//libro[@isbn='978-1234567890']

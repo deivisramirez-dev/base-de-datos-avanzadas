@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 5: Bases de Datos Distribuidas - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 5: Bases de Datos Distribuidas</h1>
+            <p>Sistemas distribuidos y gestión de datos en múltiples nodos</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Teorema CAP</h3>
+                    <p>Principio fundamental que establece que en sistemas distribuidos solo se pueden garantizar dos de tres propiedades: Consistencia, Disponibilidad y Tolerancia a Particiones.</p>
+                    <div class="concept-details">
+                        <strong>Propiedades CAP:</strong>
+                        <ul>
+                            <li><strong>Consistencia (C):</strong> Todos los nodos ven los mismos datos</li>
+                            <li><strong>Disponibilidad (A):</strong> Sistema responde a peticiones</li>
+                            <li><strong>Tolerancia a Particiones (P):</strong> Funciona ante fallos de red</li>
+                        </ul>
+                        <strong>Implicaciones:</strong> Trade-offs inevitables, diseño de sistemas
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Consistencia Eventual</h3>
+                    <p>Modelo de consistencia donde los datos eventualmente convergen a un estado consistente, permitiendo mayor disponibilidad.</p>
+                    <div class="concept-details">
+                        <strong>Características:</strong>
+                        <ul>
+                            <li><strong>Convergencia:</strong> Los datos se sincronizan eventualmente</li>
+                            <li><strong>Latencia:</strong> Tiempo para alcanzar consistencia</li>
+                            <li><strong>Conflictos:</strong> Resolución de versiones divergentes</li>
+                            <li><strong>Vector Clocks:</strong> Ordenamiento causal de eventos</li>
+                        </ul>
+                        <strong>Ventajas:</strong> Alta disponibilidad, escalabilidad, tolerancia a fallos
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Transacciones Distribuidas</h3>
+                    <p>Transacciones que involucran múltiples nodos y requieren coordinación especial para mantener ACID.</p>
+                    <div class="concept-details">
+                        <strong>Protocolos:</strong>
+                        <ul>
+                            <li><strong>Two-Phase Commit (2PC):</strong> Coordinador y participantes</li>
+                            <li><strong>Three-Phase Commit (3PC):</strong> Mejora de 2PC con timeout</li>
+                            <li><strong>Saga Pattern:</strong> Compensación en lugar de rollback</li>
+                            <li><strong>Event Sourcing:</strong> Almacenamiento de eventos</li>
+                        </ul>
+                        <strong>Desafíos:</strong> Fallos de red, particionamiento, latencia
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Replicación y Sincronización</h3>
+                    <p>Mecanismos para mantener copias sincronizadas de datos en múltiples nodos.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de replicación:</strong>
+                        <ul>
+                            <li><strong>Master-Slave:</strong> Un nodo maestro, múltiples esclavos</li>
+                            <li><strong>Master-Master:</strong> Múltiples nodos maestros</li>
+                            <li><strong>Síncrona:</strong> Confirmación tras replicar</li>
+                            <li><strong>Asíncrona:</strong> Replicación en background</li>
+                        </ul>
+                        <strong>Estrategias:</strong> Write-through, write-behind, conflict resolution
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Sharding y Particionamiento</h3>
+                    <p>División horizontal de datos en múltiples nodos para distribuir la carga y mejorar el rendimiento.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias de sharding:</strong>
+                        <ul>
+                            <li><strong>Range-based:</strong> Partición por rangos de valores</li>
+                            <li><strong>Hash-based:</strong> Distribución uniforme por hash</li>
+                            <li><strong>Directory-based:</strong> Tabla de mapeo de shards</li>
+                            <li><strong>Consistent Hashing:</strong> Distribución con rebalancing mínimo</li>
+                        </ul>
+                        <strong>Desafíos:</strong> Hot spots, rebalancing, consultas cross-shard
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Configuración de Replicación PostgreSQL</h4>
+                        <p><strong>Escenario:</strong> Sistema de alta disponibilidad con réplicas</p>
+                        <div class="code-block">
+-- Configuración Master (PostgreSQL)
+-- postgresql.conf
+wal_level = replica
+max_wal_senders = 3
+max_replication_slots = 3
+hot_standby = on
+
+-- pg_hba.conf
+host replication replicator 192.168.1.0/24 md5
+
+-- Crear usuario de replicación
+CREATE USER replicator WITH REPLICATION LOGIN PASSWORD 'replica_pass';
+
+-- Configuración Slave
+-- recovery.conf
+standby_mode = 'on'
+primary_conninfo = 'host=master_host port=5432 user=replicator password=replica_pass'
+trigger_file = '/tmp/postgresql.trigger'
+
+-- Inicializar réplica
+pg_basebackup -h master_host -D /var/lib/postgresql/data -U replicator -W -v -P
+
+-- Verificar estado de replicación
+SELECT * FROM pg_stat_replication;
+
+-- Monitoreo de lag de replicación
+SELECT 
+    client_addr,
+    state,
+    sent_lsn,
+    write_lsn,
+    flush_lsn,
+    replay_lsn,
+    write_lag,
+    flush_lag,
+    replay_lag
+FROM pg_stat_replication;

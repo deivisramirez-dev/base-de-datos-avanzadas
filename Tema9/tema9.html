@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 9: Ejecución y Procesamiento de Consultas - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 9: Ejecución y Procesamiento de Consultas</h1>
+            <p>Optimización y procesamiento eficiente de consultas en bases de datos</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Optimizador de Consultas</h3>
+                    <p>Componente del SGBD que determina la mejor forma de ejecutar una consulta basándose en estadísticas y reglas.</p>
+                    <div class="concept-details">
+                        <strong>Fases del optimizador:</strong>
+                        <ul>
+                            <li><strong>Parsing:</strong> Análisis sintáctico de la consulta</li>
+                            <li><strong>Binding:</strong> Resolución de nombres y tipos</li>
+                            <li><strong>Optimization:</strong> Generación de planes de ejecución</li>
+                            <li><strong>Execution:</strong> Ejecución del plan seleccionado</li>
+                        </ul>
+                        <strong>Estrategias:</strong> Rule-based, cost-based, hybrid
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Planes de Ejecución</h3>
+                    <p>Representación de cómo el motor de base de datos ejecutará una consulta, incluyendo el orden de operaciones.</p>
+                    <div class="concept-details">
+                        <strong>Componentes principales:</strong>
+                        <ul>
+                            <li><strong>Table Scan:</strong> Lectura secuencial de toda la tabla</li>
+                            <li><strong>Index Scan:</strong> Uso de índices para acceso directo</li>
+                            <li><strong>Hash Join:</strong> Unión basada en hash para grandes conjuntos</li>
+                            <li><strong>Nested Loop:</strong> Bucles anidados para uniones pequeñas</li>
+                        </ul>
+                        <strong>Análisis:</strong> Costo estimado, operaciones I/O, uso de memoria
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Estadísticas y Selectividad</h3>
+                    <p>Información sobre la distribución de datos que el optimizador utiliza para tomar decisiones de ejecución.</p>
+                    <div class="concept-details">
+                        <strong>Métricas importantes:</strong>
+                        <ul>
+                            <li><strong>Selectividad:</strong> Proporción de filas que cumplen una condición</li>
+                            <li><strong>Cardinalidad:</strong> Número de valores únicos en una columna</li>
+                            <li><strong>Distribución:</strong> Frecuencia de valores en los datos</li>
+                            <li><strong>Correlación:</strong> Relación entre columnas</li>
+                        </ul>
+                        <strong>Fórmula de selectividad:</strong> Selectividad = (Valores únicos) / (Total de filas)
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Optimización de JOINs</h3>
+                    <p>Técnicas para mejorar el rendimiento de operaciones de unión entre tablas.</p>
+                    <div class="concept-details">
+                        <strong>Algoritmos de JOIN:</strong>
+                        <ul>
+                            <li><strong>Nested Loop Join:</strong> O(n×m) - Para tablas pequeñas</li>
+                            <li><strong>Hash Join:</strong> O(n+m) - Para tablas grandes sin orden</li>
+                            <li><strong>Merge Join:</strong> O(n log n + m log m) - Para datos ordenados</li>
+                            <li><strong>Index Nested Loop:</strong> Usando índices para búsquedas</li>
+                        </ul>
+                        <strong>Factores de decisión:</strong> Tamaño de tablas, índices disponibles, memoria
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Cache de Consultas</h3>
+                    <p>Mecanismos para reutilizar planes de ejecución y resultados de consultas frecuentes.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de cache:</strong>
+                        <ul>
+                            <li><strong>Query Plan Cache:</strong> Almacena planes de ejecución compilados</li>
+                            <li><strong>Result Cache:</strong> Almacena resultados de consultas</li>
+                            <li><strong>Buffer Pool:</strong> Cache de páginas de datos en memoria</li>
+                            <li><strong>Metadata Cache:</strong> Cache de metadatos del esquema</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Reducción de tiempo de compilación, reutilización de resultados
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Análisis de Plan de Ejecución</h4>
+                        <p><strong>Escenario:</strong> Optimización de consulta compleja en PostgreSQL</p>
+                        <div class="code-block">
+-- Consulta original (lenta)
+SELECT p.nombre, c.categoria, SUM(oi.cantidad * oi.precio) as total
+FROM productos p
+JOIN categorias c ON p.categoria_id = c.id
+JOIN orden_items oi ON p.id = oi.producto_id
+JOIN ordenes o ON oi.orden_id = o.id
+WHERE o.fecha >= '2024-01-01'
+  AND c.activa = true
+GROUP BY p.id, p.nombre, c.categoria
+HAVING SUM(oi.cantidad * oi.precio) > 1000
+ORDER BY total DESC;
+
+-- Análisis del plan de ejecución
+EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)
+SELECT p.nombre, c.categoria, SUM(oi.cantidad * oi.precio) as total
+FROM productos p
+JOIN categorias c ON p.categoria_id = c.id
+JOIN orden_items oi ON p.id = oi.producto_id
+JOIN ordenes o ON oi.orden_id = o.id
+WHERE o.fecha >= '2024-01-01'
+  AND c.activa = true
+GROUP BY p.id, p.nombre, c.categoria
+HAVING SUM(oi.cantidad * oi.precio) > 1000
+ORDER BY total DESC;
+
+-- Resultado del análisis:
+{
+  "Plan": {
+    "Node Type": "Sort",
+    "Sort Key": ["total DESC"],
+    "Total Cost": 1250.50,
+    "Actual Time": 45.123,
+    "Rows": 15000,
+    "Buffers": {
+      "Shared Hit": 125,
+      "Shared Read": 45
+    },
+    "Plans": [
+      {
+        "Node Type": "Hash Join",
+        "Join Type": "Inner",
+        "Hash Cond": "(oi.producto_id = p.id)",
+        "Total Cost": 1100.25,
+        "Actual Time": 35.456,
+        "Rows": 15000
+      }
+    ]
+  }
+}
+
+-- Consulta optimizada
+SELECT p.nombre, c.categoria, SUM(oi.cantidad * oi.precio) as total
+FROM productos p
+INNER JOIN categorias c ON p.categoria_id = c.id
+INNER JOIN orden_items oi ON p.id = oi.producto_id
+INNER JOIN ordenes o ON oi.orden_id = o.id
+WHERE o.fecha >= '2024-01-01'
+  AND c.activa = true
+  AND oi.cantidad > 0  -- Filtro temprano
+GROUP BY p.id, p.nombre, c.categoria
+HAVING SUM(oi.cantidad * oi.precio) > 1000
+ORDER BY total DESC;
+
+-- Índices recomendados
+CREATE INDEX idx_ordenes_fecha ON ordenes(fecha);
+CREATE INDEX idx_orden_items_producto ON orden_items(producto_id);
+CREATE INDEX idx_categorias_activa ON categorias(activa) WHERE activa = true;
+CREATE INDEX idx_productos_categoria ON productos(categoria_id);

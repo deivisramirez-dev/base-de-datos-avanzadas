@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 10: Bases de Datos Relacionales - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 10: Bases de Datos Relacionales</h1>
+            <p>Modelo relacional, normalización y diseño de bases de datos relacionales</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Modelo Relacional</h3>
+                    <p>Modelo de datos basado en la teoría de conjuntos y el álgebra relacional para organizar información en tablas.</p>
+                    <div class="concept-details">
+                        <strong>Componentes fundamentales:</strong>
+                        <ul>
+                            <li><strong>Relaciones (Tablas):</strong> Conjuntos de tuplas con el mismo esquema</li>
+                            <li><strong>Atributos (Columnas):</strong> Propiedades de las entidades</li>
+                            <li><strong>Tuplas (Filas):</strong> Instancias de las entidades</li>
+                            <li><strong>Dominios:</strong> Conjuntos de valores válidos para atributos</li>
+                        </ul>
+                        <strong>Ventajas:</strong> Simplicidad, consistencia, herramientas maduras
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Normalización</h3>
+                    <p>Proceso de organización de datos para eliminar redundancia y dependencias anómalas.</p>
+                    <div class="concept-details">
+                        <strong>Formas normales:</strong>
+                        <ul>
+                            <li><strong>1NF:</strong> Eliminación de grupos repetitivos</li>
+                            <li><strong>2NF:</strong> Eliminación de dependencias parciales</li>
+                            <li><strong>3NF:</strong> Eliminación de dependencias transitivas</li>
+                            <li><strong>BCNF:</strong> Forma normal de Boyce-Codd</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Reducción de redundancia, integridad, flexibilidad
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Integridad Referencial</h3>
+                    <p>Mecanismo para mantener la consistencia de las relaciones entre tablas mediante claves foráneas.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de integridad:</strong>
+                        <ul>
+                            <li><strong>Integridad de Entidad:</strong> Claves primarias únicas y no nulas</li>
+                            <li><strong>Integridad Referencial:</strong> Claves foráneas válidas</li>
+                            <li><strong>Integridad de Dominio:</strong> Valores dentro de dominios válidos</li>
+                            <li><strong>Integridad de Usuario:</strong> Reglas de negocio específicas</li>
+                        </ul>
+                        <strong>Mecanismos:</strong> Constraints, triggers, stored procedures
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Álgebra Relacional</h3>
+                    <p>Conjunto de operaciones para manipular relaciones y obtener nuevos conjuntos de datos.</p>
+                    <div class="concept-details">
+                        <strong>Operaciones básicas:</strong>
+                        <ul>
+                            <li><strong>Selección (σ):</strong> Filtrar filas según condiciones</li>
+                            <li><strong>Proyección (π):</strong> Seleccionar columnas específicas</li>
+                            <li><strong>Unión (∪):</strong> Combinar relaciones compatibles</li>
+                            <li><strong>Diferencia (-):</strong> Filas en una relación pero no en otra</li>
+                        </ul>
+                        <strong>Operaciones derivadas:</strong> Intersección, producto cartesiano, join
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>SQL Avanzado</h3>
+                    <p>Lenguaje estándar para consultar y manipular bases de datos relacionales con características avanzadas.</p>
+                    <div class="concept-details">
+                        <strong>Características avanzadas:</strong>
+                        <ul>
+                            <li><strong>Subconsultas:</strong> Consultas anidadas para lógica compleja</li>
+                            <li><strong>Window Functions:</strong> Funciones analíticas sobre particiones</li>
+                            <li><strong>CTEs:</strong> Common Table Expressions para consultas recursivas</li>
+                            <li><strong>Pivoting:</strong> Transformación de filas a columnas</li>
+                        </ul>
+                        <strong>Estándares:</strong> SQL-92, SQL:1999, SQL:2003, SQL:2016
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Diseño de Base de Datos Relacional</h4>
+                        <p><strong>Escenario:</strong> Sistema de gestión universitaria normalizado</p>
+                        <div class="code-block">
+-- Crear esquema de base de datos universitaria
+CREATE SCHEMA universidad;
+
+-- Tabla de estudiantes
+CREATE TABLE estudiantes (
+    id SERIAL PRIMARY KEY,
+    numero_matricula VARCHAR(20) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    fecha_nacimiento DATE,
+    telefono VARCHAR(20),
+    direccion TEXT,
+    fecha_ingreso DATE DEFAULT CURRENT_DATE
+);
+
+-- Tabla de carreras
+CREATE TABLE carreras (
+    id SERIAL PRIMARY KEY,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    duracion_anos INTEGER CHECK (duracion_anos > 0),
+    creditos_totales INTEGER CHECK (creditos_totales > 0),
+    activa BOOLEAN DEFAULT true
+);
+
+-- Tabla de materias
+CREATE TABLE materias (
+    id SERIAL PRIMARY KEY,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    creditos INTEGER CHECK (creditos > 0),
+    carrera_id INTEGER REFERENCES carreras(id),
+    prerequisitos TEXT,
+    activa BOOLEAN DEFAULT true
+);
+
+-- Tabla de profesores
+CREATE TABLE profesores (
+    id SERIAL PRIMARY KEY,
+    numero_empleado VARCHAR(20) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    telefono VARCHAR(20),
+    departamento VARCHAR(100),
+    fecha_contratacion DATE,
+    activo BOOLEAN DEFAULT true
+);
+
+-- Tabla de inscripciones
+CREATE TABLE inscripciones (
+    id SERIAL PRIMARY KEY,
+    estudiante_id INTEGER REFERENCES estudiantes(id),
+    materia_id INTEGER REFERENCES materias(id),
+    semestre VARCHAR(20) NOT NULL,
+    año INTEGER NOT NULL,
+    fecha_inscripcion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado VARCHAR(20) DEFAULT 'activa' CHECK (estado IN ('activa', 'cancelada', 'completada')),
+    UNIQUE(estudiante_id, materia_id, semestre, año)
+);
+
+-- Tabla de calificaciones
+CREATE TABLE calificaciones (
+    id SERIAL PRIMARY KEY,
+    inscripcion_id INTEGER REFERENCES inscripciones(id),
+    profesor_id INTEGER REFERENCES profesores(id),
+    calificacion DECIMAL(3,1) CHECK (calificacion >= 0 AND calificacion <= 10),
+    fecha_calificacion DATE,
+    observaciones TEXT,
+    UNIQUE(inscripcion_id, profesor_id)
+);
+
+-- Índices para optimizar consultas
+CREATE INDEX idx_estudiantes_email ON estudiantes(email);
+CREATE INDEX idx_inscripciones_estudiante ON inscripciones(estudiante_id);
+CREATE INDEX idx_inscripciones_materia ON inscripciones(materia_id);
+CREATE INDEX idx_calificaciones_inscripcion ON calificaciones(inscripcion_id);

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 3: Bases de Datos para Documentos XML - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 3: Bases de Datos para Documentos XML</h1>
+            <p>Almacenamiento y consulta de documentos XML en sistemas de bases de datos</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Almacenamiento de XML en Bases de Datos</h3>
+                    <p>Estrategias para almacenar documentos XML en sistemas de bases de datos relacionales y nativas.</p>
+                    <div class="concept-details">
+                        <strong>Enfoques principales:</strong>
+                        <ul>
+                            <li><strong>LOB (Large Object):</strong> Almacenamiento como objeto binario</li>
+                            <li><strong>Shredding:</strong> Descomposición en tablas relacionales</li>
+                            <li><strong>Nativo XML:</strong> Almacenamiento optimizado para XML</li>
+                            <li><strong>Híbrido:</strong> Combinación de enfoques</li>
+                        </ul>
+                        <strong>Consideraciones:</strong> Rendimiento, flexibilidad, consultas, mantenimiento
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>XQuery - Lenguaje de Consulta XML</h3>
+                    <p>Lenguaje funcional para consultar y manipular datos XML, similar a SQL para bases de datos relacionales.</p>
+                    <div class="concept-details">
+                        <strong>Características principales:</strong>
+                        <ul>
+                            <li><strong>FLWOR Expressions:</strong> For, Let, Where, Order by, Return</li>
+                            <li><strong>Path Expressions:</strong> Navegación en la estructura XML</li>
+                            <li><strong>Functions:</strong> Funciones predefinidas y personalizadas</li>
+                            <li><strong>Aggregations:</strong> Operaciones de agregación</li>
+                        </ul>
+                        <strong>Ventajas:</strong> Expresividad, flexibilidad, estándar W3C
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Índices XML</h3>
+                    <p>Estructuras de datos especializadas para acelerar consultas sobre documentos XML.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de índices:</strong>
+                        <ul>
+                            <li><strong>Path Indexes:</strong> Índices basados en rutas XPath</li>
+                            <li><strong>Value Indexes:</strong> Índices sobre valores de elementos</li>
+                            <li><strong>Structural Indexes:</strong> Índices sobre estructura del documento</li>
+                            <li><strong>Full-Text Indexes:</strong> Índices de texto completo</li>
+                        </ul>
+                        <strong>Optimización:</strong> Selectividad, cobertura, mantenimiento
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Validación XML</h3>
+                    <p>Mecanismos para validar la estructura y contenido de documentos XML contra esquemas definidos.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de validación:</strong>
+                        <ul>
+                            <li><strong>DTD (Document Type Definition):</strong> Validación básica</li>
+                            <li><strong>XSD (XML Schema Definition):</strong> Validación avanzada</li>
+                            <li><strong>Relax NG:</strong> Validación alternativa</li>
+                            <li><strong>Schematron:</strong> Validación basada en reglas</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Integridad, consistencia, documentación
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Procesamiento de XML en Tiempo Real</h3>
+                    <p>Técnicas para procesar y consultar documentos XML de manera eficiente en aplicaciones en tiempo real.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias:</strong>
+                        <ul>
+                            <li><strong>Streaming XML:</strong> Procesamiento por eventos</li>
+                            <li><strong>DOM Caching:</strong> Cache de objetos DOM</li>
+                            <li><strong>SAX Processing:</strong> Procesamiento secuencial</li>
+                            <li><strong>XSLT Streaming:</strong> Transformaciones en streaming</li>
+                        </ul>
+                        <strong>Ventajas:</strong> Memoria eficiente, latencia baja, escalabilidad
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Almacenamiento XML en PostgreSQL</h4>
+                        <p><strong>Escenario:</strong> Sistema de gestión de documentos XML</p>
+                        <div class="code-block">
+-- Crear tabla para almacenar documentos XML
+CREATE TABLE documentos_xml (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    contenido XML NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT NOW(),
+    esquema_id INTEGER REFERENCES esquemas_xml(id)
+);
+
+-- Insertar documento XML
+INSERT INTO documentos_xml (nombre, contenido) VALUES (
+    'factura_001',
+    '<?xml version="1.0" encoding="UTF-8"?>
+    <factura numero="F-2024-001" fecha="2024-01-15">
+        <cliente>
+            <nombre>Empresa ABC</nombre>
+            <direccion>Calle Principal 123</direccion>
+            <telefono>+34 123 456 789</telefono>
+        </cliente>
+        <items>
+            <item>
+                <producto>Laptop Dell</producto>
+                <cantidad>2</cantidad>
+                <precio>899.99</precio>
+                <total>1799.98</total>
+            </item>
+            <item>
+                <producto>Mouse Logitech</producto>
+                <cantidad>5</cantidad>
+                <precio>25.50</precio>
+                <total>127.50</total>
+            </item>
+        </items>
+        <total>1927.48</total>
+    </factura>'
+);
+
+-- Consultas XPath en PostgreSQL
+-- Obtener todos los clientes
+SELECT xpath('//cliente/nombre/text()', contenido) as nombres
+FROM documentos_xml;
+
+-- Buscar facturas con total mayor a 1000
+SELECT nombre, xpath('//total/text()', contenido) as total
+FROM documentos_xml
+WHERE (xpath('//total/text()', contenido))[1]::text::numeric > 1000;
+
+-- Obtener productos de una factura específica
+SELECT xpath('//item/producto/text()', contenido) as productos
+FROM documentos_xml
+WHERE nombre = 'factura_001';
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Consultas XQuery</h4>
+                        <p><strong>Escenario:</strong> Sistema de biblioteca digital con documentos XML</p>
+                        <div class="code-block">
+-- XQuery para obtener libros publicados después de 2020
+for $libro in //libro
+where $libro/@año > 2020
+return 
+    <libro_reciente>
+        <titulo>{$libro/titulo/text()}</titulo>
+        <autor>{$libro/autor/text()}</autor>
+        <año>{$libro/@año}</año>
+    </libro_reciente>
+
+-- XQuery para agrupar libros por autor
+for $autor in distinct-values(//libro/autor)
+return
+    <autor>
+        <nombre>{$autor}</nombre>
+        <libros>
+            {
+                for $libro in //libro[autor = $autor]
+                return <titulo>{$libro/titulo/text()}</titulo>
+            }
+        </libros>
+        <total_libros>{count(//libro[autor = $autor])}</total_libros>
+    </autor>
+
+-- XQuery para buscar libros por palabra clave
+for $libro in //libro
+where contains(lower-case($libro/titulo), "base de datos")
+   or contains(lower-case($libro/descripcion), "base de datos")
+return
+    <resultado>
+        <titulo>{$libro/titulo/text()}</titulo>
+        <autor>{$libro/autor/text()}</autor>
+        <relevancia>{count(tokenize($libro/descripcion, ' ')[. = 'base' or . = 'datos'])}</relevancia>
+    </resultado>

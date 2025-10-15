@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 12: Minería de Datos - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 12: Minería de Datos</h1>
+            <p>Algoritmos y técnicas de extracción de conocimiento de grandes volúmenes de datos</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Proceso KDD (Knowledge Discovery in Databases)</h3>
+                    <p>Metodología sistemática para extraer conocimiento útil de grandes volúmenes de datos.</p>
+                    <div class="concept-details">
+                        <strong>Fases del proceso KDD:</strong>
+                        <ul>
+                            <li><strong>Selección:</strong> Identificación y recolección de datos relevantes</li>
+                            <li><strong>Preprocesamiento:</strong> Limpieza y preparación de datos</li>
+                            <li><strong>Transformación:</strong> Conversión a formato adecuado</li>
+                            <li><strong>Minería:</strong> Aplicación de algoritmos de extracción</li>
+                            <li><strong>Interpretación:</strong> Evaluación y presentación de resultados</li>
+                        </ul>
+                        <strong>Objetivos:</strong> Clasificación, clustering, asociación, predicción
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Algoritmos de Clasificación</h3>
+                    <p>Técnicas para asignar etiquetas a instancias basándose en características observadas.</p>
+                    <div class="concept-details">
+                        <strong>Algoritmos principales:</strong>
+                        <ul>
+                            <li><strong>Árboles de Decisión:</strong> Reglas if-then jerárquicas</li>
+                            <li><strong>Naive Bayes:</strong> Probabilístico basado en teorema de Bayes</li>
+                            <li><strong>SVM:</strong> Máquinas de Vectores de Soporte</li>
+                            <li><strong>Random Forest:</strong> Ensemble de árboles de decisión</li>
+                        </ul>
+                        <strong>Métricas:</strong> Precisión, Recall, F1-Score, AUC-ROC
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Algoritmos de Clustering</h3>
+                    <p>Técnicas para agrupar datos similares sin conocimiento previo de las clases.</p>
+                    <div class="concept-details">
+                        <strong>Algoritmos principales:</strong>
+                        <ul>
+                            <li><strong>K-Means:</strong> Agrupación en k clusters esféricos</li>
+                            <li><strong>Hierarchical:</strong> Clustering jerárquico aglomerativo</li>
+                            <li><strong>DBSCAN:</strong> Clustering basado en densidad</li>
+                            <li><strong>Gaussian Mixture:</strong> Modelos de mezcla gaussiana</li>
+                        </ul>
+                        <strong>Métricas:</strong> Silhouette Score, Inertia, Davies-Bouldin Index
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Reglas de Asociación</h3>
+                    <p>Técnicas para descubrir patrones frecuentes y reglas de asociación en datos transaccionales.</p>
+                    <div class="concept-details">
+                        <strong>Algoritmos principales:</strong>
+                        <ul>
+                            <li><strong>Apriori:</strong> Generación de itemsets frecuentes</li>
+                            <li><strong>FP-Growth:</strong> Frequent Pattern Growth</li>
+                            <li><strong>Eclat:</strong> Equivalence Class Transformation</li>
+                        </ul>
+                        <strong>Métricas:</strong> Support, Confidence, Lift, Conviction
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Análisis de Series Temporales</h3>
+                    <p>Técnicas para analizar y predecir patrones en datos que varían en el tiempo.</p>
+                    <div class="concept-details">
+                        <strong>Componentes:</strong>
+                        <ul>
+                            <li><strong>Tendencia:</strong> Dirección general a largo plazo</li>
+                            <li><strong>Estacionalidad:</strong> Patrones que se repiten cíclicamente</li>
+                            <li><strong>Ciclos:</strong> Fluctuaciones no regulares</li>
+                            <li><strong>Ruido:</strong> Variación aleatoria</li>
+                        </ul>
+                        <strong>Modelos:</strong> ARIMA, SARIMA, LSTM, Prophet
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Clasificación de Clientes con Python</h4>
+                        <p><strong>Escenario:</strong> Segmentación de clientes para marketing dirigido</p>
+                        <div class="code-block">
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Cargar datos de clientes
+def load_customer_data():
+    query = """
+    SELECT 
+        edad,
+        ingresos_anuales,
+        gasto_mensual,
+        frecuencia_compras,
+        ultima_compra_dias,
+        categoria_preferida,
+        segmento_cliente
+    FROM clientes 
+    WHERE segmento_cliente IS NOT NULL
+    """
+    return pd.read_sql(query, connection)
+
+# Preprocesamiento de datos
+def preprocess_data(df):
+    # Codificar variables categóricas
+    df_encoded = pd.get_dummies(df, columns=['categoria_preferida'])
+    
+    # Separar características y objetivo
+    X = df_encoded.drop('segmento_cliente', axis=1)
+    y = df_encoded['segmento_cliente']
+    
+    # Estandarizar características
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    
+    return X_scaled, y, scaler
+
+# Entrenar modelo de clasificación
+def train_classification_model(X, y):
+    # Dividir datos
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+    
+    # Entrenar Random Forest
+    model = RandomForestClassifier(
+        n_estimators=100,
+        max_depth=10,
+        random_state=42
+    )
+    model.fit(X_train, y_train)
+    
+    # Evaluar modelo
+    y_pred = model.predict(X_test)
+    print("Classification Report:")
+    print(classification_report(y_test, y_pred))
+    
+    return model
+
+# Aplicar modelo a nuevos clientes
+def predict_customer_segment(model, scaler, new_customer_data):
+    # Preprocesar nuevos datos
+    new_data_scaled = scaler.transform(new_customer_data)
+    
+    # Predecir segmento
+    prediction = model.predict(new_data_scaled)
+    probabilities = model.predict_proba(new_data_scaled)
+    
+    return prediction, probabilities

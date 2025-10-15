@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1: Introducción a los Diferentes Sistemas de Bases de Datos - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 1: Introducción a los Diferentes Sistemas de Bases de Datos</h1>
+            <p>Fundamentos y clasificación de los sistemas de gestión de bases de datos modernos</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <!-- Clasificación por Modelo de Datos -->
+                <div class="concept-card">
+                    <h3>Clasificación por Modelo de Datos</h3>
+                    <p>Los sistemas de bases de datos se clasifican según el modelo de datos que utilizan para organizar y almacenar la información. Esta clasificación determina cómo se estructuran, almacenan y consultan los datos.</p>
+                    
+                    <!-- Diagrama de Clasificación -->
+                    <div class="visual-diagram">
+                        <h4>Taxonomía de Sistemas de Bases de Datos</h4>
+                        <div class="classification-tree">
+                            <div class="tree-node root">
+                                <div class="node-content">
+                                    <i class="fas fa-database"></i>
+                                    <span>Sistemas de Bases de Datos</span>
+                                </div>
+                                <div class="tree-branches">
+                                    <div class="tree-branch">
+                                        <div class="node-content">
+                                            <i class="fas fa-table"></i>
+                                            <span>Relacionales (RDBMS)</span>
+                                        </div>
+                                        <div class="tree-leaves">
+                                            <div class="leaf">MySQL</div>
+                                            <div class="leaf">PostgreSQL</div>
+                                            <div class="leaf">Oracle</div>
+                                            <div class="leaf">SQL Server</div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-branch">
+                                        <div class="node-content">
+                                            <i class="fas fa-cube"></i>
+                                            <span>NoSQL</span>
+                                        </div>
+                                        <div class="tree-leaves">
+                                            <div class="leaf">MongoDB (Documental)</div>
+                                            <div class="leaf">Redis (Clave-Valor)</div>
+                                            <div class="leaf">Cassandra (Columnar)</div>
+                                            <div class="leaf">Neo4j (Grafos)</div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-branch">
+                                        <div class="node-content">
+                                            <i class="fas fa-object-group"></i>
+                                            <span>Orientadas a Objetos</span>
+                                        </div>
+                                        <div class="tree-leaves">
+                                            <div class="leaf">ObjectStore</div>
+                                            <div class="leaf">Versant</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Características distintivas por tipo:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Estructura</th>
+                                        <th>Consistencia</th>
+                                        <th>Escalabilidad</th>
+                                        <th>Transacciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Relacional</strong></td>
+                                        <td>Tablas (Filas/Columnas)</td>
+                                        <td>Fuerte (ACID)</td>
+                                        <td>Vertical</td>
+                                        <td>Completas</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NoSQL</strong></td>
+                                        <td>Flexible</td>
+                                        <td>Eventual</td>
+                                        <td>Horizontal</td>
+                                        <td>Limitadas</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>En Memoria</strong></td>
+                                        <td>Variable</td>
+                                        <td>Fuerte</td>
+                                        <td>Clustering</td>
+                                        <td>Rápidas</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bases de Datos Relacionales -->
+                <div class="concept-card">
+                    <h3>Bases de Datos Relacionales (RDBMS)</h3>
+                    <p>Sistemas basados en el modelo relacional que organizan datos en tablas con filas y columnas, garantizando integridad referencial mediante el álgebra relacional.</p>
+                    
+                    <!-- Diagrama del Modelo Relacional -->
+                    <div class="visual-diagram">
+                        <h4>Estructura del Modelo Relacional</h4>
+                        <div class="relational-model">
+                            <div class="table-diagram">
+                                <div class="table-header">
+                                    <h5>Tabla: EMPLEADOS</h5>
+                                </div>
+                                <div class="table-structure">
+                                    <div class="column primary-key">ID (PK)</div>
+                                    <div class="column">Nombre</div>
+                                    <div class="column">Apellido</div>
+                                    <div class="column foreign-key">Dept_ID (FK)</div>
+                                    <div class="column">Salario</div>
+                                </div>
+                                <div class="table-data">
+                                    <div class="row">
+                                        <div class="cell pk">1</div>
+                                        <div class="cell">Juan</div>
+                                        <div class="cell">Pérez</div>
+                                        <div class="cell fk">10</div>
+                                        <div class="cell">50000</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="cell pk">2</div>
+                                        <div class="cell">María</div>
+                                        <div class="cell">García</div>
+                                        <div class="cell fk">20</div>
+                                        <div class="cell">55000</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relationship-arrow">↓</div>
+                            <div class="table-diagram">
+                                <div class="table-header">
+                                    <h5>Tabla: DEPARTAMENTOS</h5>
+                                </div>
+                                <div class="table-structure">
+                                    <div class="column primary-key">ID (PK)</div>
+                                    <div class="column">Nombre</div>
+                                    <div class="column">Ubicación</div>
+                                </div>
+                                <div class="table-data">
+                                    <div class="row">
+                                        <div class="cell pk">10</div>
+                                        <div class="cell">IT</div>
+                                        <div class="cell">Madrid</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="cell pk">20</div>
+                                        <div class="cell">Ventas</div>
+                                        <div class="cell">Barcelona</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Propiedades ACID:</strong>
+                        <div class="acid-properties">
+                            <div class="acid-item">
+                                <div class="acid-icon">A</div>
+                                <div class="acid-content">
+                                    <h4>Atomicidad</h4>
+                                    <p>Todas las operaciones se ejecutan completamente o ninguna</p>
+                                </div>
+                            </div>
+                            <div class="acid-item">
+                                <div class="acid-icon">C</div>
+                                <div class="acid-content">
+                                    <h4>Consistencia</h4>
+                                    <p>La base de datos permanece en estado válido</p>
+                                </div>
+                            </div>
+                            <div class="acid-item">
+                                <div class="acid-icon">I</div>
+                                <div class="acid-content">
+                                    <h4>Aislamiento</h4>
+                                    <p>Las transacciones concurrentes no interfieren</p>
+                                </div>
+                            </div>
+                            <div class="acid-item">
+                                <div class="acid-icon">D</div>
+                                <div class="acid-content">
+                                    <h4>Durabilidad</h4>
+                                    <p>Los cambios persisten tras el commit</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bases de Datos NoSQL -->
+                <div class="concept-card">
+                    <h3>Bases de Datos NoSQL</h3>
+                    <p>Sistemas que no utilizan el modelo relacional, diseñados para manejar grandes volúmenes de datos no estructurados con mayor flexibilidad y escalabilidad horizontal.</p>
+                    
+                    <!-- Diagrama de Tipos NoSQL -->
+                    <div class="visual-diagram">
+                        <h4>Clasificación de Bases de Datos NoSQL</h4>
+                        <div class="nosql-types">
+                            <div class="nosql-type">
+                                <div class="type-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <h4>Documentales</h4>
+                                <p>MongoDB, CouchDB</p>
+                                <div class="type-example">
+                                    <pre>{
+  "_id": "507f1f77bcf86cd799439011",
+  "nombre": "Juan Pérez",
+  "edad": 30,
+  "direccion": {
+    "calle": "Calle Mayor 123",
+    "ciudad": "Madrid"
+  }
+}</pre>
+                                </div>
+                            </div>
+                            <div class="nosql-type">
+                                <div class="type-icon">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <h4>Clave-Valor</h4>
+                                <p>Redis, DynamoDB</p>
+                                <div class="type-example">
+                                    <pre>usuario:123 → {
+  "nombre": "Juan",
+  "email": "juan@email.com"
+}</pre>
+                                </div>
+                            </div>
+                            <div class="nosql-type">
+                                <div class="type-icon">
+                                    <i class="fas fa-columns"></i>
+                                </div>
+                                <h4>Columnares</h4>
+                                <p>Cassandra, HBase</p>
+                                <div class="type-example">
+                                    <pre>Row Key: user123
+  Column Family: profile
+    name: "Juan"
+    age: "30"</pre>
+                                </div>
+                            </div>
+                            <div class="nosql-type">
+                                <div class="type-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <h4>Grafos</h4>
+                                <p>Neo4j, ArangoDB</p>
+                                <div class="type-example">
+                                    <pre>(Usuario)-[:AMIGO]->(Usuario)
+(Usuario)-[:TRABAJA_EN]->(Empresa)</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Ventajas del NoSQL:</strong>
+                        <div class="advantages-grid">
+                            <div class="advantage-item">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                <h4>Escalabilidad Horizontal</h4>
+                                <p>Distribución en múltiples servidores</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-bolt"></i>
+                                <h4>Alto Rendimiento</h4>
+                                <p>Optimizado para operaciones específicas</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-shapes"></i>
+                                <h4>Flexibilidad</h4>
+                                <p>Esquemas dinámicos y adaptables</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-cloud"></i>
+                                <h4>Disponibilidad</h4>
+                                <p>Tolerancia a fallos distribuidos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bases de Datos en Memoria -->
+                <div class="concept-card">
+                    <h3>Bases de Datos en Memoria</h3>
+                    <p>Sistemas que almacenan datos principalmente en memoria RAM para lograr máximo rendimiento, sacrificando persistencia por velocidad.</p>
+                    
+                    <!-- Diagrama de Arquitectura en Memoria -->
+                    <div class="visual-diagram">
+                        <h4>Arquitectura de Base de Datos en Memoria</h4>
+                        <div class="memory-architecture">
+                            <div class="memory-layer">
+                                <div class="layer-title">Aplicación</div>
+                                <div class="layer-content">Consultas y Transacciones</div>
+                            </div>
+                            <div class="arrow">↓</div>
+                            <div class="memory-layer">
+                                <div class="layer-title">Cache Layer</div>
+                                <div class="layer-content">Redis, Memcached</div>
+                            </div>
+                            <div class="arrow">↓</div>
+                            <div class="memory-layer main">
+                                <div class="layer-title">Memoria RAM</div>
+                                <div class="layer-content">
+                                    <div class="memory-section">
+                                        <div class="section-title">Datos Activos</div>
+                                        <div class="section-content">Tablas, Índices, Cache</div>
+                                    </div>
+                                    <div class="memory-section">
+                                        <div class="section-title">Buffer Pool</div>
+                                        <div class="section-content">Páginas en Memoria</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="arrow">↓</div>
+                            <div class="memory-layer">
+                                <div class="layer-title">Persistencia (Opcional)</div>
+                                <div class="layer-content">Snapshots, WAL, Disk</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Características y Casos de Uso:</strong>
+                        <div class="use-cases">
+                            <div class="use-case">
+                                <div class="case-icon">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </div>
+                                <div class="case-content">
+                                    <h4>Cache de Aplicación</h4>
+                                    <p>Almacenamiento temporal de datos frecuentemente accedidos</p>
+                                </div>
+                            </div>
+                            <div class="use-case">
+                                <div class="case-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="case-content">
+                                    <h4>Análisis en Tiempo Real</h4>
+                                    <p>Procesamiento de streams de datos con latencia mínima</p>
+                                </div>
+                            </div>
+                            <div class="use-case">
+                                <div class="case-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="case-content">
+                                    <h4>Gestión de Sesiones</h4>
+                                    <p>Almacenamiento de estado de sesiones de usuario</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bases de Datos Distribuidas -->
+                <div class="concept-card">
+                    <h3>Bases de Datos Distribuidas</h3>
+                    <p>Sistemas que distribuyen datos y procesamiento entre múltiples nodos geográficamente dispersos, proporcionando escalabilidad y tolerancia a fallos.</p>
+                    
+                    <!-- Diagrama de Arquitectura Distribuida -->
+                    <div class="visual-diagram">
+                        <h4>Arquitectura de Base de Datos Distribuida</h4>
+                        <div class="distributed-architecture">
+                            <div class="client-layer">
+                                <div class="client">Cliente 1</div>
+                                <div class="client">Cliente 2</div>
+                                <div class="client">Cliente 3</div>
+                            </div>
+                            <div class="arrow-down">↓</div>
+                            <div class="coordinator-layer">
+                                <div class="coordinator">Coordinador</div>
+                            </div>
+                            <div class="arrow-down">↓</div>
+                            <div class="nodes-layer">
+                                <div class="node">
+                                    <div class="node-title">Nodo 1</div>
+                                    <div class="node-content">Datos A-C</div>
+                                </div>
+                                <div class="node">
+                                    <div class="node-title">Nodo 2</div>
+                                    <div class="node-content">Datos D-F</div>
+                                </div>
+                                <div class="node">
+                                    <div class="node-title">Nodo 3</div>
+                                    <div class="node-content">Datos G-I</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Teorema CAP -->
+                    <div class="visual-diagram">
+                        <h4>Teorema CAP (Consistency, Availability, Partition Tolerance)</h4>
+                        <div class="cap-triangle">
+                            <div class="cap-corner">
+                                <div class="corner-label">Consistencia</div>
+                                <div class="corner-content">Todos los nodos ven los mismos datos</div>
+                            </div>
+                            <div class="cap-corner">
+                                <div class="corner-label">Disponibilidad</div>
+                                <div class="corner-content">Sistema responde a peticiones</div>
+                            </div>
+                            <div class="cap-corner">
+                                <div class="corner-label">Tolerancia a Particiones</div>
+                                <div class="corner-content">Funciona ante fallos de red</div>
+                            </div>
+                            <div class="cap-center">
+                                <div class="center-text">Solo 2 de 3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Desafíos y Soluciones:</strong>
+                        <div class="challenges-solutions">
+                            <div class="challenge">
+                                <h4>Consistencia</h4>
+                                <p><strong>Desafío:</strong> Mantener datos sincronizados</p>
+                                <p><strong>Solución:</strong> Protocolos de consenso (Raft, Paxos)</p>
+                            </div>
+                            <div class="challenge">
+                                <h4>Latencia de Red</h4>
+                                <p><strong>Desafío:</strong> Comunicación entre nodos</p>
+                                <p><strong>Solución:</strong> Replicación asíncrona, CDN</p>
+                            </div>
+                            <div class="challenge">
+                                <h4>Particionamiento</h4>
+                                <p><strong>Desafío:</strong> División de datos</p>
+                                <p><strong>Solución:</strong> Sharding inteligente, rebalancing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Comparación de Sistemas Relacionales</h4>
+                        <p><strong>Escenario:</strong> Selección de SGBD para aplicación empresarial</p>
+                        <div class="code-block">
+-- PostgreSQL: Código abierto, extensible
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    fecha_registro TIMESTAMP DEFAULT NOW()
+);
+
+-- MySQL: Popular, fácil de usar
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Oracle: Empresarial, alta disponibilidad
+CREATE TABLE usuarios (
+    id NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL,
+    email VARCHAR2(255) UNIQUE,
+    fecha_registro TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+
+-- SQL Server: Integración con Microsoft
+CREATE TABLE usuarios (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nombre NVARCHAR(100) NOT NULL,
+    email NVARCHAR(255) UNIQUE,
+    fecha_registro DATETIME2 DEFAULT GETDATE()
+);
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Implementación NoSQL - MongoDB</h4>
+                        <p><strong>Escenario:</strong> Sistema de blog con documentos flexibles</p>
+                        <div class="code-block">
+// Estructura de documento en MongoDB
+{
+  _id: ObjectId("507f1f77bcf86cd799439011"),
+  titulo: "Introducción a MongoDB",
+  autor: {
+    nombre: "Juan Pérez",
+    email: "juan@example.com",
+    bio: "Desarrollador de software"
+  },
+  contenido: "MongoDB es una base de datos NoSQL...",
+  tags: ["mongodb", "nosql", "database"],
+  fecha_publicacion: ISODate("2024-01-15T10:30:00Z"),
+  comentarios: [
+    {
+      autor: "María García",
+      texto: "Excelente artículo!",
+      fecha: ISODate("2024-01-15T14:20:00Z"),
+      likes: 5
+    }
+  ],
+  estadisticas: {
+    vistas: 1250,
+    likes: 45,
+    compartidos: 12
+  }
+}
+
+// Consulta de documentos
+db.articulos.find({
+  "tags": "mongodb",
+  "fecha_publicacion": { $gte: ISODate("2024-01-01") }
+}).sort({ "estadisticas.vistas": -1 });
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Base de Datos en Memoria - Redis</h4>
+                        <p><strong>Escenario:</strong> Sistema de cache y sesiones</p>
+                        <div class="code-block">
+import redis
+import json
+from datetime import timedelta
+
+# Configuración de Redis
+redis_client = redis.Redis(
+    host='localhost',
+    port=6379,
+    db=0,
+    decode_responses=True
+)
+
+class CacheManager:
+    def __init__(self, redis_client):
+        self.redis = redis_client
+    
+    def cache_user_data(self, user_id, user_data, ttl=3600):
+        """Cache de datos de usuario"""
+        key = f"user:{user_id}"
+        self.redis.setex(key, ttl, json.dumps(user_data))
+    
+    def get_user_data(self, user_id):
+        """Obtener datos de usuario del cache"""
+        key = f"user:{user_id}"
+        data = self.redis.get(key)
+        return json.loads(data) if data else None
+    
+    def cache_product_list(self, category, products, ttl=1800):
+        """Cache de lista de productos"""
+        key = f"products:{category}"
+        self.redis.setex(key, ttl, json.dumps(products))
+    
+    def get_cached_products(self, category):
+        """Obtener productos del cache"""
+        key = f"products:{category}"
+        data = self.redis.get(key)
+        return json.loads(data) if data else None
+
+# Uso del cache manager
+cache = CacheManager(redis_client)
+
+# Cache de datos de usuario
+user_data = {
+    "id": 123,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "preferences": {"theme": "dark"}
+}
+cache.cache_user_data(123, user_data)

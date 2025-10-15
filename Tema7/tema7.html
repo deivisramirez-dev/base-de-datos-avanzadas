@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 7: Introducción al Procesamiento Transaccional - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 7: Introducción al Procesamiento Transaccional</h1>
+            <p>Fundamentos del procesamiento transaccional y control de concurrencia</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Propiedades ACID</h3>
+                    <p>Conjunto de propiedades que garantizan la confiabilidad de las transacciones en sistemas de base de datos.</p>
+                    <div class="concept-details">
+                        <strong>Componentes ACID:</strong>
+                        <ul>
+                            <li><strong>Atomicidad (A):</strong> Todas las operaciones se ejecutan o ninguna</li>
+                            <li><strong>Consistencia (C):</strong> La base de datos permanece en estado válido</li>
+                            <li><strong>Aislamiento (I):</strong> Las transacciones concurrentes no interfieren</li>
+                            <li><strong>Durabilidad (D):</strong> Los cambios persisten tras el commit</li>
+                        </ul>
+                        <strong>Implementación:</strong> Log de transacciones, bloqueos, versionado
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Niveles de Aislamiento</h3>
+                    <p>Diferentes grados de aislamiento que controlan qué cambios de otras transacciones son visibles.</p>
+                    <div class="concept-details">
+                        <strong>Niveles estándar:</strong>
+                        <ul>
+                            <li><strong>READ UNCOMMITTED:</strong> Lectura de datos no confirmados</li>
+                            <li><strong>READ COMMITTED:</strong> Solo datos confirmados (por defecto)</li>
+                            <li><strong>REPEATABLE READ:</strong> Lecturas consistentes durante la transacción</li>
+                            <li><strong>SERIALIZABLE:</strong> Ejecución como si fuera secuencial</li>
+                        </ul>
+                        <strong>Fenómenos:</strong> Dirty Read, Non-Repeatable Read, Phantom Read
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Control de Concurrencia</h3>
+                    <p>Mecanismos para manejar múltiples transacciones simultáneas sin comprometer la integridad de los datos.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias principales:</strong>
+                        <ul>
+                            <li><strong>Bloqueos (Locking):</strong> Exclusión mutua de recursos</li>
+                            <li><strong>Versionado (MVCC):</strong> Múltiples versiones de datos</li>
+                            <li><strong>Timestamp Ordering:</strong> Ordenamiento por marcas de tiempo</li>
+                            <li><strong>Optimistic Concurrency:</strong> Validación al final</li>
+                        </ul>
+                        <strong>Tipos de bloqueos:</strong> Shared (S), Exclusive (X), Intent locks
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Deadlocks y Prevención</h3>
+                    <p>Situación donde dos o más transacciones esperan indefinidamente por recursos bloqueados por otras.</p>
+                    <div class="concept-details">
+                        <strong>Condiciones necesarias:</strong>
+                        <ul>
+                            <li><strong>Exclusión mutua:</strong> Recursos no compartibles</li>
+                            <li><strong>Espera circular:</strong> T1 espera T2, T2 espera T1</li>
+                            <li><strong>No preemption:</strong> No se pueden liberar recursos forzadamente</li>
+                        </ul>
+                        <strong>Estrategias:</strong> Detección, prevención, evitación, recuperación
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Log de Transacciones</h3>
+                    <p>Registro de todas las operaciones de transacciones para permitir recuperación y mantener durabilidad.</p>
+                    <div class="concept-details">
+                        <strong>Componentes del log:</strong>
+                        <ul>
+                            <li><strong>Log Records:</strong> Registros de operaciones</li>
+                            <li><strong>Checkpoints:</strong> Puntos de sincronización</li>
+                            <li><strong>WAL (Write-Ahead Logging):</strong> Escribir log antes que datos</li>
+                            <li><strong>Recovery:</strong> Redo y Undo operations</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Durabilidad, recuperación, replicación
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Transferencia Bancaria con Aislamiento</h4>
+                        <p><strong>Escenario:</strong> Transferencia segura entre cuentas con control de concurrencia</p>
+                        <div class="code-block">
+-- Transacción de transferencia bancaria
+BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+-- Bloquear cuentas en orden específico para evitar deadlocks
+SELECT saldo FROM cuentas WHERE id = 1 FOR UPDATE;
+SELECT saldo FROM cuentas WHERE id = 2 FOR UPDATE;
+
+-- Verificar fondos suficientes
+DECLARE @saldo_origen DECIMAL(10,2);
+SELECT @saldo_origen = saldo FROM cuentas WHERE id = 1;
+
+IF @saldo_origen >= 1000.00
+BEGIN
+    -- Realizar transferencia
+    UPDATE cuentas SET saldo = saldo - 1000.00 WHERE id = 1;
+    UPDATE cuentas SET saldo = saldo + 1000.00 WHERE id = 2;
+    
+    -- Registrar transacción
+    INSERT INTO transacciones (cuenta_origen, cuenta_destino, monto, fecha)
+    VALUES (1, 2, 1000.00, GETDATE());
+    
+    COMMIT;
+END
+ELSE
+BEGIN
+    ROLLBACK;
+    RAISERROR('Fondos insuficientes', 16, 1);
+END;

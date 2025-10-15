@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 11: Data Warehouse y OLAP - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 11: Data Warehouse y OLAP</h1>
+            <p>Almacenes de datos y procesamiento analítico en línea</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Modelo Dimensional (Star Schema)</h3>
+                    <p>Arquitectura de almacén de datos centrada en tablas de hechos rodeadas por tablas dimensionales.</p>
+                    <div class="concept-details">
+                        <strong>Componentes principales:</strong>
+                        <ul>
+                            <li><strong>Fact Tables:</strong> Medidas cuantitativas del negocio</li>
+                            <li><strong>Dimension Tables:</strong> Contexto descriptivo de los hechos</li>
+                            <li><strong>Grain:</strong> Nivel de detalle de los datos</li>
+                            <li><strong>Surrogate Keys:</strong> Claves artificiales para dimensiones</li>
+                        </ul>
+                        <strong>Ventajas:</strong> Simplicidad, rendimiento, facilidad de consulta
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>ETL/ELT Processes</h3>
+                    <p>Procesos para extraer, transformar y cargar datos desde sistemas operacionales al almacén de datos.</p>
+                    <div class="concept-details">
+                        <strong>Fases del proceso:</strong>
+                        <ul>
+                            <li><strong>Extract:</strong> Obtención de datos de fuentes heterogéneas</li>
+                            <li><strong>Transform:</strong> Limpieza, validación y transformación</li>
+                            <li><strong>Load:</strong> Carga en el almacén de datos</li>
+                        </ul>
+                        <strong>Herramientas:</strong> Apache Airflow, Talend, Informatica, SSIS
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>OLAP vs OLTP</h3>
+                    <p>Diferencias entre sistemas de procesamiento analítico y transaccional.</p>
+                    <div class="concept-details">
+                        <strong>OLTP (Online Transaction Processing):</strong>
+                        <ul>
+                            <li><strong>Propósito:</strong> Procesamiento de transacciones diarias</li>
+                            <li><strong>Características:</strong> Transacciones cortas, alta concurrencia</li>
+                            <li><strong>Optimización:</strong> Para escritura y consultas simples</li>
+                        </ul>
+                        <strong>OLAP (Online Analytical Processing):</strong> Análisis complejo, consultas largas, agregaciones
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Data Marts y Data Lakes</h3>
+                    <p>Diferentes enfoques para almacenamiento y procesamiento de datos analíticos.</p>
+                    <div class="concept-details">
+                        <strong>Data Marts:</strong>
+                        <ul>
+                            <li><strong>Definición:</strong> Subconjunto especializado del data warehouse</li>
+                            <li><strong>Características:</strong> Enfocado en un área específica del negocio</li>
+                            <li><strong>Ventajas:</strong> Implementación más rápida, menor complejidad</li>
+                        </ul>
+                        <strong>Data Lakes:</strong> Almacenamiento de datos en formato nativo, esquema flexible
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Agregaciones y Pre-cálculos</h3>
+                    <p>Técnicas para optimizar consultas analíticas mediante pre-cálculo de agregaciones.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias de agregación:</strong>
+                        <ul>
+                            <li><strong>Materialized Views:</strong> Vistas materializadas con agregaciones</li>
+                            <li><strong>Aggregate Tables:</strong> Tablas de resumen pre-calculadas</li>
+                            <li><strong>Rollup Tables:</strong> Jerarquías de agregación</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Reducción de tiempo de consulta, mejor rendimiento
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Data Warehouse para Retail</h4>
+                        <p><strong>Escenario:</strong> Almacén de datos para cadena de tiendas</p>
+                        <div class="code-block">
+-- Tabla de hechos de ventas
+CREATE TABLE fact_ventas (
+    venta_id BIGINT,
+    fecha_id INTEGER,
+    producto_id INTEGER,
+    tienda_id INTEGER,
+    cliente_id INTEGER,
+    cantidad INTEGER,
+    precio_unitario DECIMAL(10,2),
+    descuento DECIMAL(5,2),
+    total DECIMAL(12,2)
+);
+
+-- Dimensión de tiempo
+CREATE TABLE dim_tiempo (
+    fecha_id INTEGER PRIMARY KEY,
+    fecha DATE,
+    año INTEGER,
+    trimestre INTEGER,
+    mes INTEGER,
+    dia_semana INTEGER,
+    es_fin_semana BOOLEAN,
+    trimestre_nombre VARCHAR(20),
+    mes_nombre VARCHAR(20)
+);
+
+-- Dimensión de productos
+CREATE TABLE dim_productos (
+    producto_id INTEGER PRIMARY KEY,
+    sku VARCHAR(50),
+    nombre VARCHAR(255),
+    categoria_id INTEGER,
+    subcategoria_id INTEGER,
+    marca VARCHAR(100),
+    precio_estandar DECIMAL(10,2),
+    fecha_introduccion DATE
+);
+
+-- Dimensión de tiendas
+CREATE TABLE dim_tiendas (
+    tienda_id INTEGER PRIMARY KEY,
+    codigo_tienda VARCHAR(20),
+    nombre VARCHAR(100),
+    direccion TEXT,
+    ciudad VARCHAR(100),
+    region VARCHAR(100),
+    gerente VARCHAR(100),
+    fecha_apertura DATE
+);
+
+-- Vista materializada para ventas por mes
+CREATE MATERIALIZED VIEW mv_ventas_mensuales AS
+SELECT 
+    t.año,
+    t.mes,
+    t.mes_nombre,
+    p.categoria_id,
+    s.region,
+    SUM(f.cantidad) as total_cantidad,
+    SUM(f.total) as total_ventas,
+    COUNT(DISTINCT f.venta_id) as num_ventas
+FROM fact_ventas f
+JOIN dim_tiempo t ON f.fecha_id = t.fecha_id
+JOIN dim_productos p ON f.producto_id = p.producto_id
+JOIN dim_tiendas s ON f.tienda_id = s.tienda_id
+GROUP BY t.año, t.mes, t.mes_nombre, p.categoria_id, s.region;

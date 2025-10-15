@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 6: Indexación y Asociación - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 6: Indexación y Asociación</h1>
+            <p>Técnicas de indexación y asociación para optimizar consultas</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Tipos de Índices</h3>
+                    <p>Estructuras de datos que aceleran las consultas al proporcionar acceso directo a filas específicas.</p>
+                    <div class="concept-details">
+                        <strong>Clasificación por estructura:</strong>
+                        <ul>
+                            <li><strong>B-Tree:</strong> Índices balanceados para consultas de rango</li>
+                            <li><strong>Hash:</strong> Acceso directo para consultas de igualdad</li>
+                            <li><strong>Bitmap:</strong> Eficientes para columnas con pocos valores únicos</li>
+                            <li><strong>GIN/GiST:</strong> Índices para tipos de datos complejos</li>
+                        </ul>
+                        <strong>Consideraciones:</strong> Selectividad, cardinalidad, overhead de mantenimiento
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Índices Compuestos</h3>
+                    <p>Índices que incluyen múltiples columnas, optimizando consultas que filtran por varias condiciones.</p>
+                    <div class="concept-details">
+                        <strong>Principios de diseño:</strong>
+                        <ul>
+                            <li><strong>Orden de columnas:</strong> Más selectiva primero</li>
+                            <li><strong>Regla de prefijo:</strong> Solo se puede usar si se incluyen las columnas en orden</li>
+                            <li><strong>Cardinalidad:</strong> Producto de cardinalidades de columnas</li>
+                            <li><strong>Cobertura:</strong> Índices que incluyen todas las columnas necesarias</li>
+                        </ul>
+                        <strong>Fórmula de selectividad:</strong> Selectividad = 1 / (Valores únicos columna1 × Valores únicos columna2)
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Índices Parciales</h3>
+                    <p>Índices que solo incluyen un subconjunto de filas que cumplen una condición específica.</p>
+                    <div class="concept-details">
+                        <strong>Casos de uso:</strong>
+                        <ul>
+                            <li><strong>Filtros frecuentes:</strong> WHERE status = 'active'</li>
+                            <li><strong>Valores nulos:</strong> WHERE column IS NOT NULL</li>
+                            <li><strong>Rangos específicos:</strong> WHERE date >= '2024-01-01'</li>
+                            <li><strong>Datos históricos:</strong> WHERE created_at > '2023-01-01'</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Menor tamaño, mayor velocidad, menos overhead
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Índices de Expresión</h3>
+                    <p>Índices basados en expresiones o funciones aplicadas a las columnas.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de expresiones:</strong>
+                        <ul>
+                            <li><strong>Funciones:</strong> UPPER(nombre), LOWER(email)</li>
+                            <li><strong>Operaciones:</strong> precio * cantidad, fecha + INTERVAL '1 day'</li>
+                            <li><strong>Concatenaciones:</strong> nombre || ' ' || apellido</li>
+                            <li><strong>Extracciones:</strong> EXTRACT(year FROM fecha)</li>
+                        </ul>
+                        <strong>Consideraciones:</strong> Consistencia en consultas, overhead de cálculo
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Asociación y Join Optimization</h3>
+                    <p>Técnicas para optimizar operaciones de unión entre tablas mediante índices y algoritmos eficientes.</p>
+                    <div class="concept-details">
+                        <strong>Algoritmos de JOIN:</strong>
+                        <ul>
+                            <li><strong>Nested Loop Join:</strong> O(n×m) - Para tablas pequeñas</li>
+                            <li><strong>Hash Join:</strong> O(n+m) - Para tablas grandes sin orden</li>
+                            <li><strong>Merge Join:</strong> O(n log n + m log m) - Para datos ordenados</li>
+                            <li><strong>Index Nested Loop:</strong> Usando índices para búsquedas</li>
+                        </ul>
+                        <strong>Factores de decisión:</strong> Tamaño de tablas, índices disponibles, memoria
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Diseño de Índices para E-commerce</h4>
+                        <p><strong>Escenario:</strong> Sistema de comercio electrónico con múltiples consultas</p>
+                        <div class="code-block">
+-- Tabla de productos
+CREATE TABLE productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255),
+    categoria_id INTEGER,
+    precio DECIMAL(10,2),
+    stock INTEGER,
+    activo BOOLEAN DEFAULT true,
+    fecha_creacion TIMESTAMP DEFAULT NOW()
+);
+
+-- Índice compuesto optimizado para consultas frecuentes
+CREATE INDEX idx_productos_categoria_precio_activo 
+ON productos (categoria_id, precio, activo) 
+WHERE activo = true;
+
+-- Índice parcial para productos con stock
+CREATE INDEX idx_productos_stock 
+ON productos (categoria_id, precio) 
+WHERE stock > 0;
+
+-- Índice de expresión para búsqueda case-insensitive
+CREATE INDEX idx_productos_nombre_lower 
+ON productos (LOWER(nombre));
+
+-- Índice para consultas de rango de precios
+CREATE INDEX idx_productos_precio_rango 
+ON productos (precio) 
+WHERE precio BETWEEN 10 AND 1000;
+
+-- Consultas optimizadas
+-- ✅ Usa el índice completo
+SELECT * FROM productos 
+WHERE categoria_id = 5 AND precio BETWEEN 100 AND 500 AND activo = true;
+
+-- ✅ Usa parte del índice (categoria_id)
+SELECT * FROM productos 
+WHERE categoria_id = 5 AND activo = true;
+
+-- ✅ Usa índice de expresión
+SELECT * FROM productos 
+WHERE LOWER(nombre) LIKE '%laptop%';
+
+-- ❌ No usa el índice (precio sin categoria_id)
+SELECT * FROM productos 
+WHERE precio BETWEEN 100 AND 500;

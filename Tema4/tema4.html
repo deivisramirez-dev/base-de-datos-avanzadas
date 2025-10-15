@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 4: Bases de Datos Paralelas - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 4: Bases de Datos Paralelas</h1>
+            <p>Arquitecturas y técnicas de procesamiento paralelo en bases de datos</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Arquitecturas de Procesamiento Paralelo</h3>
+                    <p>Diferentes enfoques para distribuir el procesamiento de consultas y transacciones en múltiples procesadores.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de paralelismo:</strong>
+                        <ul>
+                            <li><strong>Paralelismo de Consultas:</strong> División de consultas complejas</li>
+                            <li><strong>Paralelismo de Transacciones:</strong> Ejecución concurrente de transacciones</li>
+                            <li><strong>Paralelismo Intra-consulta:</strong> Paralelización de operaciones individuales</li>
+                            <li><strong>Paralelismo Inter-consulta:</strong> Múltiples consultas simultáneas</li>
+                        </ul>
+                        <strong>Arquitecturas:</strong> Shared-memory, shared-disk, shared-nothing
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Particionamiento de Datos</h3>
+                    <p>Técnicas para dividir datos en fragmentos que pueden ser procesados en paralelo por diferentes nodos.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias de particionamiento:</strong>
+                        <ul>
+                            <li><strong>Horizontal:</strong> División por filas (sharding)</li>
+                            <li><strong>Vertical:</strong> División por columnas</li>
+                            <li><strong>Funcional:</strong> División por funcionalidad</li>
+                            <li><strong>Round-robin:</strong> Distribución uniforme</li>
+                        </ul>
+                        <strong>Consideraciones:</strong> Balance de carga, localidad de datos, consultas cross-partition
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Algoritmos de Join Paralelos</h3>
+                    <p>Técnicas para ejecutar operaciones de unión (JOIN) de manera eficiente en sistemas paralelos.</p>
+                    <div class="concept-details">
+                        <strong>Algoritmos principales:</strong>
+                        <ul>
+                            <li><strong>Hash Join Paralelo:</strong> Distribución por hash</li>
+                            <li><strong>Sort-Merge Join:</strong> Ordenamiento paralelo y merge</li>
+                            <li><strong>Nested Loop Paralelo:</strong> Bucles anidados distribuidos</li>
+                            <li><strong>Broadcast Join:</strong> Replicación de tablas pequeñas</li>
+                        </ul>
+                        <strong>Optimización:</strong> Minimización de comunicación, balance de carga
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Balanceo de Carga</h3>
+                    <p>Mecanismos para distribuir uniformemente el trabajo entre los nodos de procesamiento.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias:</strong>
+                        <ul>
+                            <li><strong>Estático:</strong> Distribución basada en estadísticas</li>
+                            <li><strong>Dinámico:</strong> Ajuste en tiempo de ejecución</li>
+                            <li><strong>Adaptativo:</strong> Aprendizaje de patrones de carga</li>
+                            <li><strong>Predictivo:</strong> Anticipación de cargas futuras</li>
+                        </ul>
+                        <strong>Métricas:</strong> Tiempo de respuesta, utilización de CPU, throughput
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Tolerancia a Fallos en Sistemas Paralelos</h3>
+                    <p>Mecanismos para mantener la disponibilidad y consistencia ante fallos de nodos en sistemas paralelos.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias:</strong>
+                        <ul>
+                            <li><strong>Checkpointing:</strong> Puntos de recuperación periódicos</li>
+                            <li><strong>Replicación:</strong> Múltiples copias de datos críticos</li>
+                            <li><strong>Failover:</strong> Transferencia automática de carga</li>
+                            <li><strong>Recovery:</strong> Recuperación de transacciones incompletas</li>
+                        </ul>
+                        <strong>Desafíos:</strong> Consistencia, overhead, complejidad
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Configuración de PostgreSQL Paralelo</h4>
+                        <p><strong>Escenario:</strong> Optimización de consultas paralelas en PostgreSQL</p>
+                        <div class="code-block">
+-- Configuración de paralelismo en PostgreSQL
+-- postgresql.conf
+max_parallel_workers_per_gather = 4
+max_parallel_workers = 8
+max_parallel_maintenance_workers = 4
+parallel_tuple_cost = 0.1
+parallel_setup_cost = 1000.0
+
+-- Habilitar paralelismo en consultas
+SET max_parallel_workers_per_gather = 4;
+SET parallel_tuple_cost = 0.1;
+
+-- Consulta que aprovecha el paralelismo
+EXPLAIN (ANALYZE, BUFFERS, VERBOSE)
+SELECT 
+    c.categoria,
+    COUNT(*) as total_productos,
+    AVG(p.precio) as precio_promedio,
+    SUM(p.stock) as stock_total
+FROM productos p
+JOIN categorias c ON p.categoria_id = c.id
+WHERE p.activo = true
+  AND p.precio > 10
+GROUP BY c.categoria
+ORDER BY total_productos DESC;
+
+-- Crear índices para optimizar consultas paralelas
+CREATE INDEX CONCURRENTLY idx_productos_categoria_precio 
+ON productos (categoria_id, precio) 
+WHERE activo = true;
+
+-- Configurar particionamiento por rango
+CREATE TABLE ventas (
+    id BIGSERIAL,
+    fecha DATE,
+    producto_id INTEGER,
+    cantidad INTEGER,
+    precio DECIMAL(10,2)
+) PARTITION BY RANGE (fecha);
+
+-- Crear particiones mensuales
+CREATE TABLE ventas_2024_01 PARTITION OF ventas
+FOR VALUES FROM ('2024-01-01') TO ('2024-02-01');
+
+CREATE TABLE ventas_2024_02 PARTITION OF ventas
+FOR VALUES FROM ('2024-02-01') TO ('2024-03-01');

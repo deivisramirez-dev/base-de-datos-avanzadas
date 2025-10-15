@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 8: Sistemas de Recuperación - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="../index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="../index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Tema 8: Sistemas de Recuperación</h1>
+            <p>Mecanismos de recuperación ante fallos y transacciones abortadas</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Clave
+                </h2>
+                
+                <div class="concept-card">
+                    <h3>Tipos de Fallos</h3>
+                    <p>Clasificación de los diferentes tipos de fallos que pueden afectar un sistema de base de datos.</p>
+                    <div class="concept-details">
+                        <strong>Categorías de fallos:</strong>
+                        <ul>
+                            <li><strong>Fallos de Transacción:</strong> Abortos por violación de restricciones</li>
+                            <li><strong>Fallos del Sistema:</strong> Fallos de hardware o software</li>
+                            <li><strong>Fallos de Disco:</strong> Pérdida de datos en almacenamiento</li>
+                            <li><strong>Fallos de Red:</strong> Pérdida de conectividad</li>
+                        </ul>
+                        <strong>Impacto:</strong> Pérdida de datos, inconsistencia, indisponibilidad
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Log de Recuperación</h3>
+                    <p>Registro detallado de todas las operaciones para permitir la recuperación del sistema.</p>
+                    <div class="concept-details">
+                        <strong>Componentes del log:</strong>
+                        <ul>
+                            <li><strong>Log Records:</strong> Registros de operaciones (BEGIN, UPDATE, COMMIT, ABORT)</li>
+                            <li><strong>Checkpoints:</strong> Puntos de sincronización periódicos</li>
+                            <li><strong>WAL (Write-Ahead Logging):</strong> Escribir log antes que datos</li>
+                            <li><strong>Log Buffering:</strong> Cache de registros de log</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Durabilidad, recuperación, replicación
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Algoritmos de Recuperación</h3>
+                    <p>Técnicas para restaurar la consistencia de la base de datos después de un fallo.</p>
+                    <div class="concept-details">
+                        <strong>Algoritmos principales:</strong>
+                        <ul>
+                            <li><strong>ARIES (Algorithm for Recovery and Isolation Exploiting Semantics):</strong> Recuperación avanzada</li>
+                            <li><strong>Redo Recovery:</strong> Reaplicar operaciones confirmadas</li>
+                            <li><strong>Undo Recovery:</strong> Deshacer operaciones no confirmadas</li>
+                            <li><strong>Checkpoint Recovery:</strong> Recuperación desde checkpoints</li>
+                        </ul>
+                        <strong>Fases:</strong> Análisis, Redo, Undo
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Checkpoints</h3>
+                    <p>Puntos de sincronización que facilitan la recuperación al reducir el trabajo necesario.</p>
+                    <div class="concept-details">
+                        <strong>Tipos de checkpoints:</strong>
+                        <ul>
+                            <li><strong>Fuzzy Checkpoint:</strong> No requiere parar el sistema</li>
+                            <li><strong>Sharp Checkpoint:</strong> Para todas las transacciones</li>
+                            <li><strong>Incremental Checkpoint:</strong> Solo cambios desde último checkpoint</li>
+                            <li><strong>Dirty Page Checkpoint:</strong> Solo páginas modificadas</li>
+                        </ul>
+                        <strong>Beneficios:</strong> Reducción de tiempo de recuperación, menor overhead
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Recuperación de Transacciones</h3>
+                    <p>Mecanismos para manejar transacciones incompletas y mantener la consistencia.</p>
+                    <div class="concept-details">
+                        <strong>Estrategias:</strong>
+                        <ul>
+                            <li><strong>Rollback:</strong> Deshacer transacciones incompletas</li>
+                            <li><strong>Rollforward:</strong> Reaplicar transacciones confirmadas</li>
+                            <li><strong>Compensation:</strong> Operaciones de compensación</li>
+                            <li><strong>Restart:</strong> Reiniciar transacciones abortadas</li>
+                        </ul>
+                        <strong>Consideraciones:</strong> Consistencia, durabilidad, rendimiento
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Prácticos -->
+            <section id="ejemplos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Ejemplos Prácticos
+                </h2>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>Configuración de Recuperación en PostgreSQL</h4>
+                        <p><strong>Escenario:</strong> Sistema de recuperación robusto para base de datos crítica</p>
+                        <div class="code-block">
+-- Configuración de WAL en PostgreSQL
+-- postgresql.conf
+wal_level = replica
+max_wal_size = 4GB
+min_wal_size = 1GB
+checkpoint_completion_target = 0.9
+checkpoint_timeout = 15min
+checkpoint_warning = 30s
+
+-- Configuración de archiving
+archive_mode = on
+archive_command = 'cp %p /backup/wal_archive/%f'
+archive_timeout = 300
+
+-- Configuración de replicación
+max_wal_senders = 3
+max_replication_slots = 3
+hot_standby = on
+
+-- Verificar estado del WAL
+SELECT * FROM pg_stat_archiver;
+
+-- Verificar checkpoints
+SELECT * FROM pg_stat_bgwriter;
+
+-- Monitoreo de WAL
+SELECT 
+    pg_current_wal_lsn() as current_lsn,
+    pg_wal_lsn_diff(pg_current_wal_lsn(), '0/0') as wal_bytes;
+
+-- Backup base
+pg_basebackup -D /backup/base_backup -Ft -z -P
+
+-- Restore desde backup
+-- 1. Detener PostgreSQL
+-- 2. Restaurar archivos de datos
+-- 3. Restaurar archivos WAL
+-- 4. Crear recovery.conf
+-- 5. Iniciar PostgreSQL
