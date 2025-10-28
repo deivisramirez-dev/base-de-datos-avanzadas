@@ -279,9 +279,15 @@
         /* Estilos para Analogías y Conceptos Avanzados */
         .analogy-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
             margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .analogy-container {
+                grid-template-columns: 1fr;
+            }
         }
         
         .analogy-card {
@@ -291,6 +297,9 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border-left: 4px solid #007bff;
             transition: all 0.3s ease;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
         }
         
         .analogy-card:hover {
@@ -322,17 +331,22 @@
         .analogy-comparison {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: stretch;
             margin: 1rem 0;
             padding: 1rem;
             background: #f8f9fa;
             border-radius: 8px;
+            min-height: 140px;
         }
         
         .analogy-item {
             flex: 1;
             text-align: center;
-            padding: 0.5rem;
+            padding: 0.75rem;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .analogy-item.real-world {
@@ -345,6 +359,23 @@
             background: #f3e5f5;
             border-radius: 6px;
             margin-left: 0.5rem;
+        }
+        
+        .analogy-item strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .analogy-item br {
+            line-height: 1.2;
+        }
+        
+        .analogy-card p {
+            margin-top: auto;
+            padding-top: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
         
         .analogy-arrow {
