@@ -275,6 +275,279 @@
             margin: 0;
             font-size: 0.9rem;
         }
+        
+        /* Estilos para Analogías y Conceptos Avanzados */
+        .analogy-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .analogy-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid #007bff;
+            transition: all 0.3s ease;
+        }
+        
+        .analogy-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .analogy-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .analogy-title {
+            color: #007bff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .analogy-comparison {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .analogy-item {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        
+        .analogy-item.real-world {
+            background: #e3f2fd;
+            border-radius: 6px;
+            margin-right: 0.5rem;
+        }
+        
+        .analogy-item.database {
+            background: #f3e5f5;
+            border-radius: 6px;
+            margin-left: 0.5rem;
+        }
+        
+        .analogy-arrow {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin: 0 1rem;
+        }
+        
+        .amdahl-formula {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+        
+        .formula-title {
+            color: #007bff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .formula-equation {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+        
+        .formula-explanation {
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+        
+        .mapreduce-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .mapreduce-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 300px;
+        }
+        
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #28a745;
+            margin-bottom: 0.25rem;
+        }
+        
+        .step-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .industry-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .industry-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .industry-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .industry-card.google {
+            border-top-color: #4285f4;
+        }
+        
+        .industry-card.amazon {
+            border-top-color: #ff9900;
+        }
+        
+        .industry-card.netflix {
+            border-top-color: #e50914;
+        }
+        
+        .industry-card.facebook {
+            border-top-color: #1877f2;
+        }
+        
+        .industry-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .google-logo {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+        }
+        
+        .amazon-logo {
+            background: linear-gradient(135deg, #ff9900, #ff6600);
+        }
+        
+        .netflix-logo {
+            background: linear-gradient(135deg, #e50914, #b81d13);
+        }
+        
+        .facebook-logo {
+            background: linear-gradient(135deg, #1877f2, #0d47a1);
+        }
+        
+        .performance-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .performance-chart {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            color: #007bff;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 150px;
+            margin: 1rem 0;
+            border-bottom: 2px solid #e9ecef;
+            border-left: 2px solid #e9ecef;
+        }
+        
+        .chart-bar {
+            background: linear-gradient(to top, #007bff, #0056b3);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px 4px 0 0;
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            position: relative;
+        }
+        
+        .chart-bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: #6c757d;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -659,6 +932,340 @@ WHERE t1.condicion AND t2.condicion
                                     <li>Actualización de esquemas</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analogías y Conceptos Avanzados -->
+            <section id="analogias" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Analogías y Conceptos Avanzados
+                </h2>
+                
+                <!-- Analogías del Mundo Real -->
+                <div class="concept-card">
+                    <h3>Analogías para Comprender el Paralelismo</h3>
+                    <p>Las analogías del mundo real ayudan a visualizar conceptos abstractos de procesamiento paralelo, haciendo más fácil entender cómo funcionan los sistemas de bases de datos paralelas.</p>
+                    
+                    <div class="analogy-container">
+                        <div class="analogy-card">
+                            <div class="analogy-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="analogy-title">Fábrica de Ensamblaje</div>
+                            <div class="analogy-comparison">
+                                <div class="analogy-item real-world">
+                                    <strong>Mundo Real:</strong><br>
+                                    Múltiples trabajadores en líneas de producción, cada uno especializado en una tarea específica
+                                </div>
+                                <div class="analogy-arrow">→</div>
+                                <div class="analogy-item database">
+                                    <strong>Base de Datos:</strong><br>
+                                    Múltiples procesadores especializados en diferentes operaciones (selección, unión, ordenamiento)
+                                </div>
+                            </div>
+                            <p><strong>Beneficio:</strong> Mayor productividad al dividir el trabajo en tareas especializadas que se ejecutan simultáneamente.</p>
+                        </div>
+
+                        <div class="analogy-card">
+                            <div class="analogy-icon">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <div class="analogy-title">Sistema de Carreteras</div>
+                            <div class="analogy-comparison">
+                                <div class="analogy-item real-world">
+                                    <strong>Mundo Real:</strong><br>
+                                    Múltiples carriles permiten que más vehículos circulen simultáneamente
+                                </div>
+                                <div class="analogy-arrow">→</div>
+                                <div class="analogy-item database">
+                                    <strong>Base de Datos:</strong><br>
+                                    Múltiples procesadores permiten procesar más consultas simultáneamente
+                                </div>
+                            </div>
+                            <p><strong>Beneficio:</strong> Reducción del tiempo de espera y aumento del throughput del sistema.</p>
+                        </div>
+
+                        <div class="analogy-card">
+                            <div class="analogy-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="analogy-title">Cocina de Restaurante</div>
+                            <div class="analogy-comparison">
+                                <div class="analogy-item real-world">
+                                    <strong>Mundo Real:</strong><br>
+                                    Múltiples chefs preparando diferentes platos al mismo tiempo
+                                </div>
+                                <div class="analogy-arrow">→</div>
+                                <div class="analogy-item database">
+                                    <strong>Base de Datos:</strong><br>
+                                    Múltiples procesadores ejecutando diferentes consultas simultáneamente
+                                </div>
+                            </div>
+                            <p><strong>Beneficio:</strong> Servicio más rápido a múltiples clientes (usuarios) simultáneamente.</p>
+                        </div>
+
+                        <div class="analogy-card">
+                            <div class="analogy-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="analogy-title">Equipo de Trabajo</div>
+                            <div class="analogy-comparison">
+                                <div class="analogy-item real-world">
+                                    <strong>Mundo Real:</strong><br>
+                                    Equipo dividiendo un proyecto grande en tareas más pequeñas
+                                </div>
+                                <div class="analogy-arrow">→</div>
+                                <div class="analogy-item database">
+                                    <strong>Base de Datos:</strong><br>
+                                    Sistema dividiendo una consulta compleja en operaciones más simples
+                                </div>
+                            </div>
+                            <p><strong>Beneficio:</strong> Completar proyectos grandes más rápidamente mediante trabajo colaborativo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ley de Amdahl -->
+                <div class="concept-card">
+                    <h3>Ley de Amdahl: Limitaciones del Paralelismo</h3>
+                    <p>La Ley de Amdahl establece las limitaciones teóricas del paralelismo, explicando por qué no es posible obtener una mejora infinita de rendimiento simplemente añadiendo más procesadores.</p>
+                    
+                    <div class="amdahl-formula">
+                        <div class="formula-title">Fórmula de la Ley de Amdahl</div>
+                        <div class="formula-equation">
+                            Speedup = 1 / (S + (1-S)/N)
+                        </div>
+                        <div class="formula-explanation">
+                            Donde:<br>
+                            S = Fracción secuencial (no paralelizable)<br>
+                            N = Número de procesadores<br>
+                            Speedup = Mejora de velocidad obtenida
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Ejemplo Práctico:</strong>
+                        <p>Supongamos que una consulta tiene un 20% de código secuencial (S = 0.2) y queremos usar 4 procesadores (N = 4):</p>
+                        <div class="code-block">
+Speedup = 1 / (0.2 + (1-0.2)/4)
+Speedup = 1 / (0.2 + 0.8/4)
+Speedup = 1 / (0.2 + 0.2)
+Speedup = 1 / 0.4 = 2.5
+
+Resultado: Con 4 procesadores obtenemos una mejora de 2.5x
+                        </div>
+                        
+                        <strong>Implicaciones Importantes:</strong>
+                        <ul>
+                            <li><strong>Cuello de Botella Secuencial:</strong> El código no paralelizable limita la mejora máxima</li>
+                            <li><strong>Rendimiento Decreciente:</strong> Añadir más procesadores tiene menos impacto</li>
+                            <li><strong>Diseño Eficiente:</strong> Minimizar código secuencial es crucial</li>
+                            <li><strong>Punto de Saturación:</strong> Existe un número óptimo de procesadores</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Patrón Map-Reduce -->
+                <div class="concept-card">
+                    <h3>Patrón Map-Reduce</h3>
+                    <p>Map-Reduce es un patrón fundamental para procesamiento distribuido de grandes volúmenes de datos, utilizado por empresas como Google, Amazon y Netflix.</p>
+                    
+                    <div class="mapreduce-diagram">
+                        <h4>Proceso Map-Reduce</h4>
+                        <div class="mapreduce-step">
+                            <div class="step-icon">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Datos de Entrada</div>
+                                <div class="step-description">Conjunto grande de datos distribuidos en múltiples nodos</div>
+                            </div>
+                        </div>
+                        <div class="mapreduce-step">
+                            <div class="step-icon">M</div>
+                            <div class="step-content">
+                                <div class="step-title">Fase Map</div>
+                                <div class="step-description">Cada nodo procesa su porción de datos en paralelo, generando pares clave-valor</div>
+                            </div>
+                        </div>
+                        <div class="mapreduce-step">
+                            <div class="step-icon">S</div>
+                            <div class="step-content">
+                                <div class="step-title">Shuffle & Sort</div>
+                                <div class="step-description">Los datos se redistribuyen y ordenan por clave</div>
+                            </div>
+                        </div>
+                        <div class="mapreduce-step">
+                            <div class="step-icon">R</div>
+                            <div class="step-content">
+                                <div class="step-title">Fase Reduce</div>
+                                <div class="step-description">Cada nodo procesa todos los valores para una clave específica</div>
+                            </div>
+                        </div>
+                        <div class="mapreduce-step">
+                            <div class="step-icon">✓</div>
+                            <div class="step-content">
+                                <div class="step-title">Resultado Final</div>
+                                <div class="step-description">Datos agregados y procesados listos para análisis</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Ejemplo Práctico: Análisis de Ventas</strong>
+                        <div class="code-block">
+-- Datos de entrada: Ventas por región
+-- Región A: {producto: "laptop", cantidad: 10, precio: 1000}
+-- Región B: {producto: "laptop", cantidad: 15, precio: 1000}
+-- Región C: {producto: "mouse", cantidad: 50, precio: 25}
+
+-- Fase Map (procesamiento paralelo):
+-- Nodo 1: ("laptop", 10000), ("mouse", 1250)
+-- Nodo 2: ("laptop", 15000)
+-- Nodo 3: ("mouse", 1250)
+
+-- Shuffle & Sort:
+-- ("laptop", [10000, 15000])
+-- ("mouse", [1250, 1250])
+
+-- Fase Reduce (agregación):
+-- ("laptop", 25000)  -- Total ventas laptops
+-- ("mouse", 2500)    -- Total ventas mouse
+
+-- Resultado: Ventas totales por producto
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Casos de Uso en la Industria -->
+                <div class="concept-card">
+                    <h3>Casos de Uso Reales en la Industria</h3>
+                    <p>Las principales empresas tecnológicas utilizan sistemas paralelos de bases de datos para manejar volúmenes masivos de datos y proporcionar servicios escalables.</p>
+                    
+                    <div class="industry-cases">
+                        <div class="industry-card google">
+                            <div class="industry-logo google-logo">G</div>
+                            <h4>Google</h4>
+                            <p><strong>Aplicación:</strong> Motor de búsqueda y Google Analytics</p>
+                            <p><strong>Volumen:</strong> Billones de páginas web indexadas</p>
+                            <p><strong>Tecnología:</strong> MapReduce, BigQuery, Spanner</p>
+                            <p><strong>Beneficio:</strong> Búsquedas en milisegundos sobre petabytes de datos</p>
+                        </div>
+
+                        <div class="industry-card amazon">
+                            <div class="industry-logo amazon-logo">A</div>
+                            <h4>Amazon</h4>
+                            <p><strong>Aplicación:</strong> Recomendaciones de productos y análisis de comportamiento</p>
+                            <p><strong>Volumen:</strong> Millones de transacciones diarias</p>
+                            <p><strong>Tecnología:</strong> DynamoDB, Redshift, Kinesis</p>
+                            <p><strong>Beneficio:</strong> Recomendaciones personalizadas en tiempo real</p>
+                        </div>
+
+                        <div class="industry-card netflix">
+                            <div class="industry-logo netflix-logo">N</div>
+                            <h4>Netflix</h4>
+                            <p><strong>Aplicación:</strong> Recomendaciones de contenido y análisis de streaming</p>
+                            <p><strong>Volumen:</strong> Terabytes de datos de visualización diarios</p>
+                            <p><strong>Tecnología:</strong> Cassandra, Kafka, Spark</p>
+                            <p><strong>Beneficio:</strong> Algoritmos de recomendación que procesan millones de interacciones</p>
+                        </div>
+
+                        <div class="industry-card facebook">
+                            <div class="industry-logo facebook-logo">F</div>
+                            <h4>Facebook/Meta</h4>
+                            <p><strong>Aplicación:</strong> Timeline, análisis de redes sociales</p>
+                            <p><strong>Volumen:</strong> Billones de posts, likes y comentarios</p>
+                            <p><strong>Tecnología:</strong> Hive, Presto, RocksDB</p>
+                            <p><strong>Beneficio:</strong> Feed personalizado para miles de millones de usuarios</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparación de Rendimiento -->
+                <div class="concept-card">
+                    <h3>Comparación de Rendimiento: Secuencial vs Paralelo</h3>
+                    <p>Análisis comparativo del rendimiento entre sistemas secuenciales y paralelos para diferentes tipos de operaciones.</p>
+                    
+                    <div class="performance-comparison">
+                        <div class="performance-chart">
+                            <div class="chart-title">Tiempo de Ejecución (segundos)</div>
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 100%;" data-label="Secuencial"></div>
+                                <div class="chart-bar" style="height: 50%;" data-label="2 CPUs"></div>
+                                <div class="chart-bar" style="height: 25%;" data-label="4 CPUs"></div>
+                                <div class="chart-bar" style="height: 20%;" data-label="8 CPUs"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="performance-chart">
+                            <div class="chart-title">Throughput (operaciones/segundo)</div>
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 20%;" data-label="Secuencial"></div>
+                                <div class="chart-bar" style="height: 40%;" data-label="2 CPUs"></div>
+                                <div class="chart-bar" style="height: 80%;" data-label="4 CPUs"></div>
+                                <div class="chart-bar" style="height: 100%;" data-label="8 CPUs"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Observaciones Importantes:</strong>
+                        <ul>
+                            <li><strong>Mejora Lineal Inicial:</strong> Los primeros procesadores proporcionan mejora casi lineal</li>
+                            <li><strong>Rendimiento Decreciente:</strong> A partir de cierto punto, añadir más CPUs tiene menos impacto</li>
+                            <li><strong>Overhead de Comunicación:</strong> La coordinación entre procesadores consume recursos</li>
+                            <li><strong>Punto Óptimo:</strong> Existe un número ideal de procesadores para cada tipo de carga</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Conceptos de Escalabilidad -->
+                <div class="concept-card">
+                    <h3>Escalabilidad: Vertical vs Horizontal</h3>
+                    <p>Dos enfoques fundamentales para hacer crecer los sistemas de bases de datos paralelas.</p>
+                    
+                    <div class="parallel-types">
+                        <div class="parallel-type">
+                            <div class="parallel-icon">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <h4>Escalabilidad Vertical</h4>
+                            <p><strong>Definición:</strong> Añadir más recursos (CPU, RAM, disco) a un solo servidor</p>
+                            <p><strong>Ventajas:</strong></p>
+                            <ul>
+                                <li>Simplicidad de administración</li>
+                                <li>No requiere cambios en la aplicación</li>
+                                <li>Menor latencia de red</li>
+                            </ul>
+                            <p><strong>Desventajas:</strong></p>
+                            <ul>
+                                <li>Límites físicos del hardware</li>
+                                <li>Punto único de fallo</li>
+                                <li>Costo exponencial</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="parallel-type">
+                            <div class="parallel-icon">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </div>
+                            <h4>Escalabilidad Horizontal</h4>
+                            <p><strong>Definición:</strong> Añadir más servidores al sistema distribuido</p>
+                            <p><strong>Ventajas:</strong></p>
+                            <ul>
+                                <li>Escalabilidad teóricamente infinita</li>
+                                <li>Tolerancia a fallos</li>
+                                <li>Costo lineal</li>
+                            </ul>
+                            <p><strong>Desventajas:</strong></p>
+                            <ul>
+                                <li>Complejidad de coordinación</li>
+                                <li>Mayor latencia de red</li>
+                                <li>Requerimientos de software especializado</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
