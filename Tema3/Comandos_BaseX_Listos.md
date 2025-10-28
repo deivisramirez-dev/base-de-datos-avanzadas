@@ -31,78 +31,78 @@ db:list()
 ### Insertar datos completos (COPIA Y PEGA TODO)
 ```xquery
 db:add("libreria", 
-<libreria>
-    <autor id="1">
-        <nombre>Gabriel</nombre>
-        <apellido>García Márquez</apellido>
-        <nacionalidad>Colombiana</nacionalidad>
-        <fecha_nacimiento>1927-03-06</fecha_nacimiento>
-        <libros>
-            <libro isbn="978-84-376-0494-7">
-                <titulo>Cien años de soledad</titulo>
-                <precio>15.99</precio>
-                <paginas>471</paginas>
-                <fecha_publicacion>1967-05-30</fecha_publicacion>
-                <categorias>
-                    <categoria>Literatura</categoria>
-                    <categoria>Novela</categoria>
-                    <categoria>Realismo Mágico</categoria>
-                </categorias>
-            </libro>
-            <libro isbn="978-84-376-0495-4">
-                <titulo>El amor en los tiempos del cólera</titulo>
-                <precio>12.99</precio>
-                <paginas>348</paginas>
-                <fecha_publicacion>1985-03-12</fecha_publicacion>
-                <categorias>
-                    <categoria>Literatura</categoria>
-                    <categoria>Novela</categoria>
-                    <categoria>Realismo Mágico</categoria>
-                </categorias>
-            </libro>
-        </libros>
-    </autor>
-    
-    <autor id="2">
-        <nombre>Mario</nombre>
-        <apellido>Vargas Llosa</apellido>
-        <nacionalidad>Peruana</nacionalidad>
-        <fecha_nacimiento>1936-03-28</fecha_nacimiento>
-        <libros>
-            <libro isbn="978-84-376-0497-8">
-                <titulo>La ciudad y los perros</titulo>
-                <precio>14.99</precio>
-                <paginas>312</paginas>
-                <fecha_publicacion>1963-01-01</fecha_publicacion>
-                <categorias>
-                    <categoria>Literatura</categoria>
-                    <categoria>Novela</categoria>
-                    <categoria>Boom Latinoamericano</categoria>
-                </categorias>
-            </libro>
-        </libros>
-    </autor>
-    
-    <autor id="3">
-        <nombre>Isabel</nombre>
-        <apellido>Allende</apellido>
-        <nacionalidad>Chilena</nacionalidad>
-        <fecha_nacimiento>1942-08-02</fecha_nacimiento>
-        <libros>
-            <libro isbn="978-84-376-0499-2">
-                <titulo>La casa de los espíritus</titulo>
-                <precio>16.99</precio>
-                <paginas>433</paginas>
-                <fecha_publicacion>1982-01-01</fecha_publicacion>
-                <categorias>
-                    <categoria>Literatura</categoria>
-                    <categoria>Novela</categoria>
-                    <categoria>Realismo Mágico</categoria>
-                </categorias>
-            </libro>
-        </libros>
-    </autor>
-</libreria>, "libreria_completa")
+<autor id="1">
+    <nombre>Gabriel</nombre>
+    <apellido>García Márquez</apellido>
+    <nacionalidad>Colombiana</nacionalidad>
+    <fecha_nacimiento>1927-03-06</fecha_nacimiento>
+    <libros>
+        <libro isbn="978-84-376-0494-7">
+            <titulo>Cien años de soledad</titulo>
+            <precio>15.99</precio>
+            <paginas>471</paginas>
+            <fecha_publicacion>1967-05-30</fecha_publicacion>
+            <categorias>
+                <categoria>Literatura</categoria>
+                <categoria>Novela</categoria>
+                <categoria>Realismo Mágico</categoria>
+            </categorias>
+        </libro>
+        <libro isbn="978-84-376-0495-4">
+            <titulo>El amor en los tiempos del cólera</titulo>
+            <precio>12.99</precio>
+            <paginas>348</paginas>
+            <fecha_publicacion>1985-03-12</fecha_publicacion>
+            <categorias>
+                <categoria>Literatura</categoria>
+                <categoria>Novela</categoria>
+                <categoria>Realismo Mágico</categoria>
+            </categorias>
+        </libro>
+    </libros>
+</autor>, "garcia_marquez")
+
+db:add("libreria", 
+<autor id="2">
+    <nombre>Mario</nombre>
+    <apellido>Vargas Llosa</apellido>
+    <nacionalidad>Peruana</nacionalidad>
+    <fecha_nacimiento>1936-03-28</fecha_nacimiento>
+    <libros>
+        <libro isbn="978-84-376-0497-8">
+            <titulo>La ciudad y los perros</titulo>
+            <precio>14.99</precio>
+            <paginas>312</paginas>
+            <fecha_publicacion>1963-01-01</fecha_publicacion>
+            <categorias>
+                <categoria>Literatura</categoria>
+                <categoria>Novela</categoria>
+                <categoria>Boom Latinoamericano</categoria>
+            </categorias>
+        </libro>
+    </libros>
+</autor>, "vargas_llosa")
+
+db:add("libreria", 
+<autor id="3">
+    <nombre>Isabel</nombre>
+    <apellido>Allende</apellido>
+    <nacionalidad>Chilena</nacionalidad>
+    <fecha_nacimiento>1942-08-02</fecha_nacimiento>
+    <libros>
+        <libro isbn="978-84-376-0499-2">
+            <titulo>La casa de los espíritus</titulo>
+            <precio>16.99</precio>
+            <paginas>433</paginas>
+            <fecha_publicacion>1982-01-01</fecha_publicacion>
+            <categorias>
+                <categoria>Literatura</categoria>
+                <categoria>Novela</categoria>
+                <categoria>Realismo Mágico</categoria>
+            </categorias>
+        </libro>
+    </libros>
+</autor>, "allende")
 ```
 
 ### Verificar inserción
@@ -112,6 +112,12 @@ db:list("libreria")
 
 (: Contar libros :)
 count(collection("libreria")//libro)
+
+(: Ver el primer autor :)
+collection("libreria")//autor[1]
+
+(: Ver todos los autores :)
+collection("libreria")//autor
 ```
 
 ## 🔍 Consultas XPath Básicas
@@ -313,14 +319,41 @@ collection("libreria")
 
 ### Ver estructura de documentos
 ```xquery
-//autor[1]
+collection("libreria")//autor[1]
 ```
 
 ### Contar elementos por tipo
 ```xquery
-count(//autor)
-count(//libro)
-count(//categoria)
+count(collection("libreria")//autor)
+count(collection("libreria")//libro)
+count(collection("libreria")//categoria)
+```
+
+### Si la inserción no funcionó (Solución)
+```xquery
+(: 1. Eliminar base de datos si existe :)
+db:drop("libreria")
+
+(: 2. Crear nueva base de datos :)
+db:create("libreria")
+
+(: 3. Insertar datos uno por uno :)
+db:add("libreria", 
+<autor id="1">
+    <nombre>Gabriel</nombre>
+    <apellido>García Márquez</apellido>
+    <nacionalidad>Colombiana</nacionalidad>
+    <libros>
+        <libro isbn="978-84-376-0494-7">
+            <titulo>Cien años de soledad</titulo>
+            <precio>15.99</precio>
+            <paginas>471</paginas>
+        </libro>
+    </libros>
+</autor>, "garcia_marquez")
+
+(: 4. Verificar inmediatamente :)
+count(collection("libreria")//libro)
 ```
 
 ## 💡 Consejos de Uso
