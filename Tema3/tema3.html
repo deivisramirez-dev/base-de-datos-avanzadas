@@ -6,6 +6,452 @@
     <title>Tema 3: Bases de Datos para Documentos XML - Bases de Datos Avanzadas</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos para diagramas y esquemas visuales */
+        .diagram-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .strategy-box {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #007bff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .strategy-box h6 {
+            color: #007bff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .storage-example {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .table-box, .xml-box, .tree-box, .native-box {
+            background: #e3f2fd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #2196f3;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .arrow {
+            font-size: 1.5em;
+            color: #007bff;
+            font-weight: bold;
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .architecture-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #28a745;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .architecture-box h6 {
+            color: #28a745;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .component-list {
+            text-align: left;
+            margin-top: 15px;
+        }
+        
+        .component-list li {
+            margin: 8px 0;
+            padding: 5px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .pros, .cons {
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .pros {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .cons {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .pros h6, .cons h6 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .pros h6 {
+            color: #155724;
+        }
+        
+        .cons h6 {
+            color: #721c24;
+        }
+        
+        .interactive-demo {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .interactive-demo h6 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        
+        .demo-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #0056b3;
+        }
+        
+        .demo-result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        /* Estilos específicos para BaseX */
+        .basex-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .basex-feature {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid #28a745;
+            transition: all 0.3s ease;
+        }
+        
+        .basex-feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .basex-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .basex-title {
+            color: #28a745;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .basex-architecture {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .basex-layer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 300px;
+        }
+        
+        .layer-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .layer-content {
+            flex: 1;
+        }
+        
+        .layer-title {
+            font-weight: 600;
+            color: #28a745;
+            margin-bottom: 0.25rem;
+        }
+        
+        .layer-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .basex-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .comparison-card.basex {
+            border-top-color: #28a745;
+        }
+        
+        .comparison-card.relational {
+            border-top-color: #007bff;
+        }
+        
+        .comparison-card.nosql {
+            border-top-color: #ffc107;
+        }
+        
+        .comparison-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .basex-logo {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+        }
+        
+        .relational-logo {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+        }
+        
+        .nosql-logo {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+        }
+        
+        .xquery-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .xquery-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        
+        .xquery-keyword {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        
+        .xquery-string {
+            color: #10b981;
+        }
+        
+        .xquery-tag {
+            color: #f472b6;
+        }
+        
+        .basex-performance {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .performance-chart {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            color: #28a745;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 150px;
+            margin: 1rem 0;
+            border-bottom: 2px solid #e9ecef;
+            border-left: 2px solid #e9ecef;
+        }
+        
+        .chart-bar {
+            background: linear-gradient(to top, #28a745, #1e7e34);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px 4px 0 0;
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            position: relative;
+        }
+        
+        .chart-bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: #6c757d;
+            white-space: nowrap;
+        }
+        
+        .basex-installation {
+            background: #e8f5e8;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .installation-title {
+            color: #28a745;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .installation-step {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #28a745;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -53,77 +499,156 @@
                 </h2>
                 
                 <div class="concept-card">
-                    <h3>Almacenamiento de XML en Bases de Datos</h3>
-                    <p>Estrategias para almacenar documentos XML en sistemas de bases de datos relacionales y nativas.</p>
+                    <h3>Almacenamiento de Datos XML</h3>
+                    <p>Dada la amplia utilización de XML en la actualidad para el intercambio de información, surge la necesidad de poder almacenar dichos datos. Se pueden diferenciar diversas formas de almacenar dichos documentos.</p>
+                    
                     <div class="concept-details">
-                        <strong>Enfoques principales:</strong>
+                        <strong>Formas de almacenamiento:</strong>
                         <ul>
-                            <li><strong>LOB (Large Object):</strong> Almacenamiento como objeto binario</li>
-                            <li><strong>Shredding:</strong> Descomposición en tablas relacionales</li>
-                            <li><strong>Nativo XML:</strong> Almacenamiento optimizado para XML</li>
-                            <li><strong>Híbrido:</strong> Combinación de enfoques</li>
+                            <li><strong>Directamente en el sistema de archivos:</strong> Almacenamiento simple pero sin control de integridad</li>
+                            <li><strong>Utilizando una base de datos especial:</strong> Bases de datos especializadas para XML</li>
+                            <li><strong>Convertir los datos XML en representación relacional:</strong> Adaptación al modelo relacional</li>
                         </ul>
-                        <strong>Consideraciones:</strong> Rendimiento, flexibilidad, consultas, mantenimiento
+                        
+                        <strong>Almacenamiento no relacional:</strong>
+                        <ul>
+                            <li><strong>Archivos planos:</strong> Sin control de integridad, acceso concurrente, seguridad, atomicidad</li>
+                            <li><strong>Bases de datos XML:</strong> Utilizan XML como modelo básico</li>
+                        </ul>
                     </div>
                 </div>
 
                 <div class="concept-card">
-                    <h3>XQuery - Lenguaje de Consulta XML</h3>
-                    <p>Lenguaje funcional para consultar y manipular datos XML, similar a SQL para bases de datos relacionales.</p>
+                    <h3>Bases de Datos Relacionales XML</h3>
+                    <p>El modelo relacional se puede adaptar para trabajar con documentos XML. Normalmente, la transformación de los datos XML al modelo relacional es sencillo siempre y cuando el XML haya sido creado siguiendo un esquema relacional.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Tipos de almacenamiento relacional:</strong>
+                        <ul>
+                            <li><strong>Almacenamiento con cadenas:</strong> Documentos pequeños se almacenan directamente usando CLOB. Para documentos grandes se descompone en diferentes relaciones.</li>
+                            <li><strong>Representación con árboles:</strong> Todo documento XML puede seguir una representación arbórea. Se almacena utilizando relaciones nodos e hijo.</li>
+                            <li><strong>Representación con relaciones:</strong> Combina almacenamiento con cadenas y representación arbórea.</li>
+                        </ul>
+                        
+                        <strong>Ventajas:</strong> Aprovecha sistemas existentes, soporte nativo con CLOB/BLOB, mecanismos XPath y XQuery
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>SQL/XML</h3>
+                    <p>SQL/XML es una norma relativamente nueva que define una extensión normalizada de SQL para obtener resultados en XML. Esta norma utiliza esquemas XML para la validación de documentos y definición de tipos.</p>
+                    
                     <div class="concept-details">
                         <strong>Características principales:</strong>
                         <ul>
-                            <li><strong>FLWOR Expressions:</strong> For, Let, Where, Order by, Return</li>
-                            <li><strong>Path Expressions:</strong> Navegación en la estructura XML</li>
-                            <li><strong>Functions:</strong> Funciones predefinidas y personalizadas</li>
-                            <li><strong>Aggregations:</strong> Operaciones de agregación</li>
+                            <li><strong>Extensión de SQL:</strong> Funciones como xmlelement para acceder a elementos XML</li>
+                            <li><strong>Validación:</strong> Utiliza esquemas XML para validación de documentos</li>
+                            <li><strong>Tipos de datos:</strong> Definición de tipos específicos para XML</li>
+                            <li><strong>Interoperabilidad:</strong> Estándar normalizado para diferentes SGBD</li>
                         </ul>
-                        <strong>Ventajas:</strong> Expresividad, flexibilidad, estándar W3C
+                        
+                        <strong>Beneficios:</strong> Integración con SQL existente, validación automática, tipos específicos
                     </div>
                 </div>
 
                 <div class="concept-card">
-                    <h3>Índices XML</h3>
-                    <p>Estructuras de datos especializadas para acelerar consultas sobre documentos XML.</p>
+                    <h3>Bases de Datos Nativas XML (NXD)</h3>
+                    <p>En los últimos años han ido aumentando las soluciones que dan soporte nativo al almacenamiento en XML. Las bases de datos nativas XML son bases de datos orientadas a documentos, ya que no almacenan datos atómicos, como sí lo hacen las bases de datos relacionales.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de índices:</strong>
+                        <strong>Características de NXD:</strong>
                         <ul>
-                            <li><strong>Path Indexes:</strong> Índices basados en rutas XPath</li>
-                            <li><strong>Value Indexes:</strong> Índices sobre valores de elementos</li>
-                            <li><strong>Structural Indexes:</strong> Índices sobre estructura del documento</li>
-                            <li><strong>Full-Text Indexes:</strong> Índices de texto completo</li>
+                            <li><strong>Almacenamiento de documentos:</strong> Documentos XML en forma de cadenas o representaciones binarias</li>
+                            <li><strong>Lenguajes de consulta:</strong> XPath y XQuery para consultas XML</li>
+                            <li><strong>Optimización:</strong> Especializadas en procesamiento de documentos XML</li>
+                            <li><strong>Escalabilidad:</strong> Diseñadas para grandes volúmenes de documentos</li>
                         </ul>
-                        <strong>Optimización:</strong> Selectividad, cobertura, mantenimiento
+                        
+                        <strong>Ventajas:</strong> Procesamiento nativo, consultas eficientes, escalabilidad horizontal
                     </div>
                 </div>
 
                 <div class="concept-card">
-                    <h3>Validación XML</h3>
-                    <p>Mecanismos para validar la estructura y contenido de documentos XML contra esquemas definidos.</p>
+                    <h3>Motores de Bases de Datos Nativas XML</h3>
+                    <p>Existen varios motores especializados en el almacenamiento y procesamiento de documentos XML con diferentes características y enfoques.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de validación:</strong>
+                        <strong>Motores principales:</strong>
                         <ul>
-                            <li><strong>DTD (Document Type Definition):</strong> Validación básica</li>
-                            <li><strong>XSD (XML Schema Definition):</strong> Validación avanzada</li>
-                            <li><strong>Relax NG:</strong> Validación alternativa</li>
-                            <li><strong>Schematron:</strong> Validación basada en reglas</li>
+                            <li><strong>BaseX:</strong> Sistema de gestión de bases de datos XML nativo y ligero, procesador XQuery, especializado en grandes documentos y colecciones XML</li>
+                            <li><strong>eXist-db:</strong> Proyecto de software de código abierto para bases de datos NoSQL basadas en tecnología XML, proporciona XQuery y XSLT</li>
+                            <li><strong>Sedna:</strong> Sistema de gestión de bases de datos de código abierto con estrategia de almacenamiento en clúster y uso de memoria</li>
                         </ul>
-                        <strong>Beneficios:</strong> Integridad, consistencia, documentación
+                        
+                        <strong>Características comunes:</strong> Código abierto, soporte XQuery, escalabilidad, procesamiento eficiente
                     </div>
                 </div>
 
                 <div class="concept-card">
-                    <h3>Procesamiento de XML en Tiempo Real</h3>
-                    <p>Técnicas para procesar y consultar documentos XML de manera eficiente en aplicaciones en tiempo real.</p>
+                    <h3>Estrategias Avanzadas de Almacenamiento XML</h3>
+                    <p>Las estrategias de almacenamiento XML han evolucionado para optimizar el rendimiento y la flexibilidad según diferentes casos de uso empresariales.</p>
+                    
                     <div class="concept-details">
-                        <strong>Estrategias:</strong>
+                        <strong>Estrategias especializadas:</strong>
                         <ul>
-                            <li><strong>Streaming XML:</strong> Procesamiento por eventos</li>
-                            <li><strong>DOM Caching:</strong> Cache de objetos DOM</li>
-                            <li><strong>SAX Processing:</strong> Procesamiento secuencial</li>
-                            <li><strong>XSLT Streaming:</strong> Transformaciones en streaming</li>
+                            <li><strong>Almacenamiento híbrido:</strong> Combinación de CLOB para documentos pequeños y descomposición para grandes</li>
+                            <li><strong>Índices XML especializados:</strong> Estructurales, de valor y de texto completo</li>
+                            <li><strong>Compresión XML:</strong> Reducción de espacio para documentos grandes</li>
+                            <li><strong>Particionamiento:</strong> División de colecciones XML por criterios específicos</li>
                         </ul>
-                        <strong>Ventajas:</strong> Memoria eficiente, latencia baja, escalabilidad
+                        
+                        <strong>Optimizaciones:</strong> Streaming para documentos grandes, caché de consultas frecuentes, procesamiento paralelo
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Arquitectura de Bases de Datos Relacionales XML</h3>
+                    <p>Las bases de datos relacionales modernas han integrado capacidades XML nativas, creando arquitecturas híbridas que combinan lo mejor de ambos mundos.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Componentes arquitectónicos:</strong>
+                        <ul>
+                            <li><strong>Motor XML nativo:</strong> Procesamiento optimizado de documentos XML</li>
+                            <li><strong>Validación automática:</strong> Verificación contra esquemas XSD</li>
+                            <li><strong>Índices híbridos:</strong> Combinación de índices relacionales y XML</li>
+                            <li><strong>Transacciones unificadas:</strong> ACID para datos relacionales y XML</li>
+                        </ul>
+                        
+                        <strong>Ventajas:</strong> Consistencia transaccional, herramientas maduras, integración con aplicaciones existentes, estándares SQL/XML
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Bases de Datos Nativas XML - Arquitectura Avanzada</h3>
+                    <p>Las bases de datos nativas XML han desarrollado arquitecturas especializadas que optimizan el almacenamiento, consulta y procesamiento de documentos XML.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Arquitectura especializada:</strong>
+                        <ul>
+                            <li><strong>Almacenamiento estructurado:</strong> Representación interna optimizada para XML</li>
+                            <li><strong>Motor de consultas nativo:</strong> XPath y XQuery como lenguajes principales</li>
+                            <li><strong>Índices XML avanzados:</strong> Estructurales, de contenido y de metadatos</li>
+                            <li><strong>Procesamiento distribuido:</strong> Escalabilidad horizontal para grandes volúmenes</li>
+                        </ul>
+                        
+                        <strong>Características distintivas:</strong> Flexibilidad de esquemas, consultas complejas, procesamiento streaming, optimización automática
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Intercambio de Datos XML</h3>
+                    <p>Al utilizar XML para el intercambio de datos entre aplicaciones, normalmente el origen de los datos es una base de datos relacional. Para poder realizar este intercambio correctamente, los datos relacionales deben convertirse a un formato XML.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Proceso de intercambio:</strong>
+                        <ul>
+                            <li><strong>Conversión a XML:</strong> Los datos relacionales se convierten a formato XML</li>
+                            <li><strong>Transmisión:</strong> El documento XML se envía a la aplicación destino</li>
+                            <li><strong>Descomposición:</strong> La aplicación destino descompone los datos a información relacional</li>
+                            <li><strong>Almacenamiento:</strong> Los datos se almacenan en la base de datos destino</li>
+                        </ul>
+                        
+                        <strong>Automatización:</strong> Los SGBD modernos pueden automatizar este proceso para evitar que las aplicaciones tengan que adaptarse
                     </div>
                 </div>
             </section>
@@ -140,7 +665,7 @@
                 <div class="example-grid">
                     <div class="example-card">
                         <h4>Almacenamiento XML en PostgreSQL</h4>
-                        <p><strong>Escenario:</strong> Sistema de gestión de documentos XML</p>
+                        <p><strong>Escenario:</strong> Sistema de gestión de documentos XML usando CLOB</p>
                         <div class="code-block">
 -- Crear tabla para almacenar documentos XML
 CREATE TABLE documentos_xml (
@@ -197,40 +722,1023 @@ WHERE nombre = 'factura_001';
                     </div>
 
                     <div class="example-card">
-                        <h4>Consultas XQuery</h4>
-                        <p><strong>Escenario:</strong> Sistema de biblioteca digital con documentos XML</p>
+                        <h4>Representación con Árboles</h4>
+                        <p><strong>Escenario:</strong> Almacenamiento de documentos XML usando modelo de nodos</p>
                         <div class="code-block">
--- XQuery para obtener libros publicados después de 2020
-for $libro in //libro
-where $libro/@año > 2020
-return 
-    <libro_reciente>
-        <titulo>{$libro/titulo/text()}</titulo>
-        <autor>{$libro/autor/text()}</autor>
-        <año>{$libro/@año}</año>
-    </libro_reciente>
+-- Tabla para nodos XML
+CREATE TABLE nodos_xml (
+    id SERIAL PRIMARY KEY,
+    documento_id INTEGER,
+    nodo_id INTEGER,
+    padre_id INTEGER,
+    nombre VARCHAR(255),
+    valor TEXT,
+    tipo VARCHAR(50),
+    orden INTEGER
+);
 
--- XQuery para agrupar libros por autor
-for $autor in distinct-values(//libro/autor)
+-- Tabla para atributos XML
+CREATE TABLE atributos_xml (
+    id SERIAL PRIMARY KEY,
+    nodo_id INTEGER REFERENCES nodos_xml(id),
+    nombre VARCHAR(255),
+    valor TEXT
+);
+
+-- Insertar estructura de documento XML
+INSERT INTO nodos_xml (documento_id, nodo_id, padre_id, nombre, tipo, orden) VALUES
+(1, 1, NULL, 'factura', 'elemento', 1),
+(1, 2, 1, 'cliente', 'elemento', 2),
+(1, 3, 2, 'nombre', 'elemento', 3),
+(1, 4, 3, NULL, 'texto', 4);
+
+-- Insertar atributos
+INSERT INTO atributos_xml (nodo_id, nombre, valor) VALUES
+(1, 'numero', 'F-2024-001'),
+(1, 'fecha', '2024-01-15');
+
+-- Consulta para reconstruir documento XML
+WITH RECURSIVE arbol_xml AS (
+    SELECT nodo_id, padre_id, nombre, valor, tipo, orden, 0 as nivel
+    FROM nodos_xml 
+    WHERE padre_id IS NULL
+    UNION ALL
+    SELECT n.nodo_id, n.padre_id, n.nombre, n.valor, n.tipo, n.orden, a.nivel + 1
+    FROM nodos_xml n
+    JOIN arbol_xml a ON n.padre_id = a.nodo_id
+)
+SELECT * FROM arbol_xml ORDER BY nivel, orden;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>SQL/XML - Funciones XML</h4>
+                        <p><strong>Escenario:</strong> Generación de XML desde datos relacionales</p>
+                        <div class="code-block">
+-- Crear tabla de empleados
+CREATE TABLE empleados (
+    id INTEGER PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    salario DECIMAL(10,2),
+    departamento VARCHAR(50)
+);
+
+-- Insertar datos de ejemplo
+INSERT INTO empleados VALUES 
+(1, 'Juan', 'Pérez', 50000, 'IT'),
+(2, 'María', 'García', 55000, 'Ventas'),
+(3, 'Carlos', 'López', 48000, 'IT');
+
+-- Generar XML usando SQL/XML
+SELECT XMLELEMENT(
+    NAME "empleados",
+    XMLAGG(
+        XMLELEMENT(
+            NAME "empleado",
+            XMLATTRIBUTES(id AS "id", departamento AS "dept"),
+            XMLELEMENT(NAME "nombre", nombre),
+            XMLELEMENT(NAME "apellido", apellido),
+            XMLELEMENT(NAME "salario", salario)
+        )
+    )
+) AS xml_resultado
+FROM empleados;
+
+-- Consulta con filtros y agregaciones
+SELECT XMLELEMENT(
+    NAME "departamento",
+    XMLATTRIBUTES(departamento AS "nombre"),
+    XMLELEMENT(NAME "total_empleados", COUNT(*)),
+    XMLELEMENT(NAME "salario_promedio", AVG(salario)),
+    XMLAGG(
+        XMLELEMENT(NAME "empleado", nombre || ' ' || apellido)
+    )
+) AS xml_por_departamento
+FROM empleados
+GROUP BY departamento;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Arquitectura de Almacenamiento XML - Diagrama</h4>
+                        <p><strong>Escenario:</strong> Comparación de estrategias de almacenamiento XML</p>
+                        <div class="diagram-container">
+                            <div class="diagram">
+                                <h5>Estrategias de Almacenamiento XML</h5>
+                                <div class="strategy-box">
+                                    <h6>1. Almacenamiento CLOB</h6>
+                                    <div class="storage-example">
+                                        <div class="table-box">Tabla: documentos_xml</div>
+                                        <div class="arrow">↓</div>
+                                        <div class="xml-box">Documento XML completo como texto</div>
+                                    </div>
+                                    <p><strong>Ventajas:</strong> Simplicidad, integridad del documento</p>
+                                    <p><strong>Desventajas:</strong> Consultas lentas, sin validación estructural</p>
+                                </div>
+                                
+                                <div class="strategy-box">
+                                    <h6>2. Descomposición Relacional</h6>
+                                    <div class="storage-example">
+                                        <div class="table-box">Tabla: nodos_xml</div>
+                                        <div class="arrow">↓</div>
+                                        <div class="tree-box">Estructura de árbol en tablas</div>
+                                    </div>
+                                    <p><strong>Ventajas:</strong> Consultas SQL estándar, normalización</p>
+                                    <p><strong>Desventajas:</strong> Complejidad de reconstrucción</p>
+                                </div>
+                                
+                                <div class="strategy-box">
+                                    <h6>3. Almacenamiento Nativo XML</h6>
+                                    <div class="storage-example">
+                                        <div class="table-box">Tabla: documentos_xml (tipo XML)</div>
+                                        <div class="arrow">↓</div>
+                                        <div class="native-box">Procesamiento XML optimizado</div>
+                                    </div>
+                                    <p><strong>Ventajas:</strong> Consultas XPath/XQuery, validación automática</p>
+                                    <p><strong>Desventajas:</strong> Dependencia del SGBD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>BaseX - Base de Datos Nativa XML</h4>
+                        <p><strong>Escenario:</strong> Uso de BaseX para almacenamiento y consulta de documentos XML</p>
+                        <div class="code-block">
+-- Crear colección en BaseX
+CREATE DATABASE biblioteca
+
+-- Insertar documentos XML
+INSERT INTO biblioteca
+<libro id="1" categoria="programacion">
+    <titulo>Bases de Datos Avanzadas</titulo>
+    <autor>Juan Pérez</autor>
+    <año>2024</año>
+    <precio>45.50</precio>
+    <descripcion>Libro sobre técnicas avanzadas de bases de datos</descripcion>
+</libro>
+
+-- Consultas XQuery en BaseX
+-- Obtener todos los libros
+for $libro in //libro
+return $libro
+
+-- Libros de programación
+for $libro in //libro[@categoria='programacion']
+return $libro
+
+-- Libros con precio mayor a 40
+for $libro in //libro
+where $libro/precio > 40
+return $libro
+
+-- Agrupar por categoría
+for $categoria in distinct-values(//libro/@categoria)
 return
-    <autor>
-        <nombre>{$autor}</nombre>
-        <libros>
+    <categoria nombre="{$categoria}">
             {
-                for $libro in //libro[autor = $autor]
-                return <titulo>{$libro/titulo/text()}</titulo>
+            for $libro in //libro[@categoria=$categoria]
+            return $libro/titulo
             }
-        </libros>
-        <total_libros>{count(//libro[autor = $autor])}</total_libros>
-    </autor>
+    </categoria>
 
--- XQuery para buscar libros por palabra clave
+-- Búsqueda de texto completo
 for $libro in //libro
-where contains(lower-case($libro/titulo), "base de datos")
-   or contains(lower-case($libro/descripcion), "base de datos")
+where contains(lower-case($libro/descripcion), "base de datos")
+return $libro
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Comparación de Arquitecturas XML</h4>
+                        <p><strong>Escenario:</strong> Análisis comparativo de diferentes enfoques de almacenamiento XML</p>
+                        <div class="architecture-diagram">
+                            <div class="architecture-box">
+                                <h6>Base de Datos Relacional + XML</h6>
+                                <div class="component-list">
+                                    <ul>
+                                        <li>Tablas relacionales tradicionales</li>
+                                        <li>Columnas de tipo XML/CLOB</li>
+                                        <li>Funciones SQL/XML</li>
+                                        <li>Índices híbridos</li>
+                                    </ul>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h6>Ventajas</h6>
+                                        <ul>
+                                            <li>Transacciones ACID</li>
+                                            <li>Herramientas maduras</li>
+                                            <li>Integración con SQL</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h6>Desventajas</h6>
+                                        <ul>
+                                            <li>Rendimiento limitado</li>
+                                            <li>Consultas complejas</li>
+                                            <li>Escalabilidad vertical</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="architecture-box">
+                                <h6>Base de Datos Nativa XML</h6>
+                                <div class="component-list">
+                                    <ul>
+                                        <li>Almacenamiento optimizado XML</li>
+                                        <li>Motor XQuery nativo</li>
+                                        <li>Índices XML especializados</li>
+                                        <li>Procesamiento streaming</li>
+                                    </ul>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h6>Ventajas</h6>
+                                        <ul>
+                                            <li>Rendimiento superior</li>
+                                            <li>Consultas XQuery</li>
+                                            <li>Escalabilidad horizontal</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h6>Desventajas</h6>
+                                        <ul>
+                                            <li>Ecosistema limitado</li>
+                                            <li>Curva de aprendizaje</li>
+                                            <li>Menos herramientas</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Tabla Comparativa de SGBD XML</h4>
+                        <p><strong>Escenario:</strong> Evaluación de diferentes sistemas de gestión de bases de datos para XML</p>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Característica</th>
+                                    <th>PostgreSQL</th>
+                                    <th>Oracle</th>
+                                    <th>SQL Server</th>
+                                    <th>BaseX</th>
+                                    <th>eXist-db</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Tipo de datos XML</strong></td>
+                                    <td>XML nativo</td>
+                                    <td>XMLType</td>
+                                    <td>XML</td>
+                                    <td>Nativo XML</td>
+                                    <td>Nativo XML</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Consultas</strong></td>
+                                    <td>XPath integrado</td>
+                                    <td>XPath + XQuery</td>
+                                    <td>XPath + XQuery</td>
+                                    <td>XQuery completo</td>
+                                    <td>XQuery completo</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Validación</strong></td>
+                                    <td>Manual</td>
+                                    <td>Automática</td>
+                                    <td>Automática</td>
+                                    <td>Manual</td>
+                                    <td>Manual</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Índices XML</strong></td>
+                                    <td>Básicos</td>
+                                    <td>Avanzados</td>
+                                    <td>Avanzados</td>
+                                    <td>Especializados</td>
+                                    <td>Especializados</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Escalabilidad</strong></td>
+                                    <td>Vertical</td>
+                                    <td>Vertical</td>
+                                    <td>Vertical</td>
+                                    <td>Horizontal</td>
+                                    <td>Horizontal</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Licencia</strong></td>
+                                    <td>Open Source</td>
+                                    <td>Comercial</td>
+                                    <td>Comercial</td>
+                                    <td>Open Source</td>
+                                    <td>Open Source</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Demo Interactivo - Consultas XML</h4>
+                        <p><strong>Escenario:</strong> Demostración interactiva de diferentes tipos de consultas XML</p>
+                        <div class="interactive-demo">
+                            <h6>Selecciona el tipo de consulta para ver el ejemplo:</h6>
+                            <div class="demo-buttons">
+                                <button class="demo-btn" onclick="showDemo('xpath')">Consultas XPath</button>
+                                <button class="demo-btn" onclick="showDemo('xquery')">Consultas XQuery</button>
+                                <button class="demo-btn" onclick="showDemo('sqlxml')">SQL/XML</button>
+                                <button class="demo-btn" onclick="showDemo('hybrid')">Consultas Híbridas</button>
+                            </div>
+                            <div id="demo-result" class="demo-result" style="display: none;">
+                                <!-- El contenido se mostrará dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BaseX: Sistema de Gestión de Bases de Datos XML -->
+            <section id="basex" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    BaseX: Sistema de Gestión de Bases de Datos XML
+                </h2>
+
+                <!-- Introducción a BaseX -->
+                <div class="concept-card">
+                    <h3>¿Qué es BaseX?</h3>
+                    <p><strong>BaseX</strong> es un sistema de gestión de bases de datos XML nativo de código abierto, desarrollado en Java, que proporciona almacenamiento, indexación y consulta eficiente de documentos XML. Es especialmente diseñado para manejar grandes volúmenes de datos XML con alto rendimiento.</p>
+                    
+                    <div class="basex-container">
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="basex-title">Alto Rendimiento</div>
+                            <p>Optimizado para consultas XML complejas con índices automáticos y cache inteligente para mejorar el rendimiento de las consultas.</p>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="basex-title">XQuery Nativo</div>
+                            <p>Soporte completo para XQuery 3.1, XPath 3.1 y XSLT 3.0, permitiendo consultas complejas sobre documentos XML.</p>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </div>
+                            <div class="basex-title">Escalabilidad</div>
+                            <p>Arquitectura distribuida que permite escalar horizontalmente para manejar petabytes de datos XML.</p>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="basex-title">Confiabilidad</div>
+                            <p>Transacciones ACID, recuperación automática y respaldo incremental para garantizar la integridad de los datos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arquitectura de BaseX -->
+                <div class="concept-card">
+                    <h3>Arquitectura de BaseX</h3>
+                    <p>BaseX utiliza una arquitectura modular que separa claramente las responsabilidades de almacenamiento, procesamiento de consultas y gestión de transacciones.</p>
+                    
+                    <div class="basex-architecture">
+                        <h4>Capas de la Arquitectura BaseX</h4>
+                        <div class="basex-layer">
+                            <div class="layer-icon">UI</div>
+                            <div class="layer-content">
+                                <div class="layer-title">Interfaz de Usuario</div>
+                                <div class="layer-description">BaseX GUI, BaseX HTTP, BaseX REST API, BaseX WebDAV</div>
+                            </div>
+                        </div>
+                        <div class="basex-layer">
+                            <div class="layer-icon">Q</div>
+                            <div class="layer-content">
+                                <div class="layer-title">Procesador de Consultas</div>
+                                <div class="layer-description">Parser XQuery, Optimizador de consultas, Motor de evaluación</div>
+                            </div>
+                        </div>
+                        <div class="basex-layer">
+                            <div class="layer-icon">T</div>
+                            <div class="layer-content">
+                                <div class="layer-title">Gestor de Transacciones</div>
+                                <div class="layer-description">Control de concurrencia, Gestión de locks, Recuperación</div>
+                            </div>
+                        </div>
+                        <div class="basex-layer">
+                            <div class="layer-icon">S</div>
+                            <div class="layer-content">
+                                <div class="layer-title">Almacenamiento</div>
+                                <div class="layer-description">Índices XML, Cache de páginas, Gestión de memoria</div>
+                            </div>
+                        </div>
+                        <div class="basex-layer">
+                            <div class="layer-icon">D</div>
+                            <div class="layer-content">
+                                <div class="layer-title">Sistema de Archivos</div>
+                                <div class="layer-description">Almacenamiento persistente, Archivos de datos, Logs de transacciones</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparación con Otros Sistemas -->
+                <div class="concept-card">
+                    <h3>BaseX vs Otros Sistemas de Bases de Datos</h3>
+                    <p>Comparación de BaseX con sistemas relacionales y NoSQL para entender sus ventajas específicas en el manejo de datos XML.</p>
+                    
+                    <div class="basex-comparison">
+                        <div class="comparison-card basex">
+                            <div class="comparison-logo basex-logo">B</div>
+                            <h4>BaseX (XML Nativo)</h4>
+                            <p><strong>Ventajas:</strong></p>
+                            <ul>
+                                <li>Almacenamiento XML nativo optimizado</li>
+                                <li>Soporte completo XQuery/XPath</li>
+                                <li>Índices automáticos para XML</li>
+                                <li>Transacciones ACID</li>
+                                <li>Escalabilidad horizontal</li>
+                            </ul>
+                            <p><strong>Desventajas:</strong></p>
+                            <ul>
+                                <li>Curva de aprendizaje XQuery</li>
+                                <li>Menor adopción empresarial</li>
+                                <li>Limitado para datos no-XML</li>
+                            </ul>
+                        </div>
+
+                        <div class="comparison-card relational">
+                            <div class="comparison-logo relational-logo">R</div>
+                            <h4>Bases de Datos Relacionales</h4>
+                            <p><strong>Ventajas:</strong></p>
+                            <ul>
+                                <li>Madurez y estabilidad</li>
+                                <li>Amplio soporte empresarial</li>
+                                <li>SQL estándar</li>
+                                <li>Herramientas maduras</li>
+                            </ul>
+                            <p><strong>Desventajas:</strong></p>
+                            <ul>
+                                <li>XML como ciudadano de segunda clase</li>
+                                <li>Consultas XML complejas</li>
+                                <li>Pérdida de estructura XML</li>
+                                <li>Rendimiento subóptimo</li>
+                            </ul>
+                        </div>
+
+                        <div class="comparison-card nosql">
+                            <div class="comparison-logo nosql-logo">N</div>
+                            <h4>Bases de Datos NoSQL</h4>
+                            <p><strong>Ventajas:</strong></p>
+                            <ul>
+                                <li>Escalabilidad horizontal</li>
+                                <li>Flexibilidad de esquema</li>
+                                <li>Alto rendimiento</li>
+                                <li>Fácil distribución</li>
+                            </ul>
+                            <p><strong>Desventajas:</strong></p>
+                            <ul>
+                                <li>Sin soporte nativo XML</li>
+                                <li>Sin transacciones ACID</li>
+                                <li>Consultas XML limitadas</li>
+                                <li>Consistencia eventual</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejemplos Prácticos de XQuery -->
+                <div class="concept-card">
+                    <h3>Ejemplos Prácticos de XQuery en BaseX</h3>
+                    <p>Ejemplos reales de consultas XQuery que demuestran el poder y flexibilidad de BaseX para procesar documentos XML.</p>
+                    
+                    <div class="example-card">
+                        <h4>Ejemplo 1: Consulta Básica de Libros</h4>
+                        <p><strong>Escenario:</strong> Consultar libros con precio mayor a 50 euros</p>
+                        <div class="xquery-example">
+<span class="xquery-comment">(: Consulta XQuery para libros caros :)</span>
+<span class="xquery-keyword">for</span> $book <span class="xquery-keyword">in</span> collection(<span class="xquery-string">"biblioteca"</span>)/book
+<span class="xquery-keyword">where</span> $book/price > <span class="xquery-string">50</span>
+<span class="xquery-keyword">order by</span> $book/title
+<span class="xquery-keyword">return</span> 
+  <span class="xquery-tag">&lt;expensive-book&gt;</span>
+    <span class="xquery-tag">&lt;title&gt;</span>{$book/title/text()}<span class="xquery-tag">&lt;/title&gt;</span>
+    <span class="xquery-tag">&lt;price&gt;</span>{$book/price/text()}<span class="xquery-tag">&lt;/price&gt;</span>
+    <span class="xquery-tag">&lt;author&gt;</span>{$book/author/text()}<span class="xquery-tag">&lt;/author&gt;</span>
+  <span class="xquery-tag">&lt;/expensive-book&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Agregación y Agrupación</h4>
+                        <p><strong>Escenario:</strong> Calcular estadísticas por categoría de productos</p>
+                        <div class="xquery-example">
+<span class="xquery-comment">(: Estadísticas por categoría :)</span>
+<span class="xquery-keyword">for</span> $category <span class="xquery-keyword">in</span> distinct-values(collection(<span class="xquery-string">"productos"</span>)/product/category)
+<span class="xquery-keyword">let</span> $products := collection(<span class="xquery-string">"productos"</span>)/product[category = $category]
+<span class="xquery-keyword">return</span>
+  <span class="xquery-tag">&lt;category-stats&gt;</span>
+    <span class="xquery-tag">&lt;name&gt;</span>{$category}<span class="xquery-tag">&lt;/name&gt;</span>
+    <span class="xquery-tag">&lt;total-products&gt;</span>{count($products)}<span class="xquery-tag">&lt;/total-products&gt;</span>
+    <span class="xquery-tag">&lt;avg-price&gt;</span>{avg($products/price)}<span class="xquery-tag">&lt;/avg-price&gt;</span>
+    <span class="xquery-tag">&lt;max-price&gt;</span>{max($products/price)}<span class="xquery-tag">&lt;/max-price&gt;</span>
+  <span class="xquery-tag">&lt;/category-stats&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Consulta Compleja con Joins</h4>
+                        <p><strong>Escenario:</strong> Buscar empleados y sus departamentos con información adicional</p>
+                        <div class="xquery-example">
+<span class="xquery-comment">(: Join entre empleados y departamentos :)</span>
+<span class="xquery-keyword">for</span> $emp <span class="xquery-keyword">in</span> collection(<span class="xquery-string">"empleados"</span>)/employee
+<span class="xquery-keyword">let</span> $dept := collection(<span class="xquery-string">"departamentos"</span>)/department[@id = $emp/@dept-id]
+<span class="xquery-keyword">where</span> $emp/salary > <span class="xquery-string">50000</span>
+<span class="xquery-keyword">return</span>
+  <span class="xquery-tag">&lt;employee-info&gt;</span>
+    <span class="xquery-tag">&lt;name&gt;</span>{$emp/name/text()}<span class="xquery-tag">&lt;/name&gt;</span>
+    <span class="xquery-tag">&lt;salary&gt;</span>{$emp/salary/text()}<span class="xquery-tag">&lt;/salary&gt;</span>
+    <span class="xquery-tag">&lt;department&gt;</span>{$dept/name/text()}<span class="xquery-tag">&lt;/department&gt;</span>
+    <span class="xquery-tag">&lt;location&gt;</span>{$dept/location/text()}<span class="xquery-tag">&lt;/location&gt;</span>
+  <span class="xquery-tag">&lt;/employee-info&gt;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instalación y Configuración -->
+                <div class="concept-card">
+                    <h3>Instalación y Configuración de BaseX</h3>
+                    <p>Guía paso a paso para instalar y configurar BaseX en diferentes sistemas operativos.</p>
+                    
+                    <div class="basex-installation">
+                        <div class="installation-title">Instalación de BaseX</div>
+                        
+                        <div class="installation-step">
+                            <strong>1. Descarga:</strong> Descargar BaseX desde https://basex.org/download/
+                        </div>
+                        
+                        <div class="installation-step">
+                            <strong>2. Requisitos:</strong> Java 8 o superior instalado en el sistema
+                        </div>
+                        
+                        <div class="installation-step">
+                            <strong>3. Instalación:</strong>
+                            <div class="code-block">
+# Windows
+basex-10.6-windows.exe
+
+# Linux/Mac
+tar -xzf basex-10.6.tar.gz
+cd basex-10.6
+./bin/basex
+                            </div>
+                        </div>
+                        
+                        <div class="installation-step">
+                            <strong>4. Verificación:</strong>
+                            <div class="code-block">
+# Iniciar BaseX GUI
+basex
+
+# O desde línea de comandos
+basex -c "1 + 1"
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Configuración Avanzada:</strong>
+                        <ul>
+                            <li><strong>Memoria:</strong> Ajustar -Xmx para aumentar memoria disponible</li>
+                            <li><strong>Puertos:</strong> Configurar puertos HTTP (8984) y REST (8985)</li>
+                            <li><strong>Índices:</strong> Configurar índices automáticos para mejorar rendimiento</li>
+                            <li><strong>Cache:</strong> Ajustar tamaño de cache para consultas frecuentes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Rendimiento y Optimización -->
+                <div class="concept-card">
+                    <h3>Rendimiento y Optimización en BaseX</h3>
+                    <p>Análisis del rendimiento de BaseX comparado con otros sistemas y técnicas de optimización.</p>
+                    
+                    <div class="basex-performance">
+                        <div class="performance-chart">
+                            <div class="chart-title">Tiempo de Consulta (ms)</div>
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 100%;" data-label="PostgreSQL XML"></div>
+                                <div class="chart-bar" style="height: 60%;" data-label="MongoDB"></div>
+                                <div class="chart-bar" style="height: 30%;" data-label="BaseX"></div>
+                                <div class="chart-bar" style="height: 25%;" data-label="BaseX Optimizado"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="performance-chart">
+                            <div class="chart-title">Throughput (consultas/seg)</div>
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 20%;" data-label="PostgreSQL XML"></div>
+                                <div class="chart-bar" style="height: 40%;" data-label="MongoDB"></div>
+                                <div class="chart-bar" style="height: 80%;" data-label="BaseX"></div>
+                                <div class="chart-bar" style="height: 100%;" data-label="BaseX Optimizado"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Técnicas de Optimización:</strong>
+                        <ul>
+                            <li><strong>Índices Automáticos:</strong> BaseX crea índices automáticamente para elementos y atributos</li>
+                            <li><strong>Cache de Consultas:</strong> Reutilización de planes de ejecución optimizados</li>
+                            <li><strong>Compresión:</strong> Almacenamiento comprimido para reducir I/O</li>
+                            <li><strong>Paralelización:</strong> Procesamiento paralelo de consultas complejas</li>
+                            <li><strong>Índices Personalizados:</strong> Creación de índices específicos para consultas frecuentes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Casos de Uso Reales -->
+                <div class="concept-card">
+                    <h3>Casos de Uso Reales de BaseX</h3>
+                    <p>Ejemplos de empresas y organizaciones que utilizan BaseX para manejar grandes volúmenes de datos XML.</p>
+                    
+                    <div class="basex-container">
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="basex-title">Bibliotecas Digitales</div>
+                            <p>Gestión de catálogos bibliográficos, metadatos de libros, artículos científicos y recursos digitales en formato XML.</p>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <div class="basex-title">Sistemas Médicos</div>
+                            <p>Almacenamiento y consulta de historiales médicos, resultados de laboratorio y datos clínicos en formato HL7 XML.</p>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="basex-title">Manufactura</div>
+                            <p>Gestión de documentos técnicos, especificaciones de productos y datos de control de calidad en XML.</p>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-gavel"></i>
+                            </div>
+                            <div class="basex-title">Sistemas Legales</div>
+                            <p>Almacenamiento de documentos legales, contratos y regulaciones en formato XML estructurado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ventajas y Desventajas -->
+                <div class="concept-card">
+                    <h3>Ventajas y Desventajas de BaseX</h3>
+                    
+                    <div class="advantage-disadvantage">
+                        <div class="advantage-list">
+                            <h4>Ventajas</h4>
+                            <ul>
+                                <li><strong>Almacenamiento XML Nativo:</strong> Optimizado específicamente para documentos XML</li>
+                                <li><strong>XQuery Completo:</strong> Soporte completo para XQuery 3.1 y XPath 3.1</li>
+                                <li><strong>Alto Rendimiento:</strong> Índices automáticos y optimizaciones específicas para XML</li>
+                                <li><strong>Transacciones ACID:</strong> Garantiza consistencia y integridad de datos</li>
+                                <li><strong>Escalabilidad:</strong> Soporte para distribución horizontal</li>
+                                <li><strong>Código Abierto:</strong> Licencia BSD, sin costos de licencia</li>
+                                <li><strong>Interfaces Múltiples:</strong> GUI, HTTP, REST, WebDAV</li>
+                                <li><strong>Estándares:</strong> Cumple con estándares W3C para XML</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="disadvantage-list">
+                            <h4>Desventajas</h4>
+                            <ul>
+                                <li><strong>Curva de Aprendizaje:</strong> XQuery requiere aprendizaje especializado</li>
+                                <li><strong>Adopción Limitada:</strong> Menor penetración en el mercado empresarial</li>
+                                <li><strong>Datos No-XML:</strong> No optimizado para datos relacionales o JSON</li>
+                                <li><strong>Herramientas:</strong> Menos herramientas de terceros disponibles</li>
+                                <li><strong>Documentación:</strong> Menos recursos de aprendizaje comparado con SQL</li>
+                                <li><strong>Integración:</strong> Requiere adaptación para integrar con sistemas existentes</li>
+                                <li><strong>Comunidad:</strong> Comunidad más pequeña que otros SGBD</li>
+                                <li><strong>Migración:</strong> Migración desde sistemas relacionales puede ser compleja</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-item">
+                    <h4>Actividad 1: Almacenamiento XML en Base de Datos Relacional</h4>
+                    <p><strong>Duración:</strong> 30 minutos</p>
+                    <p>Implementa un sistema de almacenamiento XML usando PostgreSQL que incluya:</p>
+                    <ul>
+                        <li>Tabla para documentos XML usando tipo XML</li>
+                        <li>Consultas XPath para extraer información</li>
+                        <li>Índices para optimizar consultas</li>
+                        <li>Validación de esquemas XML</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 30 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 2: Representación con Árboles</h4>
+                    <p><strong>Duración:</strong> 35 minutos</p>
+                    <p>Diseña e implementa un sistema de almacenamiento XML usando el modelo de nodos:</p>
+                    <ul>
+                        <li>Tablas para nodos y atributos XML</li>
+                        <li>Algoritmo de inserción de documentos</li>
+                        <li>Consulta recursiva para reconstruir XML</li>
+                        <li>Optimización de consultas</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 35 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 3: SQL/XML y Generación de XML</h4>
+                    <p><strong>Duración:</strong> 25 minutos</p>
+                    <p>Utiliza las funciones SQL/XML para generar documentos XML desde datos relacionales:</p>
+                    <ul>
+                        <li>XMLELEMENT para crear elementos</li>
+                        <li>XMLAGG para agregar elementos</li>
+                        <li>XMLATTRIBUTES para atributos</li>
+                        <li>Consultas complejas con filtros</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 25 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 4: Base de Datos Nativa XML</h4>
+                    <p><strong>Duración:</strong> 40 minutos</p>
+                    <p>Configura y utiliza una base de datos nativa XML (BaseX o eXist-db):</p>
+                    <ul>
+                        <li>Instalación y configuración del motor</li>
+                        <li>Creación de colecciones de documentos</li>
+                        <li>Consultas XQuery complejas</li>
+                        <li>Comparación de rendimiento con bases relacionales</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 40 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 5: Análisis Comparativo de Arquitecturas XML</h4>
+                    <p><strong>Duración:</strong> 35 minutos</p>
+                    <p>Realiza un análisis comparativo de diferentes enfoques de almacenamiento XML:</p>
+                    <ul>
+                        <li>Implementar el mismo caso de uso en PostgreSQL, Oracle y BaseX</li>
+                        <li>Medir rendimiento de consultas en cada sistema</li>
+                        <li>Comparar facilidad de implementación</li>
+                        <li>Evaluar escalabilidad y mantenimiento</li>
+                        <li>Crear reporte con recomendaciones</li>
+                        <li>Presentar conclusiones y casos de uso ideales</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 35 min
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recursos Adicionales -->
+            <section id="recursos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    Recursos Adicionales
+                </h2>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Introducción a las bases de datos XML (2012)</h4>
+                        <p>Video de 10:09 con introducción a las bases de datos XML, DTDs, esquemas y formas de almacenamiento</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Creación de documentos XML a partir de MySQL (2011)</h4>
+                        <p>Video de 30:10 mostrando cómo exportar datos desde MySQL a XML utilizando PHP</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Convertir XML en filas y columnas utilizando SQL</h4>
+                        <p>Artículo con ejemplo de cómo convertir una representación XML en formato relacional con SQL</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>XML DB</h4>
+                        <p>Presentación de XML:DB con ejemplos y proyectos prácticos</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>XMLType Operations</h4>
+                        <p>Artículo sobre sintaxis y ejemplos de cómo utilizar queries XML en bases de datos</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>XPath</h4>
+                        <p>Manual sobre XPath para acceder a los datos y navegar por las etiquetas de un documento XML</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>XQuery</h4>
+                        <p>Manual sobre XQuery para recuperar los datos de un documento XML</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>SQL Server XQuery</h4>
+                        <p>Referencia al lenguaje XQuery desde el punto de vista de SQL Server</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Notepad++</h4>
+                        <p>Editor de textos plano multilenguaje para editar códigos fuentes de diferentes lenguajes de programación</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Virtual Box</h4>
+                        <p>Entorno de virtualización de sistemas para ejecutar máquinas virtuales</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Sistema Gestor de base de datos Oracle 11g</h4>
+                        <p>El SGBD Oracle es uno de los sistemas de bases de datos más utilizados en el mundo real</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script>
+        // Funcionalidad para el demo interactivo
+        function showDemo(type) {
+            const demoResult = document.getElementById('demo-result');
+            let content = '';
+            
+            switch(type) {
+                case 'xpath':
+                    content = `-- Consultas XPath en PostgreSQL
+-- Obtener todos los títulos de libros
+SELECT xpath('//titulo/text()', documento_xml) as titulos
+FROM biblioteca;
+
+-- Buscar libros de programación
+SELECT xpath('//libro[@categoria="programacion"]', documento_xml) as libros_programacion
+FROM biblioteca;
+
+-- Obtener precios mayores a 40
+SELECT xpath('//libro[precio > 40]/titulo/text()', documento_xml) as libros_caros
+FROM biblioteca;`;
+                    break;
+                    
+                case 'xquery':
+                    content = `-- Consultas XQuery en BaseX
+-- Obtener todos los libros
+for $libro in //libro
+return $libro
+
+-- Libros con precio mayor a 40
+for $libro in //libro
+where $libro/precio > 40
+return $libro
+
+-- Agrupar por categoría
+for $categoria in distinct-values(//libro/@categoria)
 return
-    <resultado>
-        <titulo>{$libro/titulo/text()}</titulo>
-        <autor>{$libro/autor/text()}</autor>
-        <relevancia>{count(tokenize($libro/descripcion, ' ')[. = 'base' or . = 'datos'])}</relevancia>
-    </resultado>
+    <categoria nombre="{$categoria}">
+        {for $libro in //libro[@categoria=$categoria]
+         return $libro/titulo}
+    </categoria>`;
+                    break;
+                    
+                case 'sqlxml':
+                    content = `-- SQL/XML - Generación de XML
+SELECT XMLELEMENT(
+    NAME "biblioteca",
+    XMLAGG(
+        XMLELEMENT(
+            NAME "libro",
+            XMLATTRIBUTES(categoria AS "categoria"),
+            XMLELEMENT(NAME "titulo", titulo),
+            XMLELEMENT(NAME "autor", autor),
+            XMLELEMENT(NAME "precio", precio)
+        )
+    )
+) AS xml_resultado
+FROM libros;`;
+                    break;
+                    
+                case 'hybrid':
+                    content = `-- Consultas Híbridas SQL/XML
+-- Combinar datos relacionales con XML
+SELECT 
+    c.nombre as cliente,
+    xpath('//total/text()', f.documento_xml) as total_xml,
+    f.fecha_creacion
+FROM clientes c
+JOIN facturas_xml f ON c.id = f.cliente_id
+WHERE f.fecha_creacion >= '2024-01-01';
+
+-- Agregaciones sobre XML
+SELECT 
+    xpath('//cliente/ciudad/text()', documento_xml) as ciudad,
+    COUNT(*) as total_facturas,
+    AVG((xpath('//totales/total/text()', documento_xml))[1]::text::numeric) as promedio
+FROM facturas_xml
+GROUP BY xpath('//cliente/ciudad/text()', documento_xml);`;
+                    break;
+            }
+            
+            demoResult.textContent = content;
+            demoResult.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
