@@ -6,6 +6,276 @@
     <title>Tema 4: Bases de Datos Paralelas - Bases de Datos Avanzadas</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos específicos para diagramas de arquitectura paralela */
+        .architecture-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .architecture-layer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 300px;
+        }
+        
+        .processor {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .memory-shared {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .disk-shared {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: #212529;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .connection-line {
+            width: 2px;
+            height: 30px;
+            background: #007bff;
+            margin: 0 auto;
+        }
+        
+        .parallel-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .parallel-type {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .parallel-type:hover {
+            border-color: #007bff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+        }
+        
+        .parallel-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-card {
+            background: white;
+            border-left: 4px solid #007bff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .scalability-chart {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 200px;
+            margin: 1rem 0;
+            border-bottom: 2px solid #e9ecef;
+            border-left: 2px solid #e9ecef;
+        }
+        
+        .chart-bar {
+            background: linear-gradient(to top, #007bff, #0056b3);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px 4px 0 0;
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .chart-bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .oracle-sql-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .dbms-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid;
+        }
+        
+        .oracle-card {
+            border-top-color: #ff6b35;
+        }
+        
+        .sqlserver-card {
+            border-top-color: #0078d4;
+        }
+        
+        .dbms-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .oracle-logo {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+        }
+        
+        .sqlserver-logo {
+            background: linear-gradient(135deg, #0078d4, #106ebe);
+        }
+        
+        .quiz-container {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .quiz-question {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-options {
+            margin: 1rem 0;
+        }
+        
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background: #e9ecef;
+        }
+        
+        .quiz-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+        
+        .disadvantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .disadvantage-item {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .disadvantage-item h5 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+        
+        .disadvantage-item p {
+            color: #856404;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -36,7 +306,7 @@
                 <i class="fas fa-arrow-left"></i> Volver al Inicio
             </a>
             <h1>Tema 4: Bases de Datos Paralelas</h1>
-            <p>Arquitecturas y técnicas de procesamiento paralelo en bases de datos</p>
+            <p>Arquitecturas y técnicas de procesamiento paralelo en sistemas de bases de datos</p>
         </div>
     </section>
 
@@ -52,78 +322,344 @@
                     Conceptos Clave
                 </h2>
                 
+                <!-- Introducción a Sistemas Paralelos -->
                 <div class="concept-card">
-                    <h3>Arquitecturas de Procesamiento Paralelo</h3>
-                    <p>Diferentes enfoques para distribuir el procesamiento de consultas y transacciones en múltiples procesadores.</p>
+                    <h3>Fundamentos de Sistemas Paralelos</h3>
+                    <p>Los sistemas paralelos utilizan múltiples CPU y discos capaces de ejecutar operaciones simultáneamente, mejorando significativamente el tiempo de respuesta y la productividad en sistemas de bases de datos.</p>
+                    
+                    <!-- Diagrama de Arquitectura Paralela -->
+                    <div class="visual-diagram">
+                        <h4>Arquitectura General de Sistema Paralelo</h4>
+                        <div class="architecture-diagram">
+                            <div class="architecture-layer">
+                                <div class="processor">CPU 1</div>
+                                <div class="processor">CPU 2</div>
+                                <div class="processor">CPU 3</div>
+                                <div class="processor">CPU N</div>
+                            </div>
+                            <div class="connection-line"></div>
+                            <div class="architecture-layer">
+                                <div class="memory-shared">Memoria Compartida</div>
+                            </div>
+                            <div class="connection-line"></div>
+                            <div class="architecture-layer">
+                                <div class="disk-shared">Disco 1</div>
+                                <div class="disk-shared">Disco 2</div>
+                                <div class="disk-shared">Disco 3</div>
+                                <div class="disk-shared">Disco N</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="concept-details">
-                        <strong>Tipos de paralelismo:</strong>
-                        <ul>
-                            <li><strong>Paralelismo de Consultas:</strong> División de consultas complejas</li>
-                            <li><strong>Paralelismo de Transacciones:</strong> Ejecución concurrente de transacciones</li>
-                            <li><strong>Paralelismo Intra-consulta:</strong> Paralelización de operaciones individuales</li>
-                            <li><strong>Paralelismo Inter-consulta:</strong> Múltiples consultas simultáneas</li>
-                        </ul>
-                        <strong>Arquitecturas:</strong> Shared-memory, shared-disk, shared-nothing
+                        <strong>Tipos de Máquinas Paralelas:</strong>
+                        <div class="parallel-types">
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <h4>Grano Grueso</h4>
+                                <p>Pocos procesadores muy potentes. Ideal para aplicaciones que requieren gran capacidad de procesamiento individual.</p>
+                            </div>
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <h4>Grano Fino</h4>
+                                <p>Muchos procesadores de potencia limitada. Optimizado para procesamiento distribuido y escalabilidad horizontal.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Métricas de Rendimiento -->
                 <div class="concept-card">
-                    <h3>Particionamiento de Datos</h3>
-                    <p>Técnicas para dividir datos en fragmentos que pueden ser procesados en paralelo por diferentes nodos.</p>
+                    <h3>Métricas de Rendimiento en Sistemas Paralelos</h3>
+                    <p>Para evaluar la eficiencia de un sistema paralelo de bases de datos, se utilizan dos medidas fundamentales que determinan su capacidad de procesamiento.</p>
+                    
+                    <div class="performance-metrics">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h4>Productividad</h4>
+                            <p><strong>Definición:</strong> Número de tareas completadas en un intervalo de tiempo determinado.</p>
+                            <p><strong>Fórmula:</strong> Productividad = Tareas Completadas / Tiempo Total</p>
+                            <p><strong>Importancia:</strong> Indica la capacidad del sistema para manejar múltiples operaciones simultáneas.</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h4>Tiempo de Respuesta</h4>
+                            <p><strong>Definición:</strong> Tiempo necesario para completar una única tarea y devolver el resultado.</p>
+                            <p><strong>Fórmula:</strong> Tiempo Respuesta = Tiempo Final - Tiempo Inicio</p>
+                            <p><strong>Importancia:</strong> Determina la velocidad de procesamiento individual de consultas.</p>
+                        </div>
+                    </div>
+
                     <div class="concept-details">
-                        <strong>Estrategias de particionamiento:</strong>
+                        <strong>Escenarios de Aplicación:</strong>
                         <ul>
-                            <li><strong>Horizontal:</strong> División por filas (sharding)</li>
-                            <li><strong>Vertical:</strong> División por columnas</li>
-                            <li><strong>Funcional:</strong> División por funcionalidad</li>
-                            <li><strong>Round-robin:</strong> Distribución uniforme</li>
+                            <li><strong>Transacciones pequeñas múltiples:</strong> El paralelismo aumenta la productividad</li>
+                            <li><strong>Transacciones largas múltiples:</strong> Mejora tanto tiempo de respuesta como productividad</li>
+                            <li><strong>Consultas complejas:</strong> Reducción significativa del tiempo de procesamiento</li>
                         </ul>
-                        <strong>Consideraciones:</strong> Balance de carga, localidad de datos, consultas cross-partition
                     </div>
                 </div>
 
+                <!-- Ganancia de Velocidad y Ampliabilidad -->
                 <div class="concept-card">
-                    <h3>Algoritmos de Join Paralelos</h3>
-                    <p>Técnicas para ejecutar operaciones de unión (JOIN) de manera eficiente en sistemas paralelos.</p>
+                    <h3>Ganancia de Velocidad y Ampliabilidad</h3>
+                    <p>Dos variables críticas para evaluar la eficiencia de sistemas paralelos de bases de datos.</p>
+                    
+                    <div class="scalability-chart">
+                        <h4>Tipos de Ampliabilidad</h4>
+                        <div class="chart-container">
+                            <div class="chart-bar" style="height: 60%;" data-label="Lineal"></div>
+                            <div class="chart-bar" style="height: 45%;" data-label="Sublineal"></div>
+                            <div class="chart-bar" style="height: 80%;" data-label="Por Lotes"></div>
+                            <div class="chart-bar" style="height: 70%;" data-label="Transacciones"></div>
+                        </div>
+                        <p class="text-center text-muted">Comparación de tipos de ampliabilidad en sistemas paralelos</p>
+                    </div>
+
                     <div class="concept-details">
-                        <strong>Algoritmos principales:</strong>
-                        <ul>
-                            <li><strong>Hash Join Paralelo:</strong> Distribución por hash</li>
-                            <li><strong>Sort-Merge Join:</strong> Ordenamiento paralelo y merge</li>
-                            <li><strong>Nested Loop Paralelo:</strong> Bucles anidados distribuidos</li>
-                            <li><strong>Broadcast Join:</strong> Replicación de tablas pequeñas</li>
-                        </ul>
-                        <strong>Optimización:</strong> Minimización de comunicación, balance de carga
+                        <strong>Variables de Evaluación:</strong>
+                        <div class="parallel-types">
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                                <h4>Ganancia de Velocidad</h4>
+                                <p><strong>Lineal:</strong> Incremento proporcional al número de procesadores</p>
+                                <p><strong>Sublineal:</strong> Incremento menor debido a overhead y comunicación</p>
+                            </div>
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                </div>
+                                <h4>Ampliabilidad</h4>
+                                <p><strong>Por Lotes:</strong> Aumenta tamaño de BD y tareas</p>
+                                <p><strong>Transacciones:</strong> Incrementa velocidad de envío</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Arquitecturas Paralelas -->
                 <div class="concept-card">
-                    <h3>Balanceo de Carga</h3>
-                    <p>Mecanismos para distribuir uniformemente el trabajo entre los nodos de procesamiento.</p>
+                    <h3>Arquitecturas Paralelas de Bases de Datos</h3>
+                    <p>Diferentes enfoques arquitectónicos para implementar sistemas paralelos, cada uno con ventajas y desventajas específicas.</p>
+                    
+                    <!-- Diagrama de Arquitecturas -->
+                    <div class="visual-diagram">
+                        <h4>Tipos de Arquitecturas Paralelas</h4>
+                        <div class="architecture-diagram">
+                            <div class="architecture-layer">
+                                <div class="processor">CPU 1</div>
+                                <div class="processor">CPU 2</div>
+                                <div class="processor">CPU 3</div>
+                                <div class="memory-shared">Memoria Compartida</div>
+                            </div>
+                            <div class="connection-line"></div>
+                            <div class="architecture-layer">
+                                <div class="processor">CPU 1</div>
+                                <div class="processor">CPU 2</div>
+                                <div class="processor">CPU 3</div>
+                                <div class="disk-shared">Discos Compartidos</div>
+                            </div>
+                            <div class="connection-line"></div>
+                            <div class="architecture-layer">
+                                <div class="processor">CPU 1</div>
+                                <div class="processor">CPU 2</div>
+                                <div class="processor">CPU 3</div>
+                                <div class="memory-shared">Memoria Local</div>
+                                <div class="disk-shared">Discos Locales</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="concept-details">
-                        <strong>Estrategias:</strong>
-                        <ul>
-                            <li><strong>Estático:</strong> Distribución basada en estadísticas</li>
-                            <li><strong>Dinámico:</strong> Ajuste en tiempo de ejecución</li>
-                            <li><strong>Adaptativo:</strong> Aprendizaje de patrones de carga</li>
-                            <li><strong>Predictivo:</strong> Anticipación de cargas futuras</li>
-                        </ul>
-                        <strong>Métricas:</strong> Tiempo de respuesta, utilización de CPU, throughput
+                        <strong>Comparación de Arquitecturas:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Arquitectura</th>
+                                        <th>Memoria</th>
+                                        <th>Discos</th>
+                                        <th>Ventajas</th>
+                                        <th>Desventajas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Memoria Compartida</strong></td>
+                                        <td>Compartida</td>
+                                        <td>Compartidos</td>
+                                        <td>Comunicación directa, fácil programación</td>
+                                        <td>Cuello de botella en memoria</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Disco Compartido</strong></td>
+                                        <td>Local</td>
+                                        <td>Compartidos</td>
+                                        <td>Menor tráfico de red, tolerancia a fallos</td>
+                                        <td>Contención en acceso a discos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sin Compartimiento</strong></td>
+                                        <td>Local</td>
+                                        <td>Locales</td>
+                                        <td>Alta escalabilidad, independencia</td>
+                                        <td>Alto costo de comunicación</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Jerárquico</strong></td>
+                                        <td>Mixta</td>
+                                        <td>Mixtos</td>
+                                        <td>Flexibilidad, balanceado</td>
+                                        <td>Complejidad de diseño</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Paralelismo en Consultas -->
                 <div class="concept-card">
-                    <h3>Tolerancia a Fallos en Sistemas Paralelos</h3>
-                    <p>Mecanismos para mantener la disponibilidad y consistencia ante fallos de nodos en sistemas paralelos.</p>
+                    <h3>Paralelismo en Consultas</h3>
+                    <p>Estrategias para ejecutar una sola consulta utilizando múltiples procesadores simultáneamente.</p>
+                    
                     <div class="concept-details">
-                        <strong>Estrategias:</strong>
+                        <strong>Tipos de Paralelismo en Consultas:</strong>
+                        <div class="parallel-types">
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h4>Paralelismo en Operaciones</h4>
+                                <p>Ejecutar operaciones individuales en paralelo (selección, ordenación, uniones)</p>
+                                <div class="code-block">
+-- Ejemplo: Selección paralela
+SELECT * FROM tabla_grande 
+WHERE condicion
+-- Se ejecuta en múltiples procesadores simultáneamente
+                                </div>
+                            </div>
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <h4>Paralelismo entre Operaciones</h4>
+                                <p>Ejecutar diferentes operaciones de la consulta en paralelo</p>
+                                <div class="code-block">
+-- Ejemplo: Pipeline de operaciones
+SELECT t1.*, t2.* 
+FROM tabla1 t1 JOIN tabla2 t2 ON t1.id = t2.id
+WHERE t1.condicion AND t2.condicion
+-- JOIN y WHERE se ejecutan en paralelo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paralelismo entre Consultas -->
+                <div class="concept-card">
+                    <h3>Paralelismo entre Consultas</h3>
+                    <p>Ejecución simultánea de múltiples consultas diferentes utilizando recursos disponibles.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Características del Paralelismo entre Consultas:</strong>
                         <ul>
-                            <li><strong>Checkpointing:</strong> Puntos de recuperación periódicos</li>
-                            <li><strong>Replicación:</strong> Múltiples copias de datos críticos</li>
-                            <li><strong>Failover:</strong> Transferencia automática de carga</li>
-                            <li><strong>Recovery:</strong> Recuperación de transacciones incompletas</li>
+                            <li><strong>Objetivo:</strong> Aumentar el número de transacciones por segundo</li>
+                            <li><strong>Implementación:</strong> Más sencilla en arquitecturas de memoria compartida</li>
+                            <li><strong>Desafío:</strong> Coherencia de cachés entre procesadores</li>
+                            <li><strong>Beneficio:</strong> Mayor productividad del sistema</li>
                         </ul>
-                        <strong>Desafíos:</strong> Consistencia, overhead, complejidad
+                        
+                        <strong>Problema de Coherencia de Cachés:</strong>
+                        <div class="disadvantages-grid">
+                            <div class="disadvantage-item">
+                                <h5>Lectura Concurrente</h5>
+                                <p>Múltiples procesadores leen los mismos datos simultáneamente</p>
+                            </div>
+                            <div class="disadvantage-item">
+                                <h5>Escritura Concurrente</h5>
+                                <p>Modificaciones simultáneas pueden causar inconsistencias</p>
+                            </div>
+                            <div class="disadvantage-item">
+                                <h5>Sincronización</h5>
+                                <p>Necesidad de protocolos para mantener coherencia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desventajas de Sistemas Paralelos -->
+                <div class="concept-card">
+                    <h3>Desventajas y Limitaciones</h3>
+                    <p>Aunque los sistemas paralelos ofrecen ventajas significativas, también presentan desafíos importantes que deben considerarse.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Principales Desventajas:</strong>
+                        <div class="disadvantages-grid">
+                            <div class="disadvantage-item">
+                                <h5>Costes de Inicio</h5>
+                                <p>Inicializar N procesos puede ser más costoso que el tiempo real de procesamiento, afectando la ganancia de velocidad.</p>
+                            </div>
+                            <div class="disadvantage-item">
+                                <h5>Interferencia</h5>
+                                <p>Competencia por recursos compartidos (memoria, red) puede causar retrasos y reducir la eficiencia.</p>
+                            </div>
+                            <div class="disadvantage-item">
+                                <h5>Sesgo en Tareas</h5>
+                                <p>Las tareas no se dividen uniformemente, algunas son más grandes que otras, causando desequilibrio.</p>
+                            </div>
+                            <div class="disadvantage-item">
+                                <h5>Complejidad de Diseño</h5>
+                                <p>Mayor complejidad en el diseño, implementación y mantenimiento del sistema.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diseño de Sistemas Paralelos -->
+                <div class="concept-card">
+                    <h3>Diseño de Sistemas Paralelos</h3>
+                    <p>Consideraciones importantes para diseñar sistemas paralelos robustos y eficientes.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Aspectos de Disponibilidad:</strong>
+                        <div class="parallel-types">
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h4>Recuperación ante Fallos</h4>
+                                <p>Sistema debe recuperarse automáticamente ante fallos de discos o procesadores</p>
+                                <ul>
+                                    <li>Replicación de datos</li>
+                                    <li>Checkpointing automático</li>
+                                    <li>Failover transparente</li>
+                                </ul>
+                            </div>
+                            <div class="parallel-type">
+                                <div class="parallel-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <h4>Reorganización Dinámica</h4>
+                                <p>Capacidad de reorganizar datos y esquemas sin interrumpir el servicio</p>
+                                <ul>
+                                    <li>Reorganización de particiones</li>
+                                    <li>Rebalanceo de carga</li>
+                                    <li>Actualización de esquemas</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -139,52 +675,603 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Configuración de PostgreSQL Paralelo</h4>
-                        <p><strong>Escenario:</strong> Optimización de consultas paralelas en PostgreSQL</p>
+                        <h4>Configuración de Paralelismo en Oracle</h4>
+                        <p><strong>Escenario:</strong> Configuración de procesamiento paralelo para consultas complejas</p>
                         <div class="code-block">
--- Configuración de paralelismo en PostgreSQL
--- postgresql.conf
-max_parallel_workers_per_gather = 4
-max_parallel_workers = 8
-max_parallel_maintenance_workers = 4
-parallel_tuple_cost = 0.1
-parallel_setup_cost = 1000.0
+-- Habilitar procesamiento paralelo para una sesión
+ALTER SESSION ENABLE PARALLEL QUERY;
 
--- Habilitar paralelismo en consultas
-SET max_parallel_workers_per_gather = 4;
-SET parallel_tuple_cost = 0.1;
+-- Configurar grado de paralelismo
+ALTER SESSION FORCE PARALLEL QUERY PARALLEL 4;
 
--- Consulta que aprovecha el paralelismo
-EXPLAIN (ANALYZE, BUFFERS, VERBOSE)
-SELECT 
-    c.categoria,
-    COUNT(*) as total_productos,
-    AVG(p.precio) as precio_promedio,
-    SUM(p.stock) as stock_total
-FROM productos p
-JOIN categorias c ON p.categoria_id = c.id
-WHERE p.activo = true
-  AND p.precio > 10
-GROUP BY c.categoria
-ORDER BY total_productos DESC;
+-- Consulta con hint de paralelismo
+SELECT /*+ PARALLEL(t, 4) */ 
+    t1.columna1, t2.columna2
+FROM tabla_grande t1, tabla_grande t2
+WHERE t1.id = t2.id
+AND t1.fecha BETWEEN '2024-01-01' AND '2024-12-31';
 
--- Crear índices para optimizar consultas paralelas
-CREATE INDEX CONCURRENTLY idx_productos_categoria_precio 
-ON productos (categoria_id, precio) 
-WHERE activo = true;
+-- Verificar ejecución paralela
+SELECT * FROM v$pq_sesstat 
+WHERE statistic = 'Parallelized';
 
--- Configurar particionamiento por rango
+-- Configuración automática de paralelismo
+ALTER SYSTEM SET parallel_degree_policy = AUTO;
+ALTER SYSTEM SET parallel_min_time_threshold = 10;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Procesamiento Paralelo en SQL Server</h4>
+                        <p><strong>Escenario:</strong> Configuración de paralelismo en SQL Server</p>
+                        <div class="code-block">
+-- Configurar grado máximo de paralelismo
+EXEC sp_configure 'max degree of parallelism', 4;
+RECONFIGURE;
+
+-- Habilitar procesamiento paralelo para índices
+CREATE INDEX idx_paralelo ON tabla_grande (columna1, columna2)
+WITH (MAXDOP = 4);
+
+-- Consulta con hint de paralelismo
+SELECT * FROM tabla_grande WITH (INDEX(idx_paralelo))
+WHERE columna1 > 1000
+OPTION (MAXDOP 4);
+
+-- Verificar configuración actual
+SELECT name, value_in_use 
+FROM sys.configurations 
+WHERE name LIKE '%parallel%';
+
+-- Configuración de umbral de costo para paralelismo
+EXEC sp_configure 'cost threshold for parallelism', 25;
+RECONFIGURE;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Arquitectura de Memoria Compartida</h4>
+                        <p><strong>Escenario:</strong> Implementación de sistema con memoria compartida</p>
+                        <div class="code-block">
+-- Estructura de tabla particionada para paralelismo
 CREATE TABLE ventas (
-    id BIGSERIAL,
+    id NUMBER,
     fecha DATE,
-    producto_id INTEGER,
-    cantidad INTEGER,
-    precio DECIMAL(10,2)
-) PARTITION BY RANGE (fecha);
+    producto_id NUMBER,
+    cantidad NUMBER,
+    precio NUMBER
+) PARTITION BY RANGE (fecha) (
+    PARTITION p2023 VALUES LESS THAN (DATE '2024-01-01'),
+    PARTITION p2024 VALUES LESS THAN (DATE '2025-01-01'),
+    PARTITION p2025 VALUES LESS THAN (MAXVALUE)
+);
 
--- Crear particiones mensuales
-CREATE TABLE ventas_2024_01 PARTITION OF ventas
-FOR VALUES FROM ('2024-01-01') TO ('2024-02-01');
+-- Consulta paralela en particiones
+SELECT /*+ PARALLEL(v, 4) */ 
+    producto_id, 
+    SUM(cantidad * precio) as total_ventas
+FROM ventas v
+WHERE fecha >= DATE '2024-01-01'
+GROUP BY producto_id
+ORDER BY total_ventas DESC;
 
-CREATE TABLE ventas_2024_02 PARTITION OF ventas
-FOR VALUES FROM ('2024-02-01') TO ('2024-03-01');
+-- Verificar distribución de trabajo
+SELECT * FROM v$pq_tqstat;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Sistema Sin Compartimiento</h4>
+                        <p><strong>Escenario:</strong> Implementación distribuida con nodos independientes</p>
+                        <div class="code-block">
+-- Configuración de nodos distribuidos
+-- Nodo 1: Datos de clientes
+CREATE TABLE clientes_nodo1 (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100),
+    email VARCHAR2(100),
+    region VARCHAR2(50)
+);
+
+-- Nodo 2: Datos de productos
+CREATE TABLE productos_nodo2 (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100),
+    categoria VARCHAR2(50),
+    precio NUMBER
+);
+
+-- Nodo 3: Datos de ventas
+CREATE TABLE ventas_nodo3 (
+    id NUMBER PRIMARY KEY,
+    cliente_id NUMBER,
+    producto_id NUMBER,
+    fecha DATE,
+    cantidad NUMBER
+);
+
+-- Consulta distribuida con paralelismo
+SELECT /*+ PARALLEL(c, 2) PARALLEL(p, 2) PARALLEL(v, 2) */
+    c.nombre as cliente,
+    p.nombre as producto,
+    SUM(v.cantidad * p.precio) as total
+FROM clientes_nodo1 c,
+     productos_nodo2 p,
+     ventas_nodo3 v
+WHERE c.id = v.cliente_id
+AND p.id = v.producto_id
+AND v.fecha >= DATE '2024-01-01'
+GROUP BY c.nombre, p.nombre
+ORDER BY total DESC;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Monitoreo de Rendimiento Paralelo</h4>
+                        <p><strong>Escenario:</strong> Análisis de eficiencia del procesamiento paralelo</p>
+                        <div class="code-block">
+-- Consultas de monitoreo en Oracle
+-- Verificar sesiones paralelas activas
+SELECT 
+    qcsid as session_id,
+    degree as grado_paralelismo,
+    req_degree as grado_solicitado,
+    total_work as trabajo_total,
+    completed_work as trabajo_completado
+FROM v$pq_sesstat;
+
+-- Estadísticas de procesamiento paralelo
+SELECT 
+    statistic,
+    value
+FROM v$pq_sesstat
+WHERE statistic IN (
+    'Parallelized',
+    'DOP',
+    'Slaves',
+    'Slaves Set'
+);
+
+-- Análisis de distribución de trabajo
+SELECT 
+    dfo_number,
+    tq_id,
+    server_type,
+    num_rows,
+    bytes,
+    waits,
+    timeouts
+FROM v$pq_tqstat
+ORDER BY dfo_number, tq_id;
+
+-- Rendimiento de consultas paralelas
+SELECT 
+    sql_id,
+    executions,
+    elapsed_time,
+    cpu_time,
+    parallel_servers_total,
+    parallel_servers_used
+FROM v$sql
+WHERE parallel_servers_total > 0
+ORDER BY elapsed_time DESC;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Optimización de Paralelismo</h4>
+                        <p><strong>Escenario:</strong> Técnicas para optimizar el rendimiento paralelo</p>
+                        <div class="code-block">
+-- Configuración optimizada de paralelismo
+-- 1. Configurar parámetros del sistema
+ALTER SYSTEM SET parallel_degree_policy = AUTO;
+ALTER SYSTEM SET parallel_min_time_threshold = 10;
+ALTER SYSTEM SET parallel_degree_limit = 16;
+
+-- 2. Configurar paralelismo por tabla
+ALTER TABLE tabla_grande PARALLEL 4;
+
+-- 3. Crear índices con paralelismo
+CREATE INDEX idx_paralelo ON tabla_grande (columna1, columna2)
+PARALLEL 4;
+
+-- 4. Consulta optimizada con hints
+SELECT /*+ PARALLEL(t, 4) USE_HASH(t) */
+    t.columna1,
+    COUNT(*) as total_registros
+FROM tabla_grande t
+WHERE t.fecha >= DATE '2024-01-01'
+GROUP BY t.columna1
+ORDER BY total_registros DESC;
+
+-- 5. Análisis de plan de ejecución
+EXPLAIN PLAN FOR
+SELECT /*+ PARALLEL(t, 4) */ *
+FROM tabla_grande t
+WHERE t.columna1 = 'valor';
+
+-- Verificar plan paralelo
+SELECT * FROM table(dbms_xplan.display);
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-item">
+                    <h4>Actividad 1: Análisis de Arquitecturas Paralelas</h4>
+                    <p><strong>Duración:</strong> 40 minutos</p>
+                    <p>Compara las diferentes arquitecturas paralelas de bases de datos y determina cuál es más adecuada para diferentes escenarios:</p>
+                    <ul>
+                        <li>Sistema OLTP con alta concurrencia</li>
+                        <li>Data Warehouse con consultas complejas</li>
+                        <li>Sistema distribuido geográficamente</li>
+                        <li>Aplicación de análisis en tiempo real</li>
+                    </ul>
+                    <p><strong>Entregables:</strong></p>
+                    <ul>
+                        <li>Matriz comparativa de arquitecturas</li>
+                        <li>Justificación técnica para cada escenario</li>
+                        <li>Diagramas de arquitectura propuestos</li>
+                        <li>Análisis de costos y beneficios</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 40 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 2: Configuración de Paralelismo</h4>
+                    <p><strong>Duración:</strong> 35 minutos</p>
+                    <p>Configura y optimiza el procesamiento paralelo en Oracle y SQL Server para diferentes tipos de consultas:</p>
+                    <div class="code-block">
+-- Consultas a optimizar:
+-- 1. Consulta de agregación en tabla grande
+SELECT categoria, SUM(precio * cantidad) 
+FROM ventas 
+WHERE fecha >= '2024-01-01'
+GROUP BY categoria;
+
+-- 2. Consulta con múltiples JOINs
+SELECT c.nombre, p.nombre, v.cantidad
+FROM clientes c, productos p, ventas v
+WHERE c.id = v.cliente_id AND p.id = v.producto_id;
+
+-- 3. Consulta de análisis complejo
+SELECT 
+    EXTRACT(YEAR FROM fecha) as año,
+    EXTRACT(MONTH FROM fecha) as mes,
+    COUNT(*) as total_ventas,
+    AVG(precio) as precio_promedio
+FROM ventas
+GROUP BY EXTRACT(YEAR FROM fecha), EXTRACT(MONTH FROM fecha);
+                    </div>
+                    <p><strong>Tareas:</strong></p>
+                    <ul>
+                        <li>Configurar parámetros de paralelismo</li>
+                        <li>Aplicar hints de paralelismo apropiados</li>
+                        <li>Medir rendimiento antes y después</li>
+                        <li>Documentar mejoras obtenidas</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 35 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 3: Diseño de Sistema Paralelo</h4>
+                    <p><strong>Duración:</strong> 50 minutos</p>
+                    <p>Diseña un sistema paralelo completo para una aplicación de e-commerce con los siguientes requerimientos:</p>
+                    <ul>
+                        <li><strong>Volumen:</strong> 10 millones de productos, 1 millón de clientes</li>
+                        <li><strong>Consultas:</strong> Búsquedas complejas, reportes de ventas, análisis de comportamiento</li>
+                        <li><strong>Disponibilidad:</strong> 99.9% uptime</li>
+                        <li><strong>Escalabilidad:</strong> Crecimiento del 50% anual</li>
+                    </ul>
+                    <p><strong>Componentes del diseño:</strong></p>
+                    <ul>
+                        <li>Arquitectura general del sistema</li>
+                        <li>Estrategia de particionamiento de datos</li>
+                        <li>Configuración de paralelismo</li>
+                        <li>Plan de recuperación ante fallos</li>
+                        <li>Estrategia de monitoreo y optimización</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 50 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 4: Análisis de Rendimiento</h4>
+                    <p><strong>Duración:</strong> 30 minutos</p>
+                    <p>Analiza el rendimiento de diferentes configuraciones de paralelismo y determina la configuración óptima:</p>
+                    <div class="code-block">
+-- Configuraciones a probar:
+-- Configuración 1: Sin paralelismo
+-- Configuración 2: Paralelismo grado 2
+-- Configuración 3: Paralelismo grado 4
+-- Configuración 4: Paralelismo grado 8
+-- Configuración 5: Paralelismo automático
+
+-- Consultas de prueba:
+-- 1. Consulta simple de selección
+-- 2. Consulta con agregación
+-- 3. Consulta con múltiples JOINs
+-- 4. Consulta con ordenamiento
+-- 5. Consulta con subconsultas
+                    </div>
+                    <p><strong>Métricas a medir:</strong></p>
+                    <ul>
+                        <li>Tiempo de ejecución</li>
+                        <li>Uso de CPU</li>
+                        <li>Uso de memoria</li>
+                        <li>I/O de disco</li>
+                        <li>Escalabilidad</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 30 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 5: Resolución de Problemas</h4>
+                    <p><strong>Duración:</strong> 25 minutos</p>
+                    <p>Identifica y resuelve problemas comunes en sistemas paralelos de bases de datos:</p>
+                    <ul>
+                        <li><strong>Problema 1:</strong> Consultas paralelas que no mejoran el rendimiento</li>
+                        <li><strong>Problema 2:</strong> Contención de recursos entre procesos paralelos</li>
+                        <li><strong>Problema 3:</strong> Sesgo en la distribución de trabajo</li>
+                        <li><strong>Problema 4:</strong> Fallos en la coherencia de cachés</li>
+                        <li><strong>Problema 5:</strong> Degradación del rendimiento con alto paralelismo</li>
+                    </ul>
+                    <p><strong>Para cada problema:</strong></p>
+                    <ul>
+                        <li>Identifica las causas raíz</li>
+                        <li>Propón soluciones técnicas</li>
+                        <li>Implementa las correcciones</li>
+                        <li>Verifica la mejora del rendimiento</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 25 min
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recursos Adicionales -->
+            <section id="recursos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    Recursos Adicionales
+                </h2>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Bases de Datos Paralelas - Lección Magistral</h4>
+                        <p>Video explicativo sobre arquitecturas paralelas y su implementación en sistemas de bases de datos</p>
+                        <a href="#" class="resource-link">Ver video</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Bases de Datos Paralelas (II) - Video Complementario</h4>
+                        <p>Ampliación de conceptos sobre procesamiento paralelo y optimización de rendimiento</p>
+                        <a href="#" class="resource-link">Ver video</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Bases de Datos Paralelas vs Grid DB</h4>
+                        <p>Artículo comparativo entre bases de datos paralelas y sistemas Grid para procesamiento distribuido</p>
+                        <a href="#" class="resource-link">Leer artículo</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Líneas de Investigación en Bases de Datos</h4>
+                        <p>Análisis de las tendencias actuales en investigación de bases de datos paralelas</p>
+                        <a href="#" class="resource-link">Leer investigación</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Parallel Processing and Parallel Database</h4>
+                        <p>Fundamentos de Oracle 8 para procesamiento paralelo y bases de datos paralelas</p>
+                        <a href="#" class="resource-link">Ver documentación</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Parallel Execution with Oracle Database</h4>
+                        <p>Documentación oficial de Oracle sobre conceptos básicos de paralelismo</p>
+                        <a href="#" class="resource-link">Ver documentación</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Configuración de Paralelismo en SQL Server</h4>
+                        <p>Guía completa para configurar el grado máximo de paralelismo en SQL Server</p>
+                        <a href="#" class="resource-link">Ver guía</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Aspectos Importantes sobre SBDP</h4>
+                        <p>Análisis detallado de los aspectos más relevantes de los sistemas de bases de datos paralelos</p>
+                        <a href="#" class="resource-link">Leer análisis</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cuestionario de Evaluación -->
+            <section id="cuestionario" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    Cuestionario de Evaluación
+                </h2>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">
+                        <h4>Pregunta 1</h4>
+                        <p>Indica la afirmación correcta sobre el procesamiento paralelo de consultas:</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" value="A" id="q1a">
+                                <label for="q1a">A. El procesamiento paralelo de consultas disminuye el tiempo de respuesta.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" value="B" id="q1b">
+                                <label for="q1b">B. Al ejecutar consultas en paralelo aumenta el tiempo de respuesta.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" value="C" id="q1c">
+                                <label for="q1c">C. La ejecución en paralelo disminuye la productividad del sistema.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" value="D" id="q1d">
+                                <label for="q1d">D. B y C son correctas.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Pregunta 2</h4>
+                        <p>Las máquinas de grano fino son aquellas que:</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" value="A" id="q2a">
+                                <label for="q2a">A. Disminuyen la productividad del sistema.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" value="B" id="q2b">
+                                <label for="q2b">B. Aumentan la productividad utilizando procesadores de mucha potencia.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" value="C" id="q2c">
+                                <label for="q2c">C. Aumentan la productividad utilizando procesadores de poca potencia.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" value="D" id="q2d">
+                                <label for="q2d">D. Ninguna de las anteriores.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Pregunta 3</h4>
+                        <p>En un sistema de bases de datos paralelo de memoria compartida:</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" value="A" id="q3a">
+                                <label for="q3a">A. El coste de una lectura es mayor que un sistema de disco compartido.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" value="B" id="q3b">
+                                <label for="q3b">B. Existe un tráfico mayor que el de disco compartido.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" value="C" id="q3c">
+                                <label for="q3c">C. Existe una comunicación directa entre los procesadores y la memoria.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" value="D" id="q3d">
+                                <label for="q3d">D. Ninguna de las anteriores es correcta.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Pregunta 4</h4>
+                        <p>En un sistema paralelo de bases de datos:</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q4" value="A" id="q4a">
+                                <label for="q4a">A. El paralelismo entre consultas reduce la productividad.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q4" value="B" id="q4b">
+                                <label for="q4b">B. El paralelismo entre consultas reduce siempre el tiempo de espera.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q4" value="C" id="q4c">
+                                <label for="q4c">C. El paralelismo entre consultas aumenta la productividad pero puede en ocasiones aumentar el tiempo de espera.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q4" value="D" id="q4d">
+                                <label for="q4d">D. Ninguna de las anteriores es correcta.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Pregunta 5</h4>
+                        <p>En los sistemas paralelos de bases de datos:</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q5" value="A" id="q5a">
+                                <label for="q5a">A. Disminuye el grado el coste de inicio al aumentar el paralelismo.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q5" value="B" id="q5b">
+                                <label for="q5b">B. La memoria se convierte en un cuello de botella.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q5" value="C" id="q5c">
+                                <label for="q5c">C. Pueden existir tareas de diferente tamaño.</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q5" value="D" id="q5d">
+                                <label for="q5d">D. B y C son correctas.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html>
