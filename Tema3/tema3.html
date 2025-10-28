@@ -451,6 +451,79 @@
             border-radius: 4px;
             border-left: 3px solid #28a745;
         }
+        
+        /* Estilos para XPath vs XQuery */
+        .comparison-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .comparison-table tr:hover {
+            background: #e3f2fd;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .code-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .code-section h5 {
+            color: #28a745;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .code-section p {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1442,6 +1515,350 @@ basex -c "1 + 1"
                                 <li><strong>Migración:</strong> Migración desde sistemas relacionales puede ser compleja</li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- XPath vs XQuery: Diferencias Fundamentales -->
+            <section id="xpath-xquery" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    XPath vs XQuery: Diferencias Fundamentales
+                </h2>
+
+                <!-- Introducción -->
+                <div class="concept-card">
+                    <h3>¿Cuál es la Diferencia entre XPath y XQuery?</h3>
+                    <p>Comprender la diferencia entre <strong>XPath</strong> y <strong>XQuery</strong> es fundamental para dominar el procesamiento de datos XML. Aunque están relacionados, cada uno tiene propósitos y capacidades específicas.</p>
+                    
+                    <div class="basex-container">
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="basex-title">XPath</div>
+                            <p><strong>XML Path Language</strong> - Lenguaje de consulta para navegar y seleccionar nodos en documentos XML. Es un subconjunto de XQuery.</p>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="basex-title">XQuery</div>
+                            <p><strong>XML Query Language</strong> - Lenguaje de consulta completo para XML que incluye XPath como subconjunto y añade capacidades de programación.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparación Detallada -->
+                <div class="concept-card">
+                    <h3>Comparación Detallada</h3>
+                    <p>Tabla comparativa de las características principales de XPath y XQuery:</p>
+                    
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aspecto</th>
+                                    <th>XPath</th>
+                                    <th>XQuery</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Propósito</strong></td>
+                                    <td>Seleccionar nodos</td>
+                                    <td>Consultar y transformar XML</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sintaxis</strong></td>
+                                    <td>Expresiones de ruta</td>
+                                    <td>Lenguaje de programación</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Construcción XML</strong></td>
+                                    <td>❌ No</td>
+                                    <td>✅ Sí</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Variables</strong></td>
+                                    <td>❌ No</td>
+                                    <td>✅ Sí</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Funciones personalizadas</strong></td>
+                                    <td>❌ No</td>
+                                    <td>✅ Sí</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Agregaciones</strong></td>
+                                    <td>✅ Básicas</td>
+                                    <td>✅ Avanzadas</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FLWOR</strong></td>
+                                    <td>❌ No</td>
+                                    <td>✅ Sí</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Complejidad</strong></td>
+                                    <td>Simple</td>
+                                    <td>Complejo</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Uso típico</strong></td>
+                                    <td>Selección de datos</td>
+                                    <td>Procesamiento completo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Ejemplos Prácticos -->
+                <div class="concept-card">
+                    <h3>Ejemplos Prácticos</h3>
+                    <p>Ejemplos comparativos usando los mismos datos XML para mostrar las diferencias en sintaxis y capacidades.</p>
+                    
+                    <div class="example-card">
+                        <h4>Ejemplo 1: Selección Simple</h4>
+                        <p><strong>Objetivo:</strong> Seleccionar libros con precio mayor a 15 euros</p>
+                        
+                        <div class="code-comparison">
+                            <div class="code-section">
+                                <h5>XPath</h5>
+                                <div class="xquery-example">
+<span class="xquery-comment">(: Sintaxis concisa para selección :)</span>
+<span class="xquery-keyword">//libro[@precio > 15]</span>
+                                </div>
+                                <p><strong>Resultado:</strong> Selecciona todos los elementos libro con precio > 15</p>
+                            </div>
+                            
+                            <div class="code-section">
+                                <h5>XQuery</h5>
+                                <div class="xquery-example">
+<span class="xquery-comment">(: Lenguaje de programación completo :)</span>
+<span class="xquery-keyword">for</span> $libro <span class="xquery-keyword">in</span> <span class="xquery-string">//libro[@precio > 15]</span>
+<span class="xquery-keyword">return</span> $libro
+                                </div>
+                                <p><strong>Resultado:</strong> Mismo resultado pero con sintaxis de programación</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Construcción de XML</h4>
+                        <p><strong>Objetivo:</strong> Crear un documento XML con información de libros caros</p>
+                        
+                        <div class="code-comparison">
+                            <div class="code-section">
+                                <h5>XPath</h5>
+                                <div class="xquery-example">
+<span class="xquery-comment">(: XPath NO puede construir XML :)</span>
+<span class="xquery-comment">(: Solo puede seleccionar elementos existentes :)</span>
+<span class="xquery-keyword">//libro[@precio > 15]/titulo</span>
+                                </div>
+                                <p><strong>Limitación:</strong> XPath no puede crear nuevos elementos XML</p>
+                            </div>
+                            
+                            <div class="code-section">
+                                <h5>XQuery</h5>
+                                <div class="xquery-example">
+<span class="xquery-comment">(: XQuery SÍ puede construir XML :)</span>
+<span class="xquery-tag">&lt;libros-caros&gt;</span>
+  {<span class="xquery-keyword">for</span> $libro <span class="xquery-keyword">in</span> <span class="xquery-string">//libro[@precio > 15]</span>
+   <span class="xquery-keyword">return</span>
+     <span class="xquery-tag">&lt;libro&gt;</span>
+       <span class="xquery-tag">&lt;titulo&gt;</span>{$libro/titulo/text()}<span class="xquery-tag">&lt;/titulo&gt;</span>
+       <span class="xquery-tag">&lt;precio&gt;</span>{$libro/@precio}<span class="xquery-tag">&lt;/precio&gt;</span>
+     <span class="xquery-tag">&lt;/libro&gt;</span>}
+<span class="xquery-tag">&lt;/libros-caros&gt;</span>
+                                </div>
+                                <p><strong>Capacidad:</strong> XQuery puede crear documentos XML completamente nuevos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Agregaciones y Cálculos</h4>
+                        <p><strong>Objetivo:</strong> Calcular estadísticas por autor</p>
+                        
+                        <div class="code-comparison">
+                            <div class="code-section">
+                                <h5>XPath</h5>
+                                <div class="xquery-example">
+<span class="xquery-comment">(: XPath con funciones básicas :)</span>
+<span class="xquery-keyword">count(//libro)</span>
+<span class="xquery-keyword">avg(//libro/@precio)</span>
+<span class="xquery-keyword">max(//libro/@precio)</span>
+                                </div>
+                                <p><strong>Limitación:</strong> Solo funciones básicas, sin agrupación</p>
+                            </div>
+                            
+                            <div class="code-section">
+                                <h5>XQuery</h5>
+                                <div class="xquery-example">
+<span class="xquery-comment">(: XQuery con agrupación y cálculos complejos :)</span>
+<span class="xquery-keyword">for</span> $autor <span class="xquery-keyword">in</span> <span class="xquery-string">//autor</span>
+<span class="xquery-keyword">let</span> $libros := $autor/libros/libro
+<span class="xquery-keyword">return</span>
+  <span class="xquery-tag">&lt;estadisticas-autor&gt;</span>
+    <span class="xquery-tag">&lt;nombre&gt;</span>{$autor/nombre/text()}<span class="xquery-tag">&lt;/nombre&gt;</span>
+    <span class="xquery-tag">&lt;total-libros&gt;</span>{count($libros)}<span class="xquery-tag">&lt;/total-libros&gt;</span>
+    <span class="xquery-tag">&lt;precio-promedio&gt;</span>{avg($libros/@precio)}<span class="xquery-tag">&lt;/precio-promedio&gt;</span>
+    <span class="xquery-tag">&lt;precio-maximo&gt;</span>{max($libros/@precio)}<span class="xquery-tag">&lt;/precio-maximo&gt;</span>
+  <span class="xquery-tag">&lt;/estadisticas-autor&gt;</span>
+                                </div>
+                                <p><strong>Capacidad:</strong> Agrupación, variables, cálculos complejos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Casos de Uso -->
+                <div class="concept-card">
+                    <h3>¿Cuándo Usar Cada Uno?</h3>
+                    <p>Guía práctica para decidir cuándo usar XPath o XQuery según el contexto y necesidades específicas.</p>
+                    
+                    <div class="basex-container">
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="basex-title">Usar XPath cuando:</div>
+                            <ul>
+                                <li>Necesitas <strong>seleccionar elementos</strong> específicos</li>
+                                <li>Trabajas con <strong>XSLT</strong> para transformaciones</li>
+                                <li>Haces <strong>consultas simples</strong> en XML</li>
+                                <li>Necesitas <strong>expresiones concisas</strong></li>
+                                <li>Integras con <strong>otros lenguajes</strong> (JavaScript, Java)</li>
+                            </ul>
+                        </div>
+
+                        <div class="basex-feature">
+                            <div class="basex-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="basex-title">Usar XQuery cuando:</div>
+                            <ul>
+                                <li>Necesitas <strong>construir documentos</strong> XML nuevos</li>
+                                <li>Haces <strong>consultas complejas</strong> con múltiples pasos</li>
+                                <li>Necesitas <strong>agregaciones</strong> y cálculos</li>
+                                <li>Quieres <strong>transformar datos</strong> XML</li>
+                                <li>Trabajas con <strong>bases de datos XML</strong> nativas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Relación entre XPath y XQuery -->
+                <div class="concept-card">
+                    <h3>Relación entre XPath y XQuery</h3>
+                    <p>XPath es un subconjunto de XQuery, lo que significa que toda expresión XPath válida también es válida en XQuery.</p>
+                    
+                    <div class="concept-details">
+                        <strong>XPath dentro de XQuery:</strong>
+                        <div class="xquery-example">
+<span class="xquery-comment">(: XQuery usando XPath :)</span>
+<span class="xquery-keyword">for</span> $libro <span class="xquery-keyword">in</span> <span class="xquery-string">//libro[@precio > 15]</span>  <span class="xquery-comment">(: Esta parte es XPath :)</span>
+<span class="xquery-keyword">return</span> $libro/titulo
+                        </div>
+                        
+                        <strong>XQuery extendiendo XPath:</strong>
+                        <div class="xquery-example">
+<span class="xquery-comment">(: XQuery añade capacidades de programación :)</span>
+<span class="xquery-keyword">let</span> $libros_caros := <span class="xquery-string">//libro[@precio > 15]</span>
+<span class="xquery-keyword">let</span> $total := count($libros_caros)
+<span class="xquery-keyword">return</span>
+  <span class="xquery-tag">&lt;resumen&gt;</span>
+    <span class="xquery-tag">&lt;total-libros-caros&gt;</span>{$total}<span class="xquery-tag">&lt;/total-libros-caros&gt;</span>
+    <span class="xquery-tag">&lt;libros&gt;</span>
+      {<span class="xquery-keyword">for</span> $libro <span class="xquery-keyword">in</span> $libros_caros
+       <span class="xquery-keyword">return</span> <span class="xquery-tag">&lt;libro&gt;</span>{$libro/titulo}<span class="xquery-tag">&lt;/libro&gt;</span>}
+    <span class="xquery-tag">&lt;/libros&gt;</span>
+  <span class="xquery-tag">&lt;/resumen&gt;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analogía -->
+                <div class="concept-card">
+                    <h3>Analogía para Entenderlo Mejor</h3>
+                    <p>Una analogía simple para comprender la diferencia entre XPath y XQuery:</p>
+                    
+                    <div class="analogy-container">
+                        <div class="analogy-card">
+                            <div class="analogy-icon">
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                            <div class="analogy-title">XPath</div>
+                            <div class="analogy-comparison">
+                                <div class="analogy-item real-world">
+                                    <strong>Mundo Real:</strong><br>
+                                    Navegar por carpetas en tu computadora
+                                </div>
+                                <div class="analogy-arrow">→</div>
+                                <div class="analogy-item database">
+                                    <strong>XML:</strong><br>
+                                    Seleccionar elementos específicos en documentos XML
+                                </div>
+                            </div>
+                            <p><strong>Ejemplo:</strong> <code>C:\Users\Documentos\archivo.txt</code> - Ruta específica</p>
+                        </div>
+
+                        <div class="analogy-card">
+                            <div class="analogy-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="analogy-title">XQuery</div>
+                            <div class="analogy-comparison">
+                                <div class="analogy-item real-world">
+                                    <strong>Mundo Real:</strong><br>
+                                    Programar en Python o JavaScript
+                                </div>
+                                <div class="analogy-arrow">→</div>
+                                <div class="analogy-item database">
+                                    <strong>XML:</strong><br>
+                                    Procesar y transformar datos XML completamente
+                                </div>
+                            </div>
+                            <p><strong>Capacidades:</strong> Puedes navegar (usar XPath) pero también crear, calcular y transformar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen -->
+                <div class="concept-card">
+                    <h3>Resumen</h3>
+                    <div class="advantage-disadvantage">
+                        <div class="advantage-list">
+                            <h4>XPath</h4>
+                            <ul>
+                                <li><strong>Propósito:</strong> Seleccionar datos XML</li>
+                                <li><strong>Sintaxis:</strong> Expresiones de ruta concisas</li>
+                                <li><strong>Complejidad:</strong> Simple y directo</li>
+                                <li><strong>Uso:</strong> Selección rápida de elementos</li>
+                                <li><strong>Integración:</strong> Usado dentro de otros lenguajes</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="disadvantage-list">
+                            <h4>XQuery</h4>
+                            <ul>
+                                <li><strong>Propósito:</strong> Procesar datos XML completamente</li>
+                                <li><strong>Sintaxis:</strong> Lenguaje de programación completo</li>
+                                <li><strong>Complejidad:</strong> Más potente pero más complejo</li>
+                                <li><strong>Uso:</strong> Consultas complejas y transformaciones</li>
+                                <li><strong>Capacidades:</strong> Incluye XPath + programación</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-details">
+                        <strong>Conclusión:</strong>
+                        <p>XPath es ideal para <strong>selección simple</strong> de datos XML, mientras que XQuery es necesario para <strong>procesamiento complejo</strong> que incluye construcción de documentos, agregaciones y transformaciones. XPath es un subconjunto de XQuery, por lo que aprender XPath es el primer paso hacia dominar XQuery.</p>
                     </div>
                 </div>
             </section>
