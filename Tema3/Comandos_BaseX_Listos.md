@@ -2,6 +2,11 @@
 
 ## 🚀 Comandos de Inicialización
 
+### ⚠️ IMPORTANTE: Cómo Ejecutar en BaseX GUI
+1. **Selecciona la línea completa** (haz clic y arrastra)
+2. **Presiona Ctrl+Enter** o el botón Play ▶️
+3. **NO ejecutes líneas incompletas**
+
 ### 1. Verificar BaseX
 ```xquery
 (: Verificar que BaseX funciona :)
@@ -358,6 +363,12 @@ count(collection("libreria")//libro)
 
 ## 💡 Consejos de Uso
 
+### Para BaseX GUI:
+1. **Selecciona la línea completa** antes de ejecutar
+2. **Usa Ctrl+Enter** para ejecutar línea seleccionada
+3. **O usa el botón Play ▶️** en la barra de herramientas
+4. **Para múltiples líneas:** Selecciona todo el bloque
+
 ### Para Copiar y Pegar:
 1. **Copia todo el bloque** de código
 2. **Pega en BaseX GUI** o línea de comandos
@@ -372,6 +383,23 @@ count(collection("libreria")//libro)
 1. **Empieza con XPath** simple
 2. **Avanza a XQuery** gradualmente
 3. **Construye XML** paso a paso
+
+### ⚠️ Solución de Problemas Comunes:
+
+#### Error: "Unexpected end of query"
+**Causa:** No seleccionaste la línea completa
+**Solución:** 
+1. Haz clic al inicio de la línea
+2. Arrastra hasta el final
+3. Presiona Ctrl+Enter
+
+#### Error: "Function not found"
+**Causa:** Sintaxis incorrecta
+**Solución:** Verifica que escribiste `db:create("nombre")` correctamente
+
+#### Error: "Database already exists"
+**Causa:** La base de datos ya existe
+**Solución:** Usa `db:drop("nombre")` primero, luego `db:create("nombre")`
 
 ---
 
