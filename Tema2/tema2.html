@@ -53,53 +53,126 @@
                 </h2>
                 
                 <div class="concept-card">
-                    <h3>Estructura del XML</h3>
-                    <p>El XML (eXtensible Markup Language) es un lenguaje de marcado que define reglas para codificar documentos de manera legible tanto para humanos como para máquinas.</p>
+                    <h3>Introducción al XML</h3>
+                    <p>XML (eXtensible Markup Language) es un lenguaje de marcado que surge a partir de las reglas de definición SGML. A diferencia de HTML que posee un conjunto de etiquetas definidas, en XML el conjunto de etiquetas es definido por el usuario.</p>
+                    
                     <div class="concept-details">
-                        <strong>Componentes principales:</strong>
+                        <strong>Objetivo principal:</strong> Intercambiar información entre aplicaciones de manera legible para el ser humano.
+                        
+                        <strong>Estructura de un documento XML:</strong>
                         <ul>
-                            <li><strong>Elementos:</strong> Etiquetas que encierran contenido</li>
-                            <li><strong>Atributos:</strong> Información adicional en las etiquetas</li>
-                            <li><strong>Contenido:</strong> Texto entre etiquetas de apertura y cierre</li>
-                            <li><strong>Declaración XML:</strong> Especifica versión y codificación</li>
+                            <li><strong>Prólogo (opcional):</strong> Establece información acerca de las declaraciones XML, espacio de nombres, versión, etc.</li>
+                            <li><strong>Raíz (requerido):</strong> Elemento raíz del que colgarán el resto de elementos y atributos</li>
+                            <li><strong>Materiales (opcional):</strong> Contenido adicional del documento</li>
                         </ul>
-                        <strong>Reglas:</strong> Etiquetas balanceadas, un elemento raíz, atributos entre comillas
+                        
+                        <strong>Tipos de elementos en XML:</strong>
+                        <ul>
+                            <li><strong>Elementos:</strong> Objetos encerrados en etiquetas sin hijos</li>
+                            <li><strong>Contenedores:</strong> Elementos que contienen otros elementos y contenedores</li>
+                            <li><strong>Atributos:</strong> Forman parte de los elementos y solo pueden contener texto</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Namespaces XML</h3>
+                    <p>Uno de los principales problemas de XML es la definición del conjunto de etiquetas por diferentes desarrolladores. Para saber qué conjunto de etiquetas podemos utilizar sin cometer errores se definen los espacios de nombres (namespaces) que se definen con una URI.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Características de los Namespaces:</strong>
+                        <ul>
+                            <li><strong>URI único:</strong> Identificador global del namespace</li>
+                            <li><strong>Prefijos:</strong> Abreviaciones para referenciar namespaces</li>
+                            <li><strong>Scope:</strong> Alcance de la declaración</li>
+                            <li><strong>Default namespace:</strong> Namespace por defecto</li>
+                        </ul>
+                        
+                        <strong>Beneficios:</strong> Evitar conflictos de nombres, modularidad, reutilización, interoperabilidad
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Documentos XML Bien Formados vs Válidos</h3>
+                    <p>En lo referente a los tipos de datos, XML no incluye definición de tipos, lo que implica que no sea fuertemente tipado. Para dar solución a esto se definen DTDs y Esquemas XML que sí contienen información de tipos.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Documentos XML Bien Formados:</strong>
+                        <ul>
+                            <li>No existen errores de sintaxis</li>
+                            <li>Todas las etiquetas tienen comienzo y fin correctamente</li>
+                            <li>Estructura jerárquica válida</li>
+                            <li>Atributos entre comillas</li>
+                        </ul>
+                        
+                        <strong>Documentos XML Válidos:</strong>
+                        <ul>
+                            <li>Están bien formados</li>
+                            <li>Se ajustan a una DTD o esquema XML</li>
+                            <li>El tipo de atributos coincide con lo especificado</li>
+                            <li>Respetan las restricciones definidas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Validación de Documentos XML - DTD</h3>
+                    <p>La Definición de Tipo de Documento (DTD) forma parte del bloque opcional del documento XML. Su objetivo es asegurar que los elementos que se utilizan en el documento XML son correctos.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Elementos de un DTD:</strong>
+                        <ul>
+                            <li><strong>ELEMENT:</strong> Define los tipos de elementos que puede contener el documento XML. Permite diferenciar entre elementos o contenedores.</li>
+                            <li><strong>ATTLIST:</strong> Permite especificar los atributos de un elemento. Estos pueden ser requeridos u opcionales.</li>
+                        </ul>
+                        
+                        <strong>Limitaciones de DTD:</strong>
+                        <ul>
+                            <li>Comprobación de tipos muy limitada</li>
+                            <li>Sintaxis diferente al XML</li>
+                            <li>Información de tipos se limita a cadenas de caracteres (#PCDATA o #CDATA)</li>
+                        </ul>
                     </div>
                 </div>
 
                 <div class="concept-card">
                     <h3>Esquemas XML (XSD)</h3>
-                    <p>Lenguaje para definir la estructura y restricciones de documentos XML, proporcionando validación y documentación.</p>
+                    <p>Los esquemas XML son un intento por ampliar la funcionalidad de DTD desde su sintaxis a la ligereza en la definición de tipos. La sintaxis es similar a la del propio XML y la definición de tipos es más concreta.</p>
+                    
                     <div class="concept-details">
-                        <strong>Elementos de XSD:</strong>
+                        <strong>Ventajas de XSD sobre DTD:</strong>
                         <ul>
-                            <li><strong>Elementos:</strong> Definición de tipos de elementos</li>
-                            <li><strong>Atributos:</strong> Especificación de atributos permitidos</li>
-                            <li><strong>Tipos de Datos:</strong> string, int, date, boolean, etc.</li>
+                            <li><strong>Sintaxis XML:</strong> Misma sintaxis que el documento XML</li>
+                            <li><strong>Tipos de datos:</strong> string, int, date, boolean, etc.</li>
                             <li><strong>Restricciones:</strong> minOccurs, maxOccurs, pattern</li>
+                            <li><strong>Herencia:</strong> Definición de tipos complejos</li>
                         </ul>
-                        <strong>Ventajas:</strong> Validación automática, documentación, interoperabilidad
+                        
+                        <strong>Beneficios:</strong> Validación automática, documentación, interoperabilidad, tipos de datos específicos
                     </div>
                 </div>
 
                 <div class="concept-card">
-                    <h3>XPath - Navegación en XML</h3>
-                    <p>Lenguaje para localizar elementos y atributos en documentos XML mediante expresiones de ruta.</p>
+                    <h3>Transformaciones XML - XPath</h3>
+                    <p>XPath es un lenguaje para especificar rutas en documentos XML que sirve de base para el resto de lenguajes. El separador utilizado es "/" que devuelve un conjunto de valores.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de expresiones:</strong>
+                        <strong>Tipos de expresiones XPath:</strong>
                         <ul>
                             <li><strong>Rutas absolutas:</strong> /libro/titulo</li>
                             <li><strong>Rutas relativas:</strong> ./autor</li>
                             <li><strong>Predicados:</strong> /libro[@precio > 20]</li>
                             <li><strong>Funciones:</strong> text(), count(), position()</li>
                         </ul>
+                        
                         <strong>Aplicaciones:</strong> XSLT, XQuery, validación, extracción de datos
                     </div>
                 </div>
 
                 <div class="concept-card">
                     <h3>XSLT - Transformación de XML</h3>
-                    <p>Lenguaje para transformar documentos XML en otros formatos (HTML, PDF, otros XML).</p>
+                    <p>XSLT permite realizar transformaciones a documentos XML; por ejemplo a documentos HTML. Al ir aumentando la cantidad de información intercambiada entre aplicaciones en formato XML se hace cada vez más necesario poder consultarla y transformarla a otros formatos.</p>
+                    
                     <div class="concept-details">
                         <strong>Componentes XSLT:</strong>
                         <ul>
@@ -108,22 +181,77 @@
                             <li><strong>Funciones:</strong> Manipulación de datos</li>
                             <li><strong>Condicionales:</strong> xsl:if, xsl:choose</li>
                         </ul>
-                        <strong>Casos de uso:</strong> Generación de reportes, conversión de formatos, presentación
+                        
+                        <strong>Casos de uso:</strong> Generación de reportes, conversión de formatos, presentación, XHTML
                     </div>
                 </div>
 
                 <div class="concept-card">
-                    <h3>Namespaces XML</h3>
-                    <p>Mecanismo para evitar conflictos de nombres en documentos XML que combinan vocabularios de diferentes fuentes.</p>
+                    <h3>XQuery - Consultas XML</h3>
+                    <p>XQuery se centra en poder realizar consultas a datos XML. Es un lenguaje funcional para consultar y manipular datos XML, similar a SQL para bases de datos relacionales.</p>
+                    
                     <div class="concept-details">
-                        <strong>Características:</strong>
+                        <strong>Características principales:</strong>
                         <ul>
-                            <li><strong>URI único:</strong> Identificador global del namespace</li>
-                            <li><strong>Prefijos:</strong> Abreviaciones para referenciar namespaces</li>
-                            <li><strong>Scope:</strong> Alcance de la declaración</li>
-                            <li><strong>Default namespace:</strong> Namespace por defecto</li>
+                            <li><strong>FLWOR Expressions:</strong> For, Let, Where, Order by, Return</li>
+                            <li><strong>Path Expressions:</strong> Navegación en la estructura XML</li>
+                            <li><strong>Functions:</strong> Funciones predefinidas y personalizadas</li>
+                            <li><strong>Aggregations:</strong> Operaciones de agregación</li>
                         </ul>
-                        <strong>Beneficios:</strong> Modularidad, reutilización, interoperabilidad
+                        
+                        <strong>Ventajas:</strong> Expresividad, flexibilidad, estándar W3C
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>XML en Bases de Datos - Importancia de la Validación</h3>
+                    <p>La validación de XML en bases de datos es crucial para mantener la integridad de los datos y garantizar que la información almacenada cumpla con las reglas de negocio definidas.</p>
+                    
+                    <div class="concept-details">
+                        <strong>¿Por qué es importante la validación XML en BD?</strong>
+                        <ul>
+                            <li><strong>Integridad de datos:</strong> Garantiza que los documentos XML cumplan con la estructura esperada</li>
+                            <li><strong>Consistencia:</strong> Evita errores de formato que podrían corromper los datos</li>
+                            <li><strong>Rendimiento:</strong> Los documentos válidos se procesan más eficientemente</li>
+                            <li><strong>Seguridad:</strong> Previene inyección de datos maliciosos</li>
+                            <li><strong>Interoperabilidad:</strong> Asegura compatibilidad entre sistemas</li>
+                        </ul>
+                        
+                        <strong>Beneficios en bases de datos:</strong> Consultas más eficientes, menos errores de procesamiento, mejor mantenimiento
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Tipos de Datos XML en Bases de Datos</h3>
+                    <p>Los sistemas de gestión de bases de datos modernos proporcionan tipos de datos especializados para almacenar documentos XML de manera eficiente.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Tipos de datos XML principales:</strong>
+                        <ul>
+                            <li><strong>XML (PostgreSQL):</strong> Tipo nativo con validación automática</li>
+                            <li><strong>XMLType (Oracle):</strong> Tipo de objeto con métodos XML integrados</li>
+                            <li><strong>XML (SQL Server):</strong> Tipo de datos con soporte para esquemas</li>
+                            <li><strong>CLOB/BLOB:</strong> Para almacenamiento como texto binario</li>
+                        </ul>
+                        
+                        <strong>Ventajas de tipos nativos:</strong> Validación automática, consultas optimizadas, índices especializados, funciones XML integradas
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Consultas XML en Bases de Datos</h3>
+                    <p>Los SGBD modernos proporcionan funciones especializadas para consultar datos XML almacenados, combinando la potencia de SQL con la flexibilidad de XML.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Métodos de consulta XML:</strong>
+                        <ul>
+                            <li><strong>XPath integrado:</strong> Consultas XPath dentro de SQL</li>
+                            <li><strong>XQuery:</strong> Lenguaje de consulta XML completo</li>
+                            <li><strong>Funciones XML:</strong> Funciones específicas para manipular XML</li>
+                            <li><strong>Índices XML:</strong> Optimización de consultas sobre documentos XML</li>
+                        </ul>
+                        
+                        <strong>Ventajas:</strong> Consultas híbridas SQL/XML, rendimiento optimizado, integración con datos relacionales
                     </div>
                 </div>
             </section>
@@ -139,12 +267,14 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Documento XML Básico</h4>
-                        <p><strong>Escenario:</strong> Catálogo de libros con información bibliográfica</p>
+                        <h4>Documento XML Básico con Namespaces</h4>
+                        <p><strong>Escenario:</strong> Catálogo de libros con información bibliográfica usando namespaces</p>
                         <div class="code-block">
 <?xml version="1.0" encoding="UTF-8"?>
 <catalogo xmlns="http://www.ejemplo.com/libros"
-          xmlns:precio="http://www.ejemplo.com/precios">
+          xmlns:precio="http://www.ejemplo.com/precios"
+          xmlns:editorial="http://www.ejemplo.com/editorial">
+    
     <libro isbn="978-1234567890" categoria="programacion">
         <titulo>Bases de Datos Avanzadas</titulo>
         <autor>
@@ -152,7 +282,7 @@
             <apellido>García</apellido>
             <nacionalidad>Española</nacionalidad>
         </autor>
-        <editorial>Editorial Técnica</editorial>
+        <editorial:editorial nombre="Editorial Técnica" pais="España"/>
         <fecha_publicacion año="2024" mes="enero"/>
         <precio:precio moneda="EUR">45.50</precio:precio>
         <descripcion>
@@ -169,7 +299,7 @@
             <apellido>López</apellido>
             <nacionalidad>Mexicana</nacionalidad>
         </autor>
-        <editorial>Editorial Digital</editorial>
+        <editorial:editorial nombre="Editorial Digital" pais="México"/>
         <fecha_publicacion año="2023" mes="diciembre"/>
         <precio:precio moneda="USD">39.99</precio:precio>
         <descripcion>
@@ -183,8 +313,39 @@
                     </div>
 
                     <div class="example-card">
-                        <h4>Esquema XSD</h4>
-                        <p><strong>Escenario:</strong> Definición de esquema para validar el catálogo de libros</p>
+                        <h4>DTD para Validación</h4>
+                        <p><strong>Escenario:</strong> Definición DTD para validar el catálogo de libros</p>
+                        <div class="code-block">
+<!DOCTYPE catalogo [
+    <!ELEMENT catalogo (libro+)>
+    <!ELEMENT libro (titulo, autor, editorial, fecha_publicacion, precio, descripcion, disponibilidad)>
+    <!ELEMENT titulo (#PCDATA)>
+    <!ELEMENT autor (nombre, apellido, nacionalidad)>
+    <!ELEMENT nombre (#PCDATA)>
+    <!ELEMENT apellido (#PCDATA)>
+    <!ELEMENT nacionalidad (#PCDATA)>
+    <!ELEMENT editorial (#PCDATA)>
+    <!ELEMENT fecha_publicacion EMPTY>
+    <!ELEMENT precio (#PCDATA)>
+    <!ELEMENT descripcion (resumen, palabras_clave)>
+    <!ELEMENT resumen (#PCDATA)>
+    <!ELEMENT palabras_clave (#PCDATA)>
+    <!ELEMENT disponibilidad EMPTY>
+    
+    <!ATTLIST libro isbn CDATA #REQUIRED
+                   categoria CDATA #REQUIRED>
+    <!ATTLIST fecha_publicacion año CDATA #REQUIRED
+                               mes CDATA #REQUIRED>
+    <!ATTLIST precio moneda CDATA #REQUIRED>
+    <!ATTLIST disponibilidad stock CDATA #REQUIRED
+                            ubicacion CDATA #REQUIRED>
+]>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Esquema XSD Completo</h4>
+                        <p><strong>Escenario:</strong> Definición de esquema XSD para validar el catálogo</p>
                         <div class="code-block">
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -244,35 +405,452 @@
                     </div>
 
                     <div class="example-card">
-                        <h4>Consultas XPath</h4>
-                        <p><strong>Escenario:</strong> Extracción de información específica del catálogo</p>
+                        <h4>Almacenamiento XML en PostgreSQL</h4>
+                        <p><strong>Escenario:</strong> Sistema de facturación con documentos XML</p>
                         <div class="code-block">
--- XPath para obtener títulos de libros
-//titulo
+-- Crear tabla con tipo XML nativo
+CREATE TABLE facturas_xml (
+    id SERIAL PRIMARY KEY,
+    numero_factura VARCHAR(50) UNIQUE,
+    documento_xml XML NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT NOW(),
+    cliente_id INTEGER,
+    total DECIMAL(10,2)
+);
 
--- XPath para libros de programación
-//libro[@categoria='programacion']
+-- Insertar factura XML
+INSERT INTO facturas_xml (numero_factura, documento_xml, cliente_id, total) VALUES (
+    'F-2024-001',
+    '<?xml version="1.0" encoding="UTF-8"?>
+    <factura numero="F-2024-001" fecha="2024-01-15">
+        <cliente>
+            <nombre>Empresa ABC S.L.</nombre>
+            <cif>B12345678</cif>
+            <direccion>
+                <calle>Calle Principal 123</calle>
+                <ciudad>Madrid</ciudad>
+                <codigo_postal>28001</codigo_postal>
+            </direccion>
+        </cliente>
+        <items>
+            <item>
+                <producto>Laptop Dell XPS 13</producto>
+                <cantidad>2</cantidad>
+                <precio_unitario>899.99</precio_unitario>
+                <total_item>1799.98</total_item>
+            </item>
+            <item>
+                <producto>Mouse Logitech MX Master</producto>
+                <cantidad>5</cantidad>
+                <precio_unitario>25.50</precio_unitario>
+                <total_item>127.50</total_item>
+            </item>
+        </items>
+        <totales>
+            <subtotal>1927.48</subtotal>
+            <iva>21%</iva>
+            <total>2332.25</total>
+        </totales>
+    </factura>',
+    1001,
+    2332.25
+);
 
--- XPath para autores españoles
-//autor[nacionalidad='Española']
+-- Consultas XPath en PostgreSQL
+-- Obtener nombres de clientes
+SELECT numero_factura, 
+       xpath('//cliente/nombre/text()', documento_xml) as nombre_cliente
+FROM facturas_xml;
 
--- XPath para libros con precio mayor a 40
-//libro[precio:precio > 40]
+-- Buscar facturas con total mayor a 2000
+SELECT numero_factura, 
+       (xpath('//totales/total/text()', documento_xml))[1]::text::numeric as total
+FROM facturas_xml
+WHERE (xpath('//totales/total/text()', documento_xml))[1]::text::numeric > 2000;
 
--- XPath para libros publicados en 2024
-//libro[fecha_publicacion/@año='2024']
+-- Obtener productos de facturas específicas
+SELECT numero_factura,
+       xpath('//item/producto/text()', documento_xml) as productos
+FROM facturas_xml
+WHERE numero_factura = 'F-2024-001';
+                        </div>
+                    </div>
 
--- XPath para contar libros por categoría
-count(//libro[@categoria='programacion'])
+                    <div class="example-card">
+                        <h4>Validación XML con Esquemas en Base de Datos</h4>
+                        <p><strong>Escenario:</strong> Validación automática de documentos XML</p>
+                        <div class="code-block">
+-- Crear esquema XML para validación
+CREATE TABLE esquemas_xml (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    esquema_xsd TEXT
+);
 
--- XPath para obtener el primer libro
-//libro[1]
+-- Insertar esquema XSD para facturas
+INSERT INTO esquemas_xml (nombre, esquema_xsd) VALUES (
+    'factura_esquema',
+    '<?xml version="1.0" encoding="UTF-8"?>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:element name="factura">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="cliente">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="nombre" type="xs:string"/>
+                                <xs:element name="cif" type="xs:string"/>
+                                <xs:element name="direccion">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="calle" type="xs:string"/>
+                                            <xs:element name="ciudad" type="xs:string"/>
+                                            <xs:element name="codigo_postal" type="xs:string"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="items">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="item" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="producto" type="xs:string"/>
+                                            <xs:element name="cantidad" type="xs:positiveInteger"/>
+                                            <xs:element name="precio_unitario" type="xs:decimal"/>
+                                            <xs:element name="total_item" type="xs:decimal"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="totales">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="subtotal" type="xs:decimal"/>
+                                <xs:element name="iva" type="xs:string"/>
+                                <xs:element name="total" type="xs:decimal"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="numero" type="xs:string" use="required"/>
+                <xs:attribute name="fecha" type="xs:date" use="required"/>
+            </xs:complexType>
+        </xs:element>
+    </xs:schema>'
+);
 
--- XPath para libros con stock mayor a 100
-//libro[disponibilidad/@stock > 100]
+-- Función para validar XML contra esquema
+CREATE OR REPLACE FUNCTION validar_xml_factura(xml_doc XML)
+RETURNS BOOLEAN AS $$
+BEGIN
+    -- Aquí se implementaría la validación real
+    -- Por simplicidad, validamos que tenga la estructura básica
+    RETURN xpath('//factura', xml_doc) IS NOT NULL 
+           AND xpath('//cliente', xml_doc) IS NOT NULL
+           AND xpath('//items', xml_doc) IS NOT NULL
+           AND xpath('//totales', xml_doc) IS NOT NULL;
+END;
+$$ LANGUAGE plpgsql;
 
--- XPath para obtener todos los nombres de autores
-//autor/nombre
+-- Usar la función de validación
+SELECT numero_factura, 
+       validar_xml_factura(documento_xml) as es_valido
+FROM facturas_xml;
+                        </div>
+                    </div>
 
--- XPath para libros con ISBN específico
-//libro[@isbn='978-1234567890']
+                    <div class="example-card">
+                        <h4>Consultas Híbridas SQL/XML</h4>
+                        <p><strong>Escenario:</strong> Combinación de datos relacionales y XML</p>
+                        <div class="code-block">
+-- Tabla de clientes (datos relacionales)
+CREATE TABLE clientes (
+    id INTEGER PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+INSERT INTO clientes VALUES 
+(1001, 'Empresa ABC S.L.', 'contacto@empresaabc.com', '+34 91 123 4567'),
+(1002, 'Corporación XYZ', 'info@corporacionxyz.com', '+34 93 987 6543');
+
+-- Consulta híbrida: datos relacionales + XML
+SELECT 
+    c.nombre as cliente_relacional,
+    c.email,
+    xpath('//cliente/nombre/text()', f.documento_xml) as cliente_xml,
+    xpath('//totales/total/text()', f.documento_xml) as total_xml,
+    f.total as total_relacional
+FROM clientes c
+JOIN facturas_xml f ON c.id = f.cliente_id
+WHERE f.fecha_creacion >= '2024-01-01';
+
+-- Consulta con agregaciones sobre XML
+SELECT 
+    xpath('//cliente/ciudad/text()', documento_xml) as ciudad,
+    COUNT(*) as total_facturas,
+    AVG((xpath('//totales/total/text()', documento_xml))[1]::text::numeric) as promedio_total
+FROM facturas_xml
+GROUP BY xpath('//cliente/ciudad/text()', documento_xml);
+
+-- Búsqueda de productos específicos en XML
+SELECT numero_factura,
+       xpath('//item/producto/text()', documento_xml) as productos
+FROM facturas_xml
+WHERE xpath('//item/producto[contains(text(), "Dell")]', documento_xml) IS NOT NULL;
+
+-- Consulta con filtros XML complejos
+SELECT numero_factura,
+       (xpath('//totales/total/text()', documento_xml))[1]::text::numeric as total,
+       xpath('//cliente/nombre/text()', documento_xml) as cliente
+FROM facturas_xml
+WHERE (xpath('//totales/total/text()', documento_xml))[1]::text::numeric > 2000
+  AND xpath('//item/cantidad/text()', documento_xml)::text::numeric > 1;
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-item">
+                    <h4>Actividad 1: Creación de Documento XML</h4>
+                    <p><strong>Duración:</strong> 20 minutos</p>
+                    <p>Crea un documento XML para un sistema de gestión de empleados que incluya:</p>
+                    <ul>
+                        <li>Información personal del empleado</li>
+                        <li>Departamento y cargo</li>
+                        <li>Salario y fecha de contratación</li>
+                        <li>Proyectos asignados</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 20 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 2: Validación con DTD</h4>
+                    <p><strong>Duración:</strong> 25 minutos</p>
+                    <p>Diseña un DTD para validar el documento XML de empleados creado en la actividad anterior. Incluye:</p>
+                    <ul>
+                        <li>Definición de todos los elementos</li>
+                        <li>Atributos requeridos y opcionales</li>
+                        <li>Restricciones de cardinalidad</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 25 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 3: Esquema XSD</h4>
+                    <p><strong>Duración:</strong> 30 minutos</p>
+                    <p>Convierte el DTD anterior a un esquema XSD más robusto que incluya:</p>
+                    <ul>
+                        <li>Tipos de datos específicos</li>
+                        <li>Restricciones de patrón</li>
+                        <li>Validación de rangos</li>
+                        <li>Definición de tipos complejos</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 30 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 4: Consultas XPath</h4>
+                    <p><strong>Duración:</strong> 25 minutos</p>
+                    <p>Escribe consultas XPath para extraer información específica del documento de empleados:</p>
+                    <ul>
+                        <li>Empleados de un departamento específico</li>
+                        <li>Empleados con salario mayor a una cantidad</li>
+                        <li>Empleados contratados en un año específico</li>
+                        <li>Proyectos de un empleado específico</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 25 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 5: XML en Bases de Datos</h4>
+                    <p><strong>Duración:</strong> 30 minutos</p>
+                    <p>Implementa un sistema de facturación con almacenamiento XML en base de datos:</p>
+                    <ul>
+                        <li>Crear tabla con tipo de datos XML nativo</li>
+                        <li>Insertar documentos XML de facturas</li>
+                        <li>Implementar consultas XPath en SQL</li>
+                        <li>Desarrollar consultas híbridas SQL/XML</li>
+                        <li>Validar documentos XML con esquemas</li>
+                        <li>Crear índices XML para optimización</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 30 min
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recursos Adicionales -->
+            <section id="recursos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    Recursos Adicionales
+                </h2>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Manual para el programador de XML</h4>
+                        <p>Manual completo para aprender XML desde cero con ejemplos prácticos</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Manual para el programador de XSLT</h4>
+                        <p>Guía completa de XSLT con soluciones prácticas para proyectos</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>XML para principiantes (2012)</h4>
+                        <p>Video de 1:02:29 con introducción al lenguaje XML y ejemplos en directo</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Definiendo DTDs (2013)</h4>
+                        <p>Video de 2:29 mostrando cómo crear documentos DTDs con ejemplos claros</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Seguridad en documentos XML</h4>
+                        <p>Artículo sobre técnicas de seguridad implementadas utilizando documentos XML</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Información general de servicios web XML</h4>
+                        <p>Introducción a servicios web XML, su funcionamiento e infraestructura</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Introducción a XQuery</h4>
+                        <p>Manual sobre XQuery para acceder y consultar documentos XML</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Librerías de procesamiento XML</h4>
+                        <p>Enlaces útiles para iniciarse en el procesamiento de documentos XML con Java</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>PostgreSQL XML Functions</h4>
+                        <p>Documentación oficial de funciones XML en PostgreSQL</p>
+                        <a href="https://www.postgresql.org/docs/current/functions-xml.html" class="resource-link">Ver documentación</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Oracle XMLType</h4>
+                        <p>Guía completa de XMLType en Oracle Database</p>
+                        <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/adxdb/xmltype.html" class="resource-link">Ver guía</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>SQL Server XML Data Type</h4>
+                        <p>Tutorial sobre tipos de datos XML en SQL Server</p>
+                        <a href="https://docs.microsoft.com/en-us/sql/t-sql/xml/xml-data-type-and-columns" class="resource-link">Ver tutorial</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>XML en Bases de Datos</h4>
+                        <p>Video tutorial sobre integración XML con bases de datos</p>
+                        <a href="#" class="resource-link">Ver video</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>XML Indexing Strategies</h4>
+                        <p>Estrategias de indexación para optimizar consultas XML</p>
+                        <a href="#" class="resource-link">Leer guía</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html>

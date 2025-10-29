@@ -492,6 +492,562 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Normalización de Bases de Datos -->
+                <div class="concept-card">
+                    <h3>Normalización de Bases de Datos</h3>
+                    <p>La normalización es un proceso sistemático para organizar datos en una base de datos relacional, eliminando redundancias y dependencias anómalas. Este proceso mejora la integridad de los datos, reduce el almacenamiento y facilita el mantenimiento.</p>
+                    
+                    <!-- Diagrama del Proceso de Normalización -->
+                    <div class="visual-diagram">
+                        <h4>Proceso de Normalización - Formas Normales</h4>
+                        <div class="normalization-process">
+                            <div class="normalization-step">
+                                <div class="step-number">1FN</div>
+                                <div class="step-content">
+                                    <h5>Primera Forma Normal</h5>
+                                    <p>Eliminar grupos repetitivos y valores atómicos</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">2FN</div>
+                                <div class="step-content">
+                                    <h5>Segunda Forma Normal</h5>
+                                    <p>Eliminar dependencias parciales</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">3FN</div>
+                                <div class="step-content">
+                                    <h5>Tercera Forma Normal</h5>
+                                    <p>Eliminar dependencias transitivas</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">BCNF</div>
+                                <div class="step-content">
+                                    <h5>Forma Normal de Boyce-Codd</h5>
+                                    <p>Eliminar dependencias funcionales anómalas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Objetivos de la Normalización:</strong>
+                        <ul>
+                            <li><strong>Eliminar redundancia:</strong> Evitar duplicación de datos</li>
+                            <li><strong>Prevenir anomalías:</strong> Evitar inconsistencias en actualizaciones</li>
+                            <li><strong>Mejorar integridad:</strong> Garantizar consistencia de datos</li>
+                            <li><strong>Facilitar mantenimiento:</strong> Simplificar modificaciones</li>
+                            <li><strong>Optimizar almacenamiento:</strong> Reducir espacio requerido</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Primera Forma Normal (1FN) -->
+                <div class="concept-card">
+                    <h3>Primera Forma Normal (1FN)</h3>
+                    <p>Una tabla está en 1FN cuando todos los atributos contienen valores atómicos (indivisibles) y no hay grupos repetitivos. Cada celda debe contener un solo valor.</p>
+                    
+                    <!-- Ejemplo de 1FN -->
+                    <div class="visual-diagram">
+                        <h4>Ejemplo: Tabla NO Normalizada → 1FN</h4>
+                        <div class="table-comparison">
+                            <div class="table-before">
+                                <h5>❌ ANTES (No Normalizada)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>ESTUDIANTES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID</div>
+                                        <div class="column">Nombre</div>
+                                        <div class="column">Materias</div>
+                                        <div class="column">Teléfonos</div>
+                                    </div>
+                                    <div class="table-data">
+                                        <div class="row">
+                                            <div class="cell pk">1</div>
+                                            <div class="cell">Juan Pérez</div>
+                                            <div class="cell">Matemáticas, Física, Química</div>
+                                            <div class="cell">555-1234, 555-5678</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="cell pk">2</div>
+                                            <div class="cell">María García</div>
+                                            <div class="cell">Historia, Literatura</div>
+                                            <div class="cell">555-9012</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><strong>Problemas:</strong> Valores múltiples en una celda, grupos repetitivos</p>
+                            </div>
+                            
+                            <div class="table-after">
+                                <h5>✅ DESPUÉS (1FN)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>ESTUDIANTES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID</div>
+                                        <div class="column">Nombre</div>
+                                        <div class="column">Materia</div>
+                                        <div class="column">Teléfono</div>
+                                    </div>
+                                    <div class="table-data">
+                                        <div class="row">
+                                            <div class="cell pk">1</div>
+                                            <div class="cell">Juan Pérez</div>
+                                            <div class="cell">Matemáticas</div>
+                                            <div class="cell">555-1234</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="cell pk">1</div>
+                                            <div class="cell">Juan Pérez</div>
+                                            <div class="cell">Física</div>
+                                            <div class="cell">555-5678</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="cell pk">1</div>
+                                            <div class="cell">Juan Pérez</div>
+                                            <div class="cell">Química</div>
+                                            <div class="cell">555-1234</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><strong>Mejoras:</strong> Valores atómicos, una materia por fila</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Reglas para 1FN:</strong>
+                        <ul>
+                            <li><strong>Valores atómicos:</strong> Cada celda debe contener un solo valor</li>
+                            <li><strong>Sin grupos repetitivos:</strong> No arrays o listas en una columna</li>
+                            <li><strong>Orden no significativo:</strong> El orden de las filas no debe importar</li>
+                            <li><strong>Clave primaria:</strong> Cada fila debe ser única</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Segunda Forma Normal (2FN) -->
+                <div class="concept-card">
+                    <h3>Segunda Forma Normal (2FN)</h3>
+                    <p>Una tabla está en 2FN cuando está en 1FN y todos los atributos no clave dependen completamente de la clave primaria, no solo de una parte de ella.</p>
+                    
+                    <!-- Ejemplo de 2FN -->
+                    <div class="visual-diagram">
+                        <h4>Ejemplo: 1FN → 2FN</h4>
+                        <div class="table-comparison">
+                            <div class="table-before">
+                                <h5>❌ ANTES (1FN con dependencias parciales)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>ESTUDIANTES_MATERIAS</h6>
+                                        <p>Clave: (ID_Estudiante, Codigo_Materia)</p>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Estudiante</div>
+                                        <div class="column primary-key">Codigo_Materia</div>
+                                        <div class="column">Nombre_Estudiante</div>
+                                        <div class="column">Carrera</div>
+                                        <div class="column">Nombre_Materia</div>
+                                        <div class="column">Creditos</div>
+                                        <div class="column">Calificacion</div>
+                                    </div>
+                                    <div class="table-data">
+                                        <div class="row">
+                                            <div class="cell pk">1</div>
+                                            <div class="cell pk">MAT101</div>
+                                            <div class="cell">Juan Pérez</div>
+                                            <div class="cell">Ingeniería</div>
+                                            <div class="cell">Matemáticas I</div>
+                                            <div class="cell">4</div>
+                                            <div class="cell">85</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><strong>Problema:</strong> Nombre_Estudiante y Carrera dependen solo de ID_Estudiante</p>
+                            </div>
+                            
+                            <div class="table-after">
+                                <h5>✅ DESPUÉS (2FN)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>ESTUDIANTES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Estudiante</div>
+                                        <div class="column">Nombre_Estudiante</div>
+                                        <div class="column">Carrera</div>
+                                    </div>
+                                </div>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>MATERIAS</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">Codigo_Materia</div>
+                                        <div class="column">Nombre_Materia</div>
+                                        <div class="column">Creditos</div>
+                                    </div>
+                                </div>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>CALIFICACIONES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Estudiante</div>
+                                        <div class="column primary-key">Codigo_Materia</div>
+                                        <div class="column">Calificacion</div>
+                                    </div>
+                                </div>
+                                <p><strong>Mejora:</strong> Eliminación de dependencias parciales</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Reglas para 2FN:</strong>
+                        <ul>
+                            <li><strong>Estar en 1FN:</strong> Prerequisito fundamental</li>
+                            <li><strong>Dependencia completa:</strong> Atributos no clave dependen de toda la clave primaria</li>
+                            <li><strong>Eliminar dependencias parciales:</strong> No debe haber dependencias de parte de la clave</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dependencias Funcionales y Transitivas -->
+                <div class="concept-card">
+                    <h3>Dependencias Funcionales y Transitivas</h3>
+                    <p>Las dependencias funcionales y transitivas son conceptos fundamentales para entender la normalización, especialmente la Tercera Forma Normal (3FN). Comprender estos conceptos es crucial para diseñar bases de datos eficientes.</p>
+                    
+                    <!-- Diagrama de Dependencias -->
+                    <div class="visual-diagram">
+                        <h4>Tipos de Dependencias en Normalización</h4>
+                        <div class="dependency-diagram">
+                            <div class="dependency-type">
+                                <h5>🔗 Dependencia Funcional</h5>
+                                <div class="dependency-visual">
+                                    <div class="dependency-box">A</div>
+                                    <div class="dependency-arrow">→</div>
+                                    <div class="dependency-box">B</div>
+                                </div>
+                                <p><strong>Definición:</strong> A determina B (A → B)</p>
+                                <p><strong>Significado:</strong> Para cada valor de A, existe un único valor de B</p>
+                            </div>
+                            
+                            <div class="dependency-type">
+                                <h5>🔄 Dependencia Transitiva</h5>
+                                <div class="dependency-visual">
+                                    <div class="dependency-box">A</div>
+                                    <div class="dependency-arrow">→</div>
+                                    <div class="dependency-box">B</div>
+                                    <div class="dependency-arrow">→</div>
+                                    <div class="dependency-box">C</div>
+                                    <div class="dependency-transitive">A → C (transitiva)</div>
+                                </div>
+                                <p><strong>Definición:</strong> A → B y B → C, entonces A → C (transitiva)</p>
+                                <p><strong>Significado:</strong> C depende de A a través de B</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplos Prácticos de Dependencias -->
+                    <div class="concept-details">
+                        <h4>Ejemplos Prácticos de Dependencias</h4>
+                        
+                        <div class="example-section">
+                            <h5>📋 Ejemplo 1: Dependencias Funcionales</h5>
+                            <div class="code-block">
+                                <strong>Tabla: EMPLEADOS</strong>
+                                <br>ID_Empleado → Nombre, Departamento, Salario
+                                <br>Departamento → Ubicacion_Departamento
+                                <br>
+                                <br><strong>Interpretación:</strong>
+                                <br>• ID_Empleado determina únicamente el nombre, departamento y salario
+                                <br>• Departamento determina la ubicación del departamento
+                            </div>
+                        </div>
+
+                        <div class="example-section">
+                            <h5>🔄 Ejemplo 2: Dependencias Transitivas</h5>
+                            <div class="code-block">
+                                <strong>Tabla: ESTUDIANTES (Problema)</strong>
+                                <br>ID_Estudiante → Nombre, Carrera_ID, Nombre_Carrera, Facultad
+                                <br>
+                                <br><strong>Dependencias identificadas:</strong>
+                                <br>• ID_Estudiante → Carrera_ID (directa)
+                                <br>• Carrera_ID → Nombre_Carrera, Facultad (directa)
+                                <br>• ID_Estudiante → Nombre_Carrera, Facultad (TRANSITIVA)
+                                <br>
+                                <br><strong>Problema:</strong> Nombre_Carrera y Facultad dependen de ID_Estudiante 
+                                <br>a través de Carrera_ID (dependencia transitiva)
+                            </div>
+                        </div>
+
+                        <div class="example-section">
+                            <h5>✅ Ejemplo 3: Solución Normalizada</h5>
+                            <div class="code-block">
+                                <strong>ESTUDIANTES (3FN)</strong>
+                                <br>ID_Estudiante → Nombre, Carrera_ID
+                                <br>
+                                <br><strong>CARRERAS (3FN)</strong>
+                                <br>Carrera_ID → Nombre_Carrera, Facultad
+                                <br>
+                                <br><strong>Resultado:</strong> Eliminadas las dependencias transitivas
+                                <br>• Cada tabla tiene dependencias funcionales directas
+                                <br>• No hay dependencias transitivas
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Reglas para Identificar Dependencias:</strong>
+                        <ul>
+                            <li><strong>Dependencia Funcional:</strong> Si A determina B, entonces A → B</li>
+                            <li><strong>Dependencia Transitiva:</strong> Si A → B y B → C, entonces A → C (transitiva)</li>
+                            <li><strong>Dependencia Parcial:</strong> Si solo parte de la clave determina un atributo</li>
+                            <li><strong>Superclave:</strong> Conjunto de atributos que determinan todos los demás</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tercera Forma Normal (3FN) -->
+                <div class="concept-card">
+                    <h3>Tercera Forma Normal (3FN)</h3>
+                    <p>Una tabla está en 3FN cuando está en 2FN y no hay dependencias transitivas. Los atributos no clave no deben depender de otros atributos no clave.</p>
+                    
+                    <!-- Ejemplo de 3FN -->
+                    <div class="visual-diagram">
+                        <h4>Ejemplo: 2FN → 3FN</h4>
+                        <div class="table-comparison">
+                            <div class="table-before">
+                                <h5>❌ ANTES (2FN con dependencias transitivas)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>ESTUDIANTES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Estudiante</div>
+                                        <div class="column">Nombre</div>
+                                        <div class="column">Carrera_ID</div>
+                                        <div class="column">Nombre_Carrera</div>
+                                        <div class="column">Facultad</div>
+                                    </div>
+                                    <div class="table-data">
+                                        <div class="row">
+                                            <div class="cell pk">1</div>
+                                            <div class="cell">Juan Pérez</div>
+                                            <div class="cell">ING001</div>
+                                            <div class="cell">Ingeniería de Sistemas</div>
+                                            <div class="cell">Facultad de Ingeniería</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><strong>Problema:</strong> Nombre_Carrera y Facultad dependen de Carrera_ID, no de ID_Estudiante</p>
+                            </div>
+                            
+                            <div class="table-after">
+                                <h5>✅ DESPUÉS (3FN)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>ESTUDIANTES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Estudiante</div>
+                                        <div class="column">Nombre</div>
+                                        <div class="column foreign-key">Carrera_ID</div>
+                                    </div>
+                                </div>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>CARRERAS</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">Carrera_ID</div>
+                                        <div class="column">Nombre_Carrera</div>
+                                        <div class="column">Facultad</div>
+                                    </div>
+                                </div>
+                                <p><strong>Mejora:</strong> Eliminación de dependencias transitivas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Reglas para 3FN:</strong>
+                        <ul>
+                            <li><strong>Estar en 2FN:</strong> Prerequisito fundamental</li>
+                            <li><strong>Sin dependencias transitivas:</strong> Atributos no clave no dependen de otros atributos no clave</li>
+                            <li><strong>Dependencia directa:</strong> Todos los atributos no clave dependen directamente de la clave primaria</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Forma Normal de Boyce-Codd (BCNF) -->
+                <div class="concept-card">
+                    <h3>Forma Normal de Boyce-Codd (BCNF)</h3>
+                    <p>Una tabla está en BCNF cuando está en 3FN y para toda dependencia funcional X → Y, X debe ser una superclave. Es una versión más estricta de 3FN.</p>
+                    
+                    <!-- Ejemplo de BCNF -->
+                    <div class="visual-diagram">
+                        <h4>Ejemplo: 3FN → BCNF</h4>
+                        <div class="table-comparison">
+                            <div class="table-before">
+                                <h5>❌ ANTES (3FN pero no BCNF)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>PROFESORES_MATERIAS</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Profesor</div>
+                                        <div class="column primary-key">Codigo_Materia</div>
+                                        <div class="column">Nombre_Profesor</div>
+                                        <div class="column">Departamento</div>
+                                        <div class="column">Horario</div>
+                                    </div>
+                                    <div class="table-data">
+                                        <div class="row">
+                                            <div class="cell pk">P001</div>
+                                            <div class="cell pk">MAT101</div>
+                                            <div class="cell">Dr. García</div>
+                                            <div class="cell">Matemáticas</div>
+                                            <div class="cell">Lunes 8:00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><strong>Problema:</strong> Si un profesor solo enseña una materia, hay dependencia funcional anómala</p>
+                            </div>
+                            
+                            <div class="table-after">
+                                <h5>✅ DESPUÉS (BCNF)</h5>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>PROFESORES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Profesor</div>
+                                        <div class="column">Nombre_Profesor</div>
+                                        <div class="column">Departamento</div>
+                                    </div>
+                                </div>
+                                <div class="table-diagram">
+                                    <div class="table-header">
+                                        <h6>ASIGNACIONES</h6>
+                                    </div>
+                                    <div class="table-structure">
+                                        <div class="column primary-key">ID_Profesor</div>
+                                        <div class="column primary-key">Codigo_Materia</div>
+                                        <div class="column">Horario</div>
+                                    </div>
+                                </div>
+                                <p><strong>Mejora:</strong> Eliminación de dependencias funcionales anómalas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Reglas para BCNF:</strong>
+                        <ul>
+                            <li><strong>Estar en 3FN:</strong> Prerequisito fundamental</li>
+                            <li><strong>Superclave:</strong> Para toda dependencia X → Y, X debe ser superclave</li>
+                            <li><strong>Eliminar anomalías:</strong> No debe haber dependencias funcionales problemáticas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Proceso Completo de Normalización -->
+                <div class="concept-card">
+                    <h3>Proceso Completo de Normalización</h3>
+                    <p>La normalización es un proceso iterativo que debe aplicarse sistemáticamente para obtener el mejor diseño de base de datos.</p>
+                    
+                    <!-- Diagrama del Proceso Completo -->
+                    <div class="visual-diagram">
+                        <h4>Metodología de Normalización</h4>
+                        <div class="normalization-methodology">
+                            <div class="method-step">
+                                <div class="step-icon">1</div>
+                                <div class="step-content">
+                                    <h5>Identificar Entidades</h5>
+                                    <p>Determinar las entidades principales del sistema</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="method-step">
+                                <div class="step-icon">2</div>
+                                <div class="step-content">
+                                    <h5>Crear Tabla Inicial</h5>
+                                    <p>Diseñar tabla con todos los atributos</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="method-step">
+                                <div class="step-icon">3</div>
+                                <div class="step-content">
+                                    <h5>Aplicar 1FN</h5>
+                                    <p>Eliminar grupos repetitivos y valores múltiples</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="method-step">
+                                <div class="step-icon">4</div>
+                                <div class="step-content">
+                                    <h5>Aplicar 2FN</h5>
+                                    <p>Eliminar dependencias parciales</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="method-step">
+                                <div class="step-icon">5</div>
+                                <div class="step-content">
+                                    <h5>Aplicar 3FN</h5>
+                                    <p>Eliminar dependencias transitivas</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="method-step">
+                                <div class="step-icon">6</div>
+                                <div class="step-content">
+                                    <h5>Verificar BCNF</h5>
+                                    <p>Eliminar dependencias funcionales anómalas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Beneficios de la Normalización:</strong>
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>Integridad de Datos</h4>
+                                <p>Elimina redundancias y anomalías</p>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-save"></i>
+                                <h4>Eficiencia de Almacenamiento</h4>
+                                <p>Reduce espacio requerido</p>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-tools"></i>
+                                <h4>Facilidad de Mantenimiento</h4>
+                                <p>Simplifica actualizaciones</p>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-search"></i>
+                                <h4>Optimización de Consultas</h4>
+                                <p>Mejora rendimiento de consultas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Ejemplos Prácticos -->
@@ -539,6 +1095,185 @@ CREATE TABLE usuarios (
     email NVARCHAR(255) UNIQUE,
     fecha_registro DATETIME2 DEFAULT GETDATE()
 );
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Proceso de Normalización Completo</h4>
+                        <p><strong>Escenario:</strong> Sistema de gestión universitaria - Normalización paso a paso</p>
+                        <div class="code-block">
+-- PASO 1: Tabla NO Normalizada (Problemas identificados)
+CREATE TABLE estudiantes_completo (
+    id_estudiante INT,
+    nombre VARCHAR(100),
+    carrera VARCHAR(100),
+    facultad VARCHAR(100),
+    materias VARCHAR(500),  -- ❌ Múltiples valores
+    telefonos VARCHAR(200), -- ❌ Múltiples valores
+    profesores VARCHAR(300), -- ❌ Múltiples valores
+    calificaciones VARCHAR(200), -- ❌ Múltiples valores
+    creditos_totales INT,
+    promedio DECIMAL(3,2)
+);
+
+-- PASO 2: Aplicar 1FN - Eliminar grupos repetitivos
+CREATE TABLE estudiantes_1fn (
+    id_estudiante INT,
+    nombre VARCHAR(100),
+    carrera VARCHAR(100),
+    facultad VARCHAR(100),
+    materia VARCHAR(100),    -- ✅ Un valor por fila
+    telefono VARCHAR(20),   -- ✅ Un valor por fila
+    profesor VARCHAR(100),  -- ✅ Un valor por fila
+    calificacion INT,       -- ✅ Un valor por fila
+    creditos INT,
+    promedio DECIMAL(3,2)
+);
+
+-- PASO 3: Aplicar 2FN - Eliminar dependencias parciales
+-- Separar en tablas independientes
+CREATE TABLE estudiantes_2fn (
+    id_estudiante INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    carrera VARCHAR(100),
+    facultad VARCHAR(100),
+    promedio DECIMAL(3,2)
+);
+
+CREATE TABLE materias_2fn (
+    codigo_materia VARCHAR(10) PRIMARY KEY,
+    nombre_materia VARCHAR(100),
+    creditos INT
+);
+
+CREATE TABLE profesores_2fn (
+    id_profesor INT PRIMARY KEY,
+    nombre_profesor VARCHAR(100),
+    departamento VARCHAR(100)
+);
+
+CREATE TABLE inscripciones_2fn (
+    id_estudiante INT,
+    codigo_materia VARCHAR(10),
+    id_profesor INT,
+    calificacion INT,
+    telefono VARCHAR(20),
+    PRIMARY KEY (id_estudiante, codigo_materia),
+    FOREIGN KEY (id_estudiante) REFERENCES estudiantes_2fn(id_estudiante),
+    FOREIGN KEY (codigo_materia) REFERENCES materias_2fn(codigo_materia),
+    FOREIGN KEY (id_profesor) REFERENCES profesores_2fn(id_profesor)
+);
+
+-- PASO 4: Aplicar 3FN - Eliminar dependencias transitivas
+CREATE TABLE estudiantes_3fn (
+    id_estudiante INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    carrera_id INT,
+    promedio DECIMAL(3,2),
+    FOREIGN KEY (carrera_id) REFERENCES carreras_3fn(carrera_id)
+);
+
+CREATE TABLE carreras_3fn (
+    carrera_id INT PRIMARY KEY,
+    nombre_carrera VARCHAR(100),
+    facultad VARCHAR(100)
+);
+
+-- PASO 5: Verificar BCNF - Eliminar dependencias funcionales anómalas
+-- El diseño ya está en BCNF si no hay dependencias funcionales problemáticas
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo Práctico: Sistema de Ventas</h4>
+                        <p><strong>Escenario:</strong> Normalización de tabla de pedidos con productos</p>
+                        <div class="code-block">
+-- TABLA NO NORMALIZADA (Problemas)
+CREATE TABLE pedidos_no_normalizada (
+    pedido_id INT,
+    fecha_pedido DATE,
+    cliente_id INT,
+    nombre_cliente VARCHAR(100),
+    direccion_cliente VARCHAR(200),
+    ciudad_cliente VARCHAR(100),
+    producto_id INT,
+    nombre_producto VARCHAR(100),
+    categoria_producto VARCHAR(50),
+    precio_unitario DECIMAL(10,2),
+    cantidad INT,
+    subtotal DECIMAL(10,2),
+    total_pedido DECIMAL(10,2)
+);
+
+-- NORMALIZACIÓN A 1FN
+CREATE TABLE pedidos_1fn (
+    pedido_id INT,
+    fecha_pedido DATE,
+    cliente_id INT,
+    nombre_cliente VARCHAR(100),
+    direccion_cliente VARCHAR(200),
+    ciudad_cliente VARCHAR(100),
+    producto_id INT,
+    nombre_producto VARCHAR(100),
+    categoria_producto VARCHAR(50),
+    precio_unitario DECIMAL(10,2),
+    cantidad INT,
+    subtotal DECIMAL(10,2)
+);
+
+-- NORMALIZACIÓN A 2FN
+CREATE TABLE clientes_2fn (
+    cliente_id INT PRIMARY KEY,
+    nombre_cliente VARCHAR(100),
+    direccion_cliente VARCHAR(200),
+    ciudad_cliente VARCHAR(100)
+);
+
+CREATE TABLE productos_2fn (
+    producto_id INT PRIMARY KEY,
+    nombre_producto VARCHAR(100),
+    categoria_producto VARCHAR(50),
+    precio_unitario DECIMAL(10,2)
+);
+
+CREATE TABLE pedidos_2fn (
+    pedido_id INT,
+    fecha_pedido DATE,
+    cliente_id INT,
+    total_pedido DECIMAL(10,2),
+    PRIMARY KEY (pedido_id),
+    FOREIGN KEY (cliente_id) REFERENCES clientes_2fn(cliente_id)
+);
+
+CREATE TABLE detalle_pedidos_2fn (
+    pedido_id INT,
+    producto_id INT,
+    cantidad INT,
+    subtotal DECIMAL(10,2),
+    PRIMARY KEY (pedido_id, producto_id),
+    FOREIGN KEY (pedido_id) REFERENCES pedidos_2fn(pedido_id),
+    FOREIGN KEY (producto_id) REFERENCES productos_2fn(producto_id)
+);
+
+-- NORMALIZACIÓN A 3FN
+CREATE TABLE categorias_3fn (
+    categoria_id INT PRIMARY KEY,
+    nombre_categoria VARCHAR(50)
+);
+
+CREATE TABLE productos_3fn (
+    producto_id INT PRIMARY KEY,
+    nombre_producto VARCHAR(100),
+    categoria_id INT,
+    precio_unitario DECIMAL(10,2),
+    FOREIGN KEY (categoria_id) REFERENCES categorias_3fn(categoria_id)
+);
+
+-- RESULTADO FINAL: Base de datos completamente normalizada
+-- - Eliminación de redundancias
+-- - Integridad referencial
+-- - Facilidad de mantenimiento
+-- - Optimización de consultas
                         </div>
                     </div>
 
@@ -634,3 +1369,239 @@ user_data = {
     "preferences": {"theme": "dark"}
 }
 cache.cache_user_data(123, user_data)
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-item">
+                    <h4>Actividad 1: Normalización de Sistema de Biblioteca</h4>
+                    <p><strong>Duración:</strong> 45 minutos</p>
+                    <p>Diseña y normaliza un sistema de gestión de biblioteca que incluya:</p>
+                    <ul>
+                        <li>Información de libros (título, autor, editorial, ISBN, categoría)</li>
+                        <li>Información de usuarios (estudiantes y profesores)</li>
+                        <li>Préstamos y devoluciones</li>
+                        <li>Multas y sanciones</li>
+                        <li>Reservas de libros</li>
+                    </ul>
+                    <p><strong>Entregables:</strong></p>
+                    <ul>
+                        <li>Tabla inicial no normalizada con problemas identificados</li>
+                        <li>Proceso de normalización paso a paso (1FN, 2FN, 3FN, BCNF)</li>
+                        <li>Diagrama E-R final normalizado</li>
+                        <li>Scripts SQL para crear las tablas</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 45 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 2: Análisis de Dependencias Funcionales</h4>
+                    <p><strong>Duración:</strong> 30 minutos</p>
+                    <p>Analiza las siguientes dependencias funcionales y determina el nivel de normalización:</p>
+                    <div class="code-block">
+-- Tabla: EMPLEADOS_PROYECTOS
+-- Atributos: (ID_Empleado, Nombre, Departamento, ID_Proyecto, Nombre_Proyecto, Fecha_Inicio, Horas_Trabajadas)
+
+-- Dependencias identificadas:
+-- ID_Empleado → Nombre, Departamento
+-- ID_Proyecto → Nombre_Proyecto, Fecha_Inicio
+-- (ID_Empleado, ID_Proyecto) → Horas_Trabajadas
+                    </div>
+                    <p><strong>Tareas:</strong></p>
+                    <ul>
+                        <li>Identificar todas las dependencias funcionales</li>
+                        <li>Determinar claves candidatas y primarias</li>
+                        <li>Identificar dependencias parciales y transitivas</li>
+                        <li>Proponer normalización hasta BCNF</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 30 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 3: Caso Práctico - E-commerce</h4>
+                    <p><strong>Duración:</strong> 40 minutos</p>
+                    <p>Normaliza un sistema de e-commerce con la siguiente información:</p>
+                    <div class="code-block">
+-- Información a normalizar:
+-- Clientes: ID, Nombre, Email, Teléfono, Dirección, Ciudad, País
+-- Productos: ID, Nombre, Descripción, Categoría, Subcategoría, Precio
+-- Pedidos: ID, Cliente_ID, Fecha, Estado, Total
+-- Detalle_Pedidos: Pedido_ID, Producto_ID, Cantidad, Precio_Unitario, Subtotal
+-- Categorías: ID, Nombre, Descripción
+-- Inventario: Producto_ID, Stock, Stock_Mínimo, Ubicación
+                    </div>
+                    <p><strong>Objetivos:</strong></p>
+                    <ul>
+                        <li>Crear tabla inicial con todos los datos</li>
+                        <li>Aplicar proceso de normalización completo</li>
+                        <li>Identificar relaciones entre entidades</li>
+                        <li>Crear diagrama E-R final</li>
+                        <li>Implementar en SQL con restricciones</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 40 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 4: Comparación de Enfoques</h4>
+                    <p><strong>Duración:</strong> 25 minutos</p>
+                    <p>Compara los siguientes enfoques de diseño de base de datos:</p>
+                    <ul>
+                        <li><strong>Enfoque 1:</strong> Tabla completamente desnormalizada</li>
+                        <li><strong>Enfoque 2:</strong> Normalización hasta 3FN</li>
+                        <li><strong>Enfoque 3:</strong> Normalización hasta BCNF</li>
+                    </ul>
+                    <p><strong>Análisis requerido:</strong></p>
+                    <ul>
+                        <li>Ventajas y desventajas de cada enfoque</li>
+                        <li>Casos de uso ideales para cada nivel</li>
+                        <li>Impacto en rendimiento de consultas</li>
+                        <li>Facilidad de mantenimiento</li>
+                        <li>Recomendaciones según el contexto</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 25 min
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 5: Desnormalización Estratégica</h4>
+                    <p><strong>Duración:</strong> 35 minutos</p>
+                    <p>En algunos casos, la desnormalización puede mejorar el rendimiento. Analiza cuándo y cómo aplicar desnormalización estratégica:</p>
+                    <ul>
+                        <li>Tablas de hechos en Data Warehouses</li>
+                        <li>Vistas materializadas para consultas frecuentes</li>
+                        <li>Campos calculados para evitar JOINs costosos</li>
+                        <li>Replicación de datos para optimización</li>
+                    </ul>
+                    <p><strong>Ejercicio:</strong></p>
+                    <ul>
+                        <li>Identifica casos donde la desnormalización es beneficiosa</li>
+                        <li>Diseña estrategias de desnormalización</li>
+                        <li>Evalúa trade-offs entre normalización y rendimiento</li>
+                        <li>Propón soluciones híbridas</li>
+                    </ul>
+                    <div class="activity-duration">
+                        <i class="fas fa-clock"></i> 35 min
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recursos Adicionales -->
+            <section id="recursos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    Recursos Adicionales
+                </h2>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Fundamentos de Sistemas de Bases de Datos</h4>
+                        <p>Libro de referencia completo sobre diseño de bases de datos y normalización</p>
+                        <a href="#" class="resource-link">Ver libro</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Normalización de Bases de Datos - Tutorial Completo</h4>
+                        <p>Video tutorial de 2 horas sobre normalización con ejemplos prácticos</p>
+                        <a href="#" class="resource-link">Ver video</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Herramientas de Diseño de BD</h4>
+                        <p>MySQL Workbench, pgAdmin, DBeaver - Herramientas para diseño y normalización</p>
+                        <a href="#" class="resource-link">Descargar herramientas</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Ejercicios de Normalización Online</h4>
+                        <p>Plataforma interactiva con ejercicios de normalización paso a paso</p>
+                        <a href="#" class="resource-link">Practicar online</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Casos de Estudio Reales</h4>
+                        <p>Ejemplos de normalización en sistemas empresariales reales</p>
+                        <a href="#" class="resource-link">Ver casos</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Impacto de la Normalización en el Rendimiento</h4>
+                        <p>Análisis del impacto de la normalización en el rendimiento de consultas</p>
+                        <a href="#" class="resource-link">Leer análisis</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Curso Avanzado de Diseño de BD</h4>
+                        <p>Curso especializado en diseño avanzado de bases de datos</p>
+                        <a href="#" class="resource-link">Inscribirse</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Comunidad de Diseñadores de BD</h4>
+                        <p>Foro de discusión sobre mejores prácticas en diseño de bases de datos</p>
+                        <a href="#" class="resource-link">Unirse a la comunidad</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html>
