@@ -51,78 +51,842 @@
                     </div>
                     Conceptos Clave
                 </h2>
-                
+
+                <!-- 5.1 ¿Cómo estudiar este tema? -->
                 <div class="concept-card">
-                    <h3>Teorema CAP</h3>
-                    <p>Principio fundamental que establece que en sistemas distribuidos solo se pueden garantizar dos de tres propiedades: Consistencia, Disponibilidad y Tolerancia a Particiones.</p>
+                    <h3>5.1 ¿Cómo estudiar este tema?</h3>
+                    <p>En este tema analizaremos los aspectos fundamentales para conocer las bases de datos distribuidas:</p>
+                    <div class="concept-details">
+                        <ul>
+                            <li><strong>Arquitectura distribuida:</strong> Comprender cómo se estructuran los sistemas distribuidos</li>
+                            <li><strong>Ubicación de los datos:</strong> Estrategias para distribuir y almacenar datos en múltiples nodos</li>
+                            <li><strong>Ventajas y desventajas:</strong> Análisis de los beneficios e inconvenientes de los sistemas distribuidos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 5.2 Sistemas Distribuidos -->
+                <div class="concept-card">
+                    <h3>5.2 Sistemas Distribuidos</h3>
+                    <p>Desde el punto de vista de la Arquitectura, un sistema distribuido es aquel que está formado por varios computadores, denominados <strong>sitios o nodos</strong>.</p>
+                    
+                    <div class="visual-diagram">
+                        <h4>Arquitectura de Sistema Distribuido</h4>
+                        <div class="distributed-architecture">
+                            <div class="client-layer">
+                                <div class="client">Cliente 1</div>
+                                <div class="client">Cliente 2</div>
+                                <div class="client">Cliente 3</div>
+                            </div>
+                            <div class="arrow-down">↓</div>
+                            <div class="coordinator-layer">
+                                <div class="coordinator">
+                                    <div class="node-title">Coordinador</div>
+                                    <div class="node-content">Gestiona transacciones globales</div>
+                                </div>
+                            </div>
+                            <div class="arrow-down">↓</div>
+                            <div class="nodes-layer">
+                                <div class="node">
+                                    <div class="node-title">Nodo 1</div>
+                                    <div class="node-content">Base de Datos Local</div>
+                                </div>
+                                <div class="node">
+                                    <div class="node-title">Nodo 2</div>
+                                    <div class="node-content">Base de Datos Local</div>
+                                </div>
+                                <div class="node">
+                                    <div class="node-title">Nodo 3</div>
+                                    <div class="node-content">Base de Datos Local</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Características principales:</strong>
+                        <ul>
+                            <li><strong>No compartición de memoria:</strong> Al estar formados por la unión de distintos computadores no comparten memoria principal ni disco</li>
+                            <li><strong>Dispersión geográfica:</strong> Normalmente se encuentran dispersas por diferentes lugares geográficos</li>
+                            <li><strong>Administración separada:</strong> Administración por separado de cada sitio</li>
+                            <li><strong>Tipos de transacciones:</strong> Se pueden diferenciar dos tipos:
+                                <ul>
+                                    <li><strong>Transacciones locales:</strong> Acceden y modifican datos locales</li>
+                                    <li><strong>Transacciones globales:</strong> Acceden y modifican varias bases de datos locales</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <strong>Ventajas de los sistemas distribuidos:</strong>
+                        <div class="advantages-grid">
+                            <div class="advantage-item">
+                                <i class="fas fa-share-alt"></i>
+                                <h4>Datos Compartidos</h4>
+                                <p>Acceso a datos ubicuos de forma transparente para el usuario</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-unlock-alt"></i>
+                                <h4>Autonomía</h4>
+                                <p>Cada ubicación mantiene control sobre sus propios datos</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-check-circle"></i>
+                                <h4>Disponibilidad</h4>
+                                <p>Tolerancia a fallos ante la caída de un nodo</p>
+                            </div>
+                        </div>
+
+                        <strong>Desventajas:</strong>
+                        <ul>
+                            <li><strong>Coste de desarrollo:</strong> Mayor complejidad en el desarrollo de software</li>
+                            <li><strong>Mayor probabilidad de errores:</strong> Todos los nodos trabajan en paralelo, complicando el correcto funcionamiento</li>
+                            <li><strong>Sobrecarga de procesamiento:</strong> La coordinación entre nodos puede sobrecargar el sistema</li>
+                        </ul>
+
+                        <strong>Tipos de bases de datos distribuidas:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>Homogéneas</th>
+                                        <th>Heterogéneas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>SGBD</strong></td>
+                                        <td>Mismo SGBD en todos los sitios</td>
+                                        <td>Diferentes SGBD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Conocimiento</strong></td>
+                                        <td>Conocen la existencia de otros sitios</td>
+                                        <td>Pueden desconocer otros sitios</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cooperación</strong></td>
+                                        <td>Cooperan en el procesamiento</td>
+                                        <td>No necesariamente cooperan</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Esquemas</strong></td>
+                                        <td>Esquemas similares</td>
+                                        <td>Pueden tener esquemas diferentes</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.3 Almacenamiento Distribuido -->
+                <div class="concept-card">
+                    <h3>5.3 Almacenamiento Distribuido</h3>
+                    <p>Para el desarrollo de este apartado, nos centraremos en bases de datos distribuidas <strong>homogéneas</strong>.</p>
+                    
+                    <p>Si tenemos un modelo con una relación entre tablas, en los sistemas distribuidos tenemos dos alternativas para su almacenamiento (que pueden combinarse entre ellas):</p>
+
+                    <div class="concept-details">
+                        <strong>1. Réplica</strong>
+                        <p>Se crean N réplicas de la relación y se almacenan en diferentes sitios. Esta configuración se puede utilizar cuando los datos a almacenar son muy sensibles y se intentan minimizar la posibilidad de perder datos.</p>
+                        
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspecto</th>
+                                        <th>Ventajas</th>
+                                        <th>Desventajas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Réplica</strong></td>
+                                        <td>
+                                            <ul>
+                                                <li>Disponibilidad</li>
+                                                <li>Paralelismo incrementado</li>
+                                                <li>Mejora rendimiento en lecturas</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <li>Sobrecarga incrementada durante la actualización</li>
+                                                <li>Mayor espacio de almacenamiento</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>2. Fragmentación</strong>
+                        <p>Consiste en dividir la relación en N partes y almacenarla en diferentes sitios. Se pueden diferenciar dos esquemas:</p>
+                        
+                        <div class="visual-diagram">
+                            <h4>Tipos de Fragmentación</h4>
+                            <div class="nosql-types">
+                                <div class="nosql-type">
+                                    <div class="type-icon">
+                                        <i class="fas fa-grip-lines"></i>
+                                    </div>
+                                    <h4>Fragmentación Horizontal</h4>
+                                    <p>División en base a <strong>registros</strong></p>
+                                    <div class="type-example">
+                                        <pre>Nodo 1: Registros 1-1000
+Nodo 2: Registros 1001-2000
+Nodo 3: Registros 2001-3000</pre>
+                                    </div>
+                                    <p><strong>Operación para reconstruir:</strong> Unión (UNION)</p>
+                                </div>
+                                <div class="nosql-type">
+                                    <div class="type-icon">
+                                        <i class="fas fa-grip-lines-vertical"></i>
+                                    </div>
+                                    <h4>Fragmentación Vertical</h4>
+                                    <p>División en base a <strong>atributos</strong></p>
+                                    <div class="type-example">
+                                        <pre>Nodo 1: ID, Nombre, Email
+Nodo 2: ID, Dirección, Teléfono
+Nodo 3: ID, Salario, Departamento</pre>
+                                    </div>
+                                    <p><strong>Operación para reconstruir:</strong> Reunión natural (JOIN)</p>
+                                    <p><strong>Importante:</strong> La clave primaria debe estar en todos los fragmentos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Grados de Transparencia:</strong>
+                        <p>La transparencia es fundamental en bases de datos distribuidas. Se pueden distinguir diferentes grados:</p>
+                        <div class="acid-properties">
+                            <div class="acid-item">
+                                <div class="acid-icon">F</div>
+                                <div class="acid-content">
+                                    <h4>Transparencia de Fragmentación</h4>
+                                    <p>Los usuarios no necesitan conocer que la base de datos está fragmentada</p>
+                                </div>
+                            </div>
+                            <div class="acid-item">
+                                <div class="acid-icon">R</div>
+                                <div class="acid-content">
+                                    <h4>Transparencia de Réplica</h4>
+                                    <p>Los usuarios pueden acceder a los datos como si fuesen únicos</p>
+                                </div>
+                            </div>
+                            <div class="acid-item">
+                                <div class="acid-icon">L</div>
+                                <div class="acid-content">
+                                    <h4>Transparencia de Ubicación</h4>
+                                    <p>No se exige conocer la ubicación física de los datos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Subsistemas en Sistemas Distribuidos:</strong>
+                        <ul>
+                            <li><strong>Gestor de transacciones:</strong> Gestiona transacciones locales en cada sitio</li>
+                            <li><strong>Coordinador de transacciones:</strong> Coordina la ejecución de transacciones globales</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 5.4 Disponibilidad -->
+                <div class="concept-card">
+                    <h3>5.4 Disponibilidad</h3>
+                    <p>Uno de los principales objetivos de implementar una base de datos distribuida consiste en aumentar la <strong>disponibilidad general</strong> de los datos.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Robustez del Sistema:</strong>
+                        <p>Utilizando técnicas como la replicación, el sistema puede seguir funcionando aunque se produzcan fallos. Esta capacidad recibe el nombre de <strong>robustez</strong>.</p>
+                        
+                        <p>Para lograr robustez, el sistema de bases de datos debe:</p>
+                        <div class="normalization-process">
+                            <div class="normalization-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h5>Detectar el fallo</h5>
+                                    <p>Identificar errores en red o nodos</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h5>Reconfiguración</h5>
+                                    <p>Realizar cambios necesarios</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h5>Recuperación</h5>
+                                    <p>Recuperarse y continuar ejecución</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Fuentes de errores:</strong>
+                        <ul>
+                            <li><strong>Errores de red:</strong> Fallos en la comunicación entre nodos</li>
+                            <li><strong>Errores de nodo:</strong> Fallos en un nodo específico</li>
+                        </ul>
+
+                        <p><strong>Nota importante:</strong> Cuando se recupera un sitio que ha fallado y tenía réplicas, debe obtener las actualizaciones de las copias que posee.</p>
+                    </div>
+                </div>
+
+                <!-- 5.5 Procesamiento Distribuido de Consultas -->
+                <div class="concept-card">
+                    <h3>5.5 Procesamiento Distribuido de Consultas</h3>
+                    <p>En los sistemas distribuidos hay que tener en cuenta aspectos adicionales a los sistemas centralizados:</p>
+                    
+                    <div class="concept-details">
+                        <strong>Consideraciones adicionales:</strong>
+                        <ul>
+                            <li><strong>Coste de transmisión por la red:</strong> El tiempo y ancho de banda para transferir datos entre nodos</li>
+                            <li><strong>Ganancia de procesamiento en paralelo:</strong> Beneficios de procesar consultas en múltiples nodos simultáneamente</li>
+                        </ul>
+
+                        <strong>Ejemplo de Consulta:</strong>
+                        <p>Supóngase que se quiere realizar una consulta sencilla: <em>"obtener todos los productos que vende una empresa"</em>.</p>
+                        
+                        <p>El procesamiento de esta consulta no es inmediato ya que la relación de los productos puede estar:</p>
+                        <ul>
+                            <li><strong>Fragmentada:</strong> Requiere realizar varias uniones para reconstruir la relación</li>
+                            <li><strong>Replicada:</strong> Necesita elegir la réplica que minimice el coste de transmisión</li>
+                            <li><strong>Ambas:</strong> Combinación de fragmentación y replicación requiere estrategia más compleja</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 5.6 Proveedores de Bases de Datos Distribuidas -->
+                <div class="concept-card">
+                    <h3>5.6 Proveedores de Bases de Datos Distribuidas</h3>
+                    <p>A continuación, presentamos las características básicas de las bases de datos distribuidas en <strong>Oracle</strong> y <strong>SQL Server</strong>.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Oracle Distributed Database</strong>
+                        <p>Un sistema de base de datos distribuido permite que las aplicaciones accedan a datos de bases de datos locales y remotas.</p>
+                        
+                        <ul>
+                            <li><strong>Sistema homogéneo:</strong> Cada base de datos es una base de datos Oracle</li>
+                            <li><strong>Sistema heterogéneo:</strong> Al menos una de las bases de datos no es Oracle</li>
+                            <li><strong>Arquitectura:</strong> Cliente-servidor para procesar solicitudes</li>
+                        </ul>
+
+                        <strong>Database Links (Enlaces de Base de Datos)</strong>
+                        <p>En Oracle, el concepto principal es el <strong>enlace de base de datos</strong>. Un enlace es una conexión física entre dos servidores que permite acceder a un cliente como si fueran una única base de datos lógica.</p>
+
+                        <div class="code-block">
+-- Crear database link
+CREATE DATABASE LINK remoto_db
+CONNECT TO usuario IDENTIFIED BY password
+USING 'tnsname_remoto';
+
+-- Consultar datos remotos
+SELECT * FROM empleados@remoto_db;
+
+-- Actualización remota
+UPDATE empleados@remoto_db 
+SET salario = salario * 1.1 
+WHERE departamento = 'IT';
+                        </div>
+
+                        <strong>Procesamiento de Transacciones Distribuidas:</strong>
+                        <ul>
+                            <li><strong>Sentencias SQL remotas:</strong> Consultan o modifican tablas remotas en el mismo nodo</li>
+                            <li><strong>Sentencias SQL distribuidas:</strong> Consultan o modifican datos en dos o más nodos</li>
+                        </ul>
+
+                        <strong>Commit en Dos Fases (2PC)</strong>
+                        <p>El mecanismo garantiza que todos los servidores que participan en una transacción distribuida ejecutan las declaraciones correctamente:</p>
+                        <ul>
+                            <li><strong>Fase 1 (Preparación):</strong> Todos los sitios preparan la transacción</li>
+                            <li><strong>Fase 2 (Commit/Rollback):</strong> Todos los sitios confirman o deshacen la transacción</li>
+                        </ul>
+
+                        <strong>SQL Server - Replicación</strong>
+                        <p>La replicación es un conjunto de tecnologías destinadas a la copia y distribución de datos entre bases de datos, manteniendo su coherencia.</p>
+
+                        <strong>Modelo de Replicación SQL Server:</strong>
+                        <div class="visual-diagram">
+                            <h4>Componentes del Modelo</h4>
+                            <div class="distributed-architecture">
+                                <div class="nodes-layer">
+                                    <div class="node">
+                                        <div class="node-title">Publicador</div>
+                                        <div class="node-content">Pone datos a disposición</div>
+                                    </div>
+                                    <div class="node">
+                                        <div class="node-title">Distribuidor</div>
+                                        <div class="node-content">Aloja BD de distribución</div>
+                                    </div>
+                                    <div class="node">
+                                        <div class="node-title">Suscriptor</div>
+                                        <div class="node-content">Recibe datos replicados</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Conceptos clave:</strong>
+                        <ul>
+                            <li><strong>Artículo:</strong> Unidad básica (tablas, procedimientos, vistas)</li>
+                            <li><strong>Publicación:</strong> Conjunto de artículos relacionados</li>
+                            <li><strong>Suscripción:</strong> Petición de copia de datos</li>
+                        </ul>
+
+                        <strong>Tipos de Replicación:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Descripción</th>
+                                        <th>Uso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Instantáneas</strong></td>
+                                        <td>Datos copiados tal como aparecen en un momento determinado</td>
+                                        <td>Datos que cambian poco</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transaccional</strong></td>
+                                        <td>Instantánea inicial + propagación de transacciones</td>
+                                        <td>Alto rendimiento, servidor a servidor</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mezcla</strong></td>
+                                        <td>Sitios funcionan offline y luego se mezclan cambios</td>
+                                        <td>Usuarios móviles, múltiples sitios</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.7 Teorema CAP (Complementario) -->
+                <div class="concept-card">
+                    <h3>5.7 Teorema CAP</h3>
+                    <p>El <strong>Teorema CAP</strong> (Consistency, Availability, Partition tolerance) establece que en sistemas distribuidos solo se pueden garantizar <strong>dos de tres</strong> propiedades simultáneamente.</p>
+                    
+                    <div class="visual-diagram">
+                        <h4>Triángulo CAP</h4>
+                        <div class="cap-triangle">
+                            <div class="cap-corner">
+                                <div class="corner-label">Consistencia</div>
+                                <div class="corner-content">Todos los nodos ven los mismos datos simultáneamente</div>
+                            </div>
+                            <div class="cap-corner">
+                                <div class="corner-label">Disponibilidad</div>
+                                <div class="corner-content">Sistema responde a todas las peticiones</div>
+                            </div>
+                            <div class="cap-corner">
+                                <div class="corner-label">Tolerancia a Particiones</div>
+                                <div class="corner-content">Sistema funciona ante fallos de red</div>
+                            </div>
+                            <div class="cap-center">CAP</div>
+                        </div>
+                    </div>
+
                     <div class="concept-details">
                         <strong>Propiedades CAP:</strong>
                         <ul>
-                            <li><strong>Consistencia (C):</strong> Todos los nodos ven los mismos datos</li>
-                            <li><strong>Disponibilidad (A):</strong> Sistema responde a peticiones</li>
-                            <li><strong>Tolerancia a Particiones (P):</strong> Funciona ante fallos de red</li>
+                            <li><strong>Consistencia (C):</strong> Todos los nodos ven los mismos datos al mismo tiempo. Cada lectura obtiene la escritura más reciente.</li>
+                            <li><strong>Disponibilidad (A):</strong> Cada petición recibe una respuesta (no error), aunque no esté garantizado que sea la última versión.</li>
+                            <li><strong>Tolerancia a Particiones (P):</strong> El sistema continúa funcionando aunque se pierdan mensajes entre nodos o falle un nodo.</li>
                         </ul>
-                        <strong>Implicaciones:</strong> Trade-offs inevitables, diseño de sistemas
+
+                        <strong>Combinaciones posibles:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Propiedades</th>
+                                        <th>Ejemplo</th>
+                                        <th>Uso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>CP</strong></td>
+                                        <td>Consistencia + Tolerancia a Particiones</td>
+                                        <td>MongoDB (modo consistente), HBase</td>
+                                        <td>Cuando la consistencia es crítica</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AP</strong></td>
+                                        <td>Disponibilidad + Tolerancia a Particiones</td>
+                                        <td>Cassandra, DynamoDB, CouchDB</td>
+                                        <td>Alta disponibilidad, consistencia eventual aceptable</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CA</strong></td>
+                                        <td>Consistencia + Disponibilidad</td>
+                                        <td>RDBMS tradicionales (single node)</td>
+                                        <td>Sistemas centralizados sin distribución real</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Implicaciones prácticas:</strong>
+                        <p>En sistemas distribuidos reales, las particiones de red son inevitables, por lo que generalmente se elige entre <strong>CP</strong> o <strong>AP</strong>. La elección depende de los requisitos del negocio:</p>
+                        <ul>
+                            <li><strong>CP:</strong> Sistemas bancarios, sistemas de transacciones críticas</li>
+                            <li><strong>AP:</strong> Redes sociales, sistemas de recomendación, analytics</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- 5.8 Consistencia Eventual vs Fuerte (Complementario) -->
                 <div class="concept-card">
-                    <h3>Consistencia Eventual</h3>
-                    <p>Modelo de consistencia donde los datos eventualmente convergen a un estado consistente, permitiendo mayor disponibilidad.</p>
+                    <h3>5.8 Consistencia Eventual vs Fuerte</h3>
+                    <p>Los sistemas distribuidos pueden implementar diferentes <strong>modelos de consistencia</strong> según sus requisitos.</p>
+                    
                     <div class="concept-details">
-                        <strong>Características:</strong>
+                        <strong>Consistencia Fuerte (Strict):</strong>
+                        <p>Todos los nodos ven los mismos datos al mismo tiempo. Cualquier lectura después de una escritura obtiene el valor más reciente.</p>
                         <ul>
-                            <li><strong>Convergencia:</strong> Los datos se sincronizan eventualmente</li>
-                            <li><strong>Latencia:</strong> Tiempo para alcanzar consistencia</li>
-                            <li><strong>Conflictos:</strong> Resolución de versiones divergentes</li>
-                            <li><strong>Vector Clocks:</strong> Ordenamiento causal de eventos</li>
+                            <li><strong>Ventaja:</strong> Garantiza que los datos son siempre correctos</li>
+                            <li><strong>Desventaja:</strong> Puede afectar la disponibilidad y rendimiento</li>
+                            <li><strong>Uso:</strong> Sistemas financieros, bases de datos relacionales distribuidas</li>
                         </ul>
-                        <strong>Ventajas:</strong> Alta disponibilidad, escalabilidad, tolerancia a fallos
+
+                        <strong>Consistencia Eventual:</strong>
+                        <p>Los datos eventualmente convergen a un estado consistente. Puede haber un período de inconsistencia temporal.</p>
+                        <ul>
+                            <li><strong>Ventaja:</strong> Alta disponibilidad y mejor rendimiento</li>
+                            <li><strong>Desventaja:</strong> Puede haber lecturas de datos obsoletos</li>
+                            <li><strong>Uso:</strong> Sistemas de contenido, redes sociales, sistemas NoSQL</li>
+                        </ul>
+
+                        <div class="visual-diagram">
+                            <h4>Modelos de Consistencia</h4>
+                            <div class="normalization-process">
+                                <div class="normalization-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h5>Consistencia Fuerte</h5>
+                                        <p>Escritura → Todas las réplicas → Lectura</p>
+                                    </div>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="normalization-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h5>Consistencia Eventual</h5>
+                                        <p>Escritura → Réplicas (eventualmente) → Lectura</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Niveles intermedios:</strong>
+                        <ul>
+                            <li><strong>Consistencia débil:</strong> No hay garantías sobre cuándo se verán los cambios</li>
+                            <li><strong>Consistencia causal:</strong> Preserva el orden causal de eventos relacionados</li>
+                            <li><strong>Consistencia de lectura propia:</strong> Un usuario siempre ve sus propias escrituras</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- 5.9 Sharding Avanzado - Consistent Hashing (Complementario) -->
                 <div class="concept-card">
-                    <h3>Transacciones Distribuidas</h3>
-                    <p>Transacciones que involucran múltiples nodos y requieren coordinación especial para mantener ACID.</p>
+                    <h3>5.9 Sharding Avanzado - Consistent Hashing</h3>
+                    <p><strong>Consistent Hashing</strong> es una técnica de distribución de datos que minimiza el rebalanceo cuando se agregan o eliminan nodos.</p>
+                    
                     <div class="concept-details">
-                        <strong>Protocolos:</strong>
+                        <strong>Problema del Sharding Tradicional:</strong>
+                        <p>Con hash tradicional (MOD), agregar o quitar un nodo requiere rebalancear <strong>todos</strong> los datos (N/N+1 o N/N-1).</p>
+
+                        <strong>Solución: Consistent Hashing</strong>
+                        <p>Los nodos y claves se mapean a un <strong>anillo circular</strong>. Cada clave se asigna al primer nodo en sentido horario.</p>
+
+                        <div class="code-block">
+-- Ejemplo de Consistent Hashing
+-- Anillo de 0 a 2^32-1
+
+Nodo A: posición 1000
+Nodo B: posición 5000
+Nodo C: posición 9000
+
+Clave "usuario123" → hash = 3500
+  → Asignado a Nodo B (primer nodo >= 3500)
+
+-- Si agregamos Nodo D en posición 6000:
+-- Solo afecta datos entre 5000-6000
+-- Rebalanceo: ~8.3% (1/12) vs 33% (1/3) tradicional
+                        </div>
+
+                        <strong>Ventajas:</strong>
                         <ul>
-                            <li><strong>Two-Phase Commit (2PC):</strong> Coordinador y participantes</li>
-                            <li><strong>Three-Phase Commit (3PC):</strong> Mejora de 2PC con timeout</li>
-                            <li><strong>Saga Pattern:</strong> Compensación en lugar de rollback</li>
-                            <li><strong>Event Sourcing:</strong> Almacenamiento de eventos</li>
+                            <li><strong>Rebalanceo mínimo:</strong> Solo afecta datos del rango entre nodos adyacentes</li>
+                            <li><strong>Escalabilidad:</strong> Fácil agregar/quitar nodos</li>
+                            <li><strong>Distribución uniforme:</strong> Con virtual nodes se mejora la distribución</li>
                         </ul>
-                        <strong>Desafíos:</strong> Fallos de red, particionamiento, latencia
+
+                        <strong>Virtual Nodes (VNodes):</strong>
+                        <p>Cada nodo físico se representa con múltiples puntos en el anillo para lograr mejor distribución:</p>
+                        <ul>
+                            <li>Nodo A: VNodes en 1000, 1500, 2000</li>
+                            <li>Nodo B: VNodes en 5000, 5500, 6000</li>
+                            <li>Nodo C: VNodes en 9000, 9500, 10000</li>
+                        </ul>
+
+                        <strong>Uso en sistemas reales:</strong>
+                        <ul>
+                            <li><strong>Cassandra:</strong> Usa consistent hashing con VNodes</li>
+                            <li><strong>DynamoDB:</strong> Distribución basada en consistent hashing</li>
+                            <li><strong>Redis Cluster:</strong> Hash slots con conceptos similares</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- 5.10 Latencia y Rendimiento en Redes (Complementario) -->
                 <div class="concept-card">
-                    <h3>Replicación y Sincronización</h3>
-                    <p>Mecanismos para mantener copias sincronizadas de datos en múltiples nodos.</p>
+                    <h3>5.10 Latencia y Rendimiento en Redes</h3>
+                    <p>La <strong>latencia de red</strong> es uno de los factores más críticos en sistemas distribuidos y puede afectar significativamente el rendimiento.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de replicación:</strong>
+                        <strong>Factores de latencia:</strong>
                         <ul>
-                            <li><strong>Master-Slave:</strong> Un nodo maestro, múltiples esclavos</li>
-                            <li><strong>Master-Master:</strong> Múltiples nodos maestros</li>
-                            <li><strong>Síncrona:</strong> Confirmación tras replicar</li>
-                            <li><strong>Asíncrona:</strong> Replicación en background</li>
+                            <li><strong>Distancia física:</strong> Cuanto más lejos, mayor latencia</li>
+                            <li><strong>Ancho de banda:</strong> Capacidad de transmisión de datos</li>
+                            <li><strong>Número de saltos:</strong> Routers y switches intermedios</li>
+                            <li><strong>Congestión de red:</strong> Tráfico simultáneo</li>
                         </ul>
-                        <strong>Estrategias:</strong> Write-through, write-behind, conflict resolution
+
+                        <strong>Ejemplos de latencia típica:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Escenario</th>
+                                        <th>Latencia Aproximada</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Misma máquina (localhost)</td>
+                                        <td>0.1 - 0.5 ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mismo datacenter</td>
+                                        <td>0.5 - 2 ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diferentes datacenters (misma región)</td>
+                                        <td>10 - 50 ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diferentes continentes</td>
+                                        <td>100 - 300 ms</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Estrategias de optimización:</strong>
+                        <ul>
+                            <li><strong>Colocación de datos:</strong> Mantener datos cerca de donde se usan</li>
+                            <li><strong>Batching:</strong> Agrupar múltiples operaciones en una transmisión</li>
+                            <li><strong>Pipelining:</strong> Enviar múltiples peticiones sin esperar respuestas</li>
+                            <li><strong>Caching:</strong> Reducir consultas a nodos remotos</li>
+                            <li><strong>Compresión:</strong> Reducir tamaño de datos transmitidos</li>
+                        </ul>
+
+                        <strong>Ejemplo de impacto:</strong>
+                        <div class="code-block">
+-- Consulta distribuida: 3 nodos, 10ms latencia cada uno
+-- Opción 1: Secuencial (esperar cada respuesta)
+Tiempo total = 10ms + 10ms + 10ms = 30ms
+
+-- Opción 2: Paralelo (enviar todas las peticiones)
+Tiempo total = max(10ms, 10ms, 10ms) = 10ms
+
+-- Mejora: 3x más rápido con paralelización
+                        </div>
                     </div>
                 </div>
 
+                <!-- 5.11 Bases de Datos NoSQL Distribuidas (Complementario) -->
                 <div class="concept-card">
-                    <h3>Sharding y Particionamiento</h3>
-                    <p>División horizontal de datos en múltiples nodos para distribuir la carga y mejorar el rendimiento.</p>
+                    <h3>5.11 Bases de Datos NoSQL Distribuidas</h3>
+                    <p>Las bases de datos <strong>NoSQL</strong> están diseñadas desde el principio para ser distribuidas y escalables horizontalmente.</p>
+                    
                     <div class="concept-details">
-                        <strong>Estrategias de sharding:</strong>
+                        <strong>MongoDB - Sharding:</strong>
+                        <p>MongoDB usa sharding para distribuir datos en múltiples servidores.</p>
                         <ul>
-                            <li><strong>Range-based:</strong> Partición por rangos de valores</li>
-                            <li><strong>Hash-based:</strong> Distribución uniforme por hash</li>
-                            <li><strong>Directory-based:</strong> Tabla de mapeo de shards</li>
-                            <li><strong>Consistent Hashing:</strong> Distribución con rebalancing mínimo</li>
+                            <li><strong>Shard Key:</strong> Campo usado para distribuir documentos</li>
+                            <li><strong>Config Servers:</strong> Mantienen metadata del cluster</li>
+                            <li><strong>Mongos Router:</strong> Enruta consultas a shards apropiados</li>
                         </ul>
-                        <strong>Desafíos:</strong> Hot spots, rebalancing, consultas cross-shard
+
+                        <div class="code-block">
+-- Configurar sharding en MongoDB
+sh.enableSharding("mi_base_datos")
+sh.shardCollection("mi_base_datos.articulos", {"autor_id": 1, "fecha": 1})
+
+-- MongoDB distribuye documentos basándose en shard key
+-- Consultas con shard key son más eficientes
+                        </div>
+
+                        <strong>Apache Cassandra:</strong>
+                        <p>Diseñada para alta disponibilidad y escalabilidad masiva.</p>
+                        <ul>
+                            <li><strong>Ring Architecture:</strong> Todos los nodos son iguales (peer-to-peer)</li>
+                            <li><strong>Consistent Hashing:</strong> Distribución de datos</li>
+                            <li><strong>Replication Factor:</strong> Número de copias de cada dato</li>
+                            <li><strong>Tunable Consistency:</strong> Niveles de consistencia configurables</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Ejemplo de CQL (Cassandra Query Language)
+CREATE KEYSPACE ecommerce 
+WITH replication = {
+    'class': 'NetworkTopologyStrategy',
+    'datacenter1': 3  -- 3 réplicas por datacenter
+};
+
+CREATE TABLE productos (
+    id UUID PRIMARY KEY,
+    nombre TEXT,
+    precio DECIMAL
+);
+
+-- Consulta con nivel de consistencia
+SELECT * FROM productos WHERE id = ? 
+WITH CONSISTENCY QUORUM;
+-- Quorum = (RF/2) + 1 = 2 nodos deben responder
+                        </div>
+
+                        <strong>Redis Cluster:</strong>
+                        <p>Sistema de clave-valor distribuido con alta disponibilidad.</p>
+                        <ul>
+                            <li><strong>Hash Slots:</strong> 16384 slots distribuidos entre nodos</li>
+                            <li><strong>Master-Slave:</strong> Cada master tiene réplicas</li>
+                            <li><strong>Automatic Failover:</strong> Si un master falla, un slave toma su lugar</li>
+                        </ul>
+
+                        <strong>Comparación de sistemas NoSQL distribuidos:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sistema</th>
+                                        <th>Modelo</th>
+                                        <th>Consistencia</th>
+                                        <th>Sharding</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>MongoDB</strong></td>
+                                        <td>Documental</td>
+                                        <td>Fuerte (opcional eventual)</td>
+                                        <td>Automático con shard key</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cassandra</strong></td>
+                                        <td>Columnar</td>
+                                        <td>Tunable (eventual por defecto)</td>
+                                        <td>Consistent hashing</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Redis Cluster</strong></td>
+                                        <td>Clave-Valor</td>
+                                        <td>Fuerte (con replicación)</td>
+                                        <td>Hash slots</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.12 Tolerancia a Fallos Avanzada (Complementario) -->
+                <div class="concept-card">
+                    <h3>5.12 Tolerancia a Fallos Avanzada</h3>
+                    <p>Los sistemas distribuidos deben manejar múltiples tipos de fallos y continuar operando de forma degradada o recuperarse automáticamente.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Tipos de fallos:</strong>
+                        <ul>
+                            <li><strong>Fallos de nodo:</strong> Un servidor se detiene completamente</li>
+                            <li><strong>Fallos de red:</strong> Partición de red entre nodos</li>
+                            <li><strong>Fallos de datos:</strong> Corrupción de datos en disco</li>
+                            <li><strong>Fallos bizantinos:</strong> Nodos que envían información incorrecta</li>
+                        </ul>
+
+                        <strong>Estrategias de detección:</strong>
+                        <div class="normalization-process">
+                            <div class="normalization-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h5>Heartbeat</h5>
+                                    <p>Nodos envían señales periódicas</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h5>Timeout</h5>
+                                    <p>Si no hay respuesta, asumir fallo</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h5>Verificación</h5>
+                                    <p>Confirmar fallo con otros nodos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Failover (Transferencia de servicio):</strong>
+                        <p>Cuando un nodo falla, otro nodo toma su lugar automáticamente.</p>
+                        <ul>
+                            <li><strong>Automático:</strong> Sistema detecta y reacciona automáticamente</li>
+                            <li><strong>Manual:</strong> Administrador interviene para cambiar</li>
+                            <li><strong>Tiempo de recuperación:</strong> TTR (Time To Recovery) objetivo</li>
+                        </ul>
+
+                        <strong>Split-Brain Problem:</strong>
+                        <p>Cuando una partición de red hace que dos grupos de nodos piensen que son el "maestro" activo.</p>
+                        <ul>
+                            <li><strong>Problema:</strong> Ambos grupos aceptan escrituras → Inconsistencia</li>
+                            <li><strong>Solución:</strong> Quorum, mayoría de nodos, o fencing (aislamiento)</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Ejemplo: Quorum para evitar split-brain
+-- Cluster con 5 nodos
+-- Quorum = (5/2) + 1 = 3 nodos
+
+-- Escenario: Red se divide en 2 nodos vs 3 nodos
+-- Grupo de 3 nodos: Puede operar (quorum)
+-- Grupo de 2 nodos: Se detiene (no tiene quorum)
+
+-- Esto previene escrituras conflictivas
+                        </div>
+
+                        <strong>Estrategias de recuperación:</strong>
+                        <ul>
+                            <li><strong>Write-Ahead Log (WAL):</strong> Registrar cambios antes de aplicarlos</li>
+                            <li><strong>Checkpointing:</strong> Puntos de recuperación periódicos</li>
+                            <li><strong>Replay de logs:</strong> Aplicar transacciones desde último checkpoint</li>
+                            <li><strong>Sincronización:</strong> Actualizar nodo recuperado con datos actuales</li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -138,30 +902,24 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Configuración de Replicación PostgreSQL</h4>
-                        <p><strong>Escenario:</strong> Sistema de alta disponibilidad con réplicas</p>
+                        <h4>Ejemplo 1: Configuración de Réplica en PostgreSQL</h4>
+                        <p><strong>Escenario:</strong> Sistema de alta disponibilidad con réplicas maestro-esclavo</p>
                         <div class="code-block">
--- Configuración Master (PostgreSQL)
--- postgresql.conf
+-- Configuración Master (postgresql.conf)
 wal_level = replica
 max_wal_senders = 3
 max_replication_slots = 3
 hot_standby = on
 
--- pg_hba.conf
+-- Configuración de autenticación (pg_hba.conf)
 host replication replicator 192.168.1.0/24 md5
 
 -- Crear usuario de replicación
 CREATE USER replicator WITH REPLICATION LOGIN PASSWORD 'replica_pass';
 
--- Configuración Slave
--- recovery.conf
+-- En el servidor esclavo (recovery.conf)
 standby_mode = 'on'
 primary_conninfo = 'host=master_host port=5432 user=replicator password=replica_pass'
-trigger_file = '/tmp/postgresql.trigger'
-
--- Inicializar réplica
-pg_basebackup -h master_host -D /var/lib/postgresql/data -U replicator -W -v -P
 
 -- Verificar estado de replicación
 SELECT * FROM pg_stat_replication;
@@ -178,3 +936,251 @@ SELECT
     flush_lag,
     replay_lag
 FROM pg_stat_replication;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Fragmentación Horizontal</h4>
+                        <p><strong>Escenario:</strong> Distribuir una tabla de productos por región geográfica</p>
+                        <div class="code-block">
+-- Nodo 1: Productos de Europa
+CREATE TABLE productos_europa AS
+SELECT * FROM productos 
+WHERE region = 'Europa';
+
+-- Nodo 2: Productos de América
+CREATE TABLE productos_america AS
+SELECT * FROM productos 
+WHERE region = 'America';
+
+-- Nodo 3: Productos de Asia
+CREATE TABLE productos_asia AS
+SELECT * FROM productos 
+WHERE region = 'Asia';
+
+-- Consulta distribuida (reconstrucción)
+SELECT * FROM productos_europa@nodo1
+UNION ALL
+SELECT * FROM productos_america@nodo2
+UNION ALL
+SELECT * FROM productos_asia@nodo3
+WHERE categoria = 'Electrónica';
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Fragmentación Vertical</h4>
+                        <p><strong>Escenario:</strong> Separar datos de empleados por frecuencia de acceso</p>
+                        <div class="code-block">
+-- Nodo 1: Datos básicos (acceso frecuente)
+CREATE TABLE empleados_basicos AS
+SELECT id, nombre, apellido, email, telefono 
+FROM empleados;
+
+-- Nodo 2: Datos completos (acceso menos frecuente)
+CREATE TABLE empleados_completos AS
+SELECT id, direccion, fecha_nacimiento, 
+       salario, departamento_id 
+FROM empleados;
+
+-- Consulta distribuida (reunión natural)
+SELECT e1.*, e2.direccion, e2.salario
+FROM empleados_basicos@nodo1 e1
+JOIN empleados_completos@nodo2 e2 
+ON e1.id = e2.id
+WHERE e1.departamento_id = 10;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 4: Transacción Distribuida en Oracle</h4>
+                        <p><strong>Escenario:</strong> Actualizar datos en múltiples nodos con 2PC</p>
+                        <div class="code-block">
+-- Transacción distribuida
+BEGIN
+    -- Actualización en nodo local
+    UPDATE empleados 
+    SET salario = salario * 1.1 
+    WHERE departamento = 'IT';
+    
+    -- Actualización en nodo remoto
+    UPDATE empleados@nodo_remoto 
+    SET salario = salario * 1.1 
+    WHERE departamento = 'IT';
+    
+    -- Commit en dos fases (automático)
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 5: Consulta Distribuida Optimizada</h4>
+                        <p><strong>Escenario:</strong> Minimizar coste de transmisión en consulta distribuida</p>
+                        <div class="code-block">
+-- Estrategia: Procesar localmente y enviar solo resultados
+-- En lugar de enviar toda la tabla
+
+-- Opción 1: Enviar toda la tabla (ineficiente)
+SELECT e.*, d.nombre
+FROM empleados@nodo_remoto e
+JOIN departamentos d ON e.dept_id = d.id;
+
+-- Opción 2: Procesar localmente y enviar resultados (eficiente)
+SELECT e.*, d.nombre
+FROM (
+    SELECT * FROM empleados@nodo_remoto 
+    WHERE departamento = 'IT'
+) e
+JOIN departamentos d ON e.dept_id = d.id;
+
+-- Optimización: Usar WHERE para reducir datos transmitidos
+SELECT e.id, e.nombre, d.nombre as departamento
+FROM empleados@nodo_remoto e
+JOIN departamentos d ON e.dept_id = d.id
+WHERE e.salario > 50000 AND d.ubicacion = 'Madrid';
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 6: Configuración de Replicación SQL Server</h4>
+                        <p><strong>Escenario:</strong> Configurar replicación transaccional</p>
+                        <div class="code-block">
+-- Configurar Publicador
+EXEC sp_addpublication 
+    @publication = 'ProductosPublication',
+    @description = 'Publicación de productos',
+    @sync_method = 'native',
+    @retention = 72;
+
+-- Agregar artículo (tabla)
+EXEC sp_addarticle 
+    @publication = 'ProductosPublication',
+    @article = 'Productos',
+    @source_table = 'Productos',
+    @type = 'logbased';
+
+-- Configurar Suscripción
+EXEC sp_addsubscription 
+    @publication = 'ProductosPublication',
+    @subscriber = 'SUSCRIPTOR_SERVER',
+    @destination_db = 'ProductosDB',
+    @subscription_type = 'Push';
+
+-- Verificar estado de replicación
+SELECT * FROM sys.dm_repl_articles;
+SELECT * FROM sys.dm_repl_schemas;
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-item">
+                    <h4>Actividad 1: Cuestionario de Evaluación</h4>
+                    <p>Responde las siguientes preguntas para evaluar tu comprensión del tema:</p>
+                    <div class="concept-details">
+                        <ol>
+                            <li><strong>Señala la afirmación correcta para los sistemas distribuidos:</strong>
+                                <ul>
+                                    <li>A. Comparten memoria.</li>
+                                    <li>B. Los sitios se pueden encontrar dispersos geográficamente.</li>
+                                    <li>C. Tienen baja disponibilidad.</li>
+                                    <li>D. Ninguna de las anteriores es correcta.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Señala la afirmación correcta para sistemas distribuidos:</strong>
+                                <ul>
+                                    <li>A. Son menos autónomos que los sistemas centralizados.</li>
+                                    <li>B. El coste de desarrollo software es el mismo que para un sistema centralizado.</li>
+                                    <li>C. Pueden sufrir mayor sobrecarga de procesamiento.</li>
+                                    <li>D. Ninguna de las anteriores.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Las bases de datos distribuidas homogéneas:</strong>
+                                <ul>
+                                    <li>A. Pueden combinar diferentes SGBD.</li>
+                                    <li>B. Tienen que compartir la misma ubicación geográfica.</li>
+                                    <li>C. Los sitios compiten por los recursos.</li>
+                                    <li>D. Ninguna de las anteriores.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Las bases de datos distribuidas heterogéneas:</strong>
+                                <ul>
+                                    <li>A. Pueden combinar diferentes SGBD.</li>
+                                    <li>B. Tienen que compartir la misma ubicación geográfica.</li>
+                                    <li>C. Los sitios cooperan por los recursos.</li>
+                                    <li>D. Ninguna de las anteriores.</li>
+                                </ul>
+                            </li>
+                            <li><strong>El almacenamiento de datos distribuidos mediante réplicas:</strong>
+                                <ul>
+                                    <li>A. Mejora el rendimiento.</li>
+                                    <li>B. Aumenta el coste de mantenimiento.</li>
+                                    <li>C. Aumenta la disponibilidad.</li>
+                                    <li>D. Todas son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>El almacenamiento de datos distribuidos mediante fragmentación:</strong>
+                                <ul>
+                                    <li>A. Mejora el rendimiento.</li>
+                                    <li>B. Aumenta el coste de mantenimiento.</li>
+                                    <li>C. Aumenta la disponibilidad.</li>
+                                    <li>D. Todas son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>La robustez de un sistema debe:</strong>
+                                <ul>
+                                    <li>A. Detectar el fallo.</li>
+                                    <li>B. Recuperarse y continuar la ejecución.</li>
+                                    <li>C. Apagar el sistema.</li>
+                                    <li>D. A y B son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>El procesamiento paralelo de consultas:</strong>
+                                <ul>
+                                    <li>A. Aumenta la productividad.</li>
+                                    <li>B. Tiene un grado de paralelismo máximo.</li>
+                                    <li>C. Es inmediato.</li>
+                                    <li>D. A y B son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>En un sistema de bases de datos distribuido:</strong>
+                                <ul>
+                                    <li>A. Se debe evitar la transparencia al usuario.</li>
+                                    <li>B. Al aumentar la transparencia disminuye la productividad.</li>
+                                    <li>C. Existen diferentes grados de transparencia.</li>
+                                    <li>D. Ninguna de las anteriores es correcta.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Una desventaja de la réplica es:</strong>
+                                <ul>
+                                    <li>A. Disminuye la disponibilidad.</li>
+                                    <li>B. Aumenta el paralelismo.</li>
+                                    <li>C. Disminuye la utilización del medio de conexión.</li>
+                                    <li>D. Ninguna de las anteriores es correcta.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p><strong>Respuestas correctas:</strong> 1-B, 2-C, 3-D, 4-A, 5-D, 6-D, 7-D, 8-D, 9-C, 10-D</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html>

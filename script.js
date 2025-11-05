@@ -35,8 +35,12 @@ class NavigationManager {
     }
 
     navigateToTopic(topicNumber) {
-        // Redirigir a la página del tema
-        window.location.href = `Tema${topicNumber}/tema${topicNumber}.html`;
+        // Redirigir a la página del tema o conceptos fundamentales
+        if (topicNumber === 'fundamentos') {
+            window.location.href = 'conceptos-fundamentales.html';
+        } else {
+            window.location.href = `Tema${topicNumber}/tema${topicNumber}.html`;
+        }
     }
 
     loadProgress() {

@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptos Fundamentales - Bases de Datos Avanzadas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Bases de Datos Avanzadas</h1>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="index.html#temas" class="nav-link">
+                    <i class="fas fa-book"></i> Temas
+                </a>
+                <a href="index.html#progreso" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progreso
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Topic Header -->
+    <section class="topic-header">
+        <div class="container">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+            <h1>Conceptos Fundamentales</h1>
+            <p>Conocimientos esenciales para convertirse en un administrador de bases de datosr</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Índice de Conceptos -->
+            <section class="concept-index">
+                <div class="concept-index-card">
+                    <h3>
+                        <i class="fas fa-list"></i> Índice de Conceptos
+                    </h3>
+                    <ul class="concept-list">
+                        <li><a href="#esquema"><i class="fas fa-bookmark"></i> ¿Qué es un Esquema en Bases de Datos?</a></li>
+                        <li><a href="#namespace"><i class="fas fa-bookmark"></i> ¿Qué es un Namespace en Bases de Datos?</a></li>
+                        <li><a href="#instancia-conexion"><i class="fas fa-bookmark"></i> Instancia vs Conexión: ¿Cuál es la Diferencia?</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Conceptos Clave -->
+            <section id="conceptos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Conceptos Fundamentales
+                </h2>
+
+                <!-- Concepto: Esquema -->
+                <div id="esquema" class="concept-card">
+                    <h3>¿Qué es un Esquema en Bases de Datos?</h3>
+                    <p>Un <strong>esquema</strong> es la estructura lógica de una base de datos que define las tablas, columnas, relaciones, restricciones y otros objetos, sin incluir los datos reales.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Definición General:</strong>
+                        <p>El esquema es como el "plano" o "plan arquitectónico" de una base de datos. Define <em>qué</em> existe, pero no <em>cómo</em> se almacenan físicamente los datos.</p>
+
+                        <strong>Diferencias por SGBD:</strong>
+                        <p>El concepto de esquema varía significativamente entre diferentes sistemas gestores de bases de datos:</p>
+
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SGBD</th>
+                                        <th>Concepto de Esquema</th>
+                                        <th>Características</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Oracle</strong></td>
+                                        <td>Esquema = Usuario + Namespace</td>
+                                        <td>
+                                            <ul>
+                                                <li>Un usuario = un esquema (generalmente)</li>
+                                                <li>El esquema contiene objetos del usuario</li>
+                                                <li>Acceso: <code>esquema.objeto</code></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>MySQL</strong></td>
+                                        <td>Esquema = Base de Datos</td>
+                                        <td>
+                                            <ul>
+                                                <li><code>CREATE SCHEMA</code> = <code>CREATE DATABASE</code></li>
+                                                <li>Un esquema es un contenedor de objetos</li>
+                                                <li>Múltiples esquemas por instancia</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>PostgreSQL</strong></td>
+                                        <td>Namespace dentro de una Base de Datos</td>
+                                        <td>
+                                            <ul>
+                                                <li>Múltiples esquemas por base de datos</li>
+                                                <li>Esquema por defecto: <code>public</code></li>
+                                                <li><code>search_path</code> define orden de búsqueda</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SQL Server</strong></td>
+                                        <td>Namespace independiente</td>
+                                        <td>
+                                            <ul>
+                                                <li>Esquema separado del usuario</li>
+                                                <li>Múltiples esquemas por base de datos</li>
+                                                <li>Un usuario puede tener esquema por defecto</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Ejemplos Prácticos:</strong>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Oracle: Usuario y Esquema</h4>
+                                <div class="code-block">
+-- Crear usuario (automáticamente crea esquema)
+CREATE USER hr IDENTIFIED BY password;
+
+-- Otorgar privilegios
+GRANT CONNECT, RESOURCE TO hr;
+
+-- Conectarse como hr
+CONNECT hr/password;
+
+-- Crear tabla en el esquema hr
+CREATE TABLE empleados (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100),
+    email VARCHAR2(100)
+);
+
+-- Acceder desde otro usuario:
+SELECT * FROM hr.empleados;
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>MySQL: Esquema = Database</h4>
+                                <div class="code-block">
+-- Crear esquema (sinónimo de base de datos)
+CREATE SCHEMA empresa;
+-- O también:
+CREATE DATABASE empresa;
+
+-- Usar el esquema
+USE empresa;
+
+-- Crear tabla
+CREATE TABLE empleados (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    email VARCHAR(100)
+);
+
+-- Acceso con notación completa:
+SELECT * FROM empresa.empleados;
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>PostgreSQL: Múltiples Esquemas</h4>
+                                <div class="code-block">
+-- Crear base de datos
+CREATE DATABASE empresa;
+
+-- Conectarse a la base de datos
+\c empresa;
+
+-- Crear múltiples esquemas
+CREATE SCHEMA ventas;
+CREATE SCHEMA recursos_humanos;
+CREATE SCHEMA finanzas;
+
+-- Crear tablas en diferentes esquemas
+CREATE TABLE ventas.productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    precio DECIMAL(10,2)
+);
+
+CREATE TABLE recursos_humanos.empleados (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    salario DECIMAL(10,2)
+);
+
+-- Configurar search_path
+SET search_path TO ventas, public;
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>SQL Server: Esquema Separado</h4>
+                                <div class="code-block">
+-- Crear esquema
+CREATE SCHEMA ventas;
+
+-- Crear usuario
+CREATE USER usuario1 FOR LOGIN login1;
+
+-- Asignar esquema por defecto
+ALTER USER usuario1 WITH DEFAULT_SCHEMA = ventas;
+
+-- Crear tabla en el esquema
+CREATE TABLE ventas.productos (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    precio DECIMAL(10,2)
+);
+
+-- El usuario puede crear objetos sin especificar esquema
+-- (se usa el esquema por defecto)
+CREATE TABLE pedidos (
+    id INT PRIMARY KEY,
+    fecha DATE
+);
+-- Se crea en ventas.pedidos automáticamente
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Comparación Visual:</strong>
+                        <div class="visual-diagram">
+                            <h4>Estructura Conceptual por SGBD</h4>
+                            <div id="schema-comparison-diagram" class="interactive-diagram">
+                                <svg id="schema-svg" width="900" height="600" viewBox="0 0 900 600">
+                                    <defs>
+                                        <linearGradient id="oracleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#F80000;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#C00000;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="mysqlGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#00758F;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#005A6B;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="postgresGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#336791;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#2A5468;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="userGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+                                        </linearGradient>
+                                        <filter id="shadow">
+                                            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                                        </filter>
+                                    </defs>
+
+                                    <!-- ORACLE -->
+                                    <g id="oracle-section">
+                                        <text x="150" y="30" text-anchor="middle" fill="#F80000" font-size="18" font-weight="bold">ORACLE</text>
+                                        <rect x="50" y="50" width="200" height="150" rx="8" fill="url(#oracleGradient)" filter="url(#shadow)" opacity="0.9"/>
+                                        <text x="150" y="80" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Instancia</text>
+                                        
+                                        <rect x="70" y="100" width="80" height="40" rx="5" fill="url(#userGradient)" opacity="0.9"/>
+                                        <text x="110" y="120" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Usuario1</text>
+                                        <text x="110" y="135" text-anchor="middle" fill="white" font-size="9">(tablas)</text>
+                                        <text x="170" y="120" text-anchor="start" fill="white" font-size="9">← Esquema</text>
+                                        
+                                        <rect x="70" y="150" width="80" height="40" rx="5" fill="url(#userGradient)" opacity="0.9"/>
+                                        <text x="110" y="170" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Usuario2</text>
+                                        <text x="110" y="185" text-anchor="middle" fill="white" font-size="9">(tablas)</text>
+                                        <text x="170" y="170" text-anchor="start" fill="white" font-size="9">← Esquema</text>
+                                    </g>
+
+                                    <!-- MYSQL -->
+                                    <g id="mysql-section">
+                                        <text x="450" y="30" text-anchor="middle" fill="#00758F" font-size="18" font-weight="bold">MYSQL</text>
+                                        <rect x="350" y="50" width="200" height="150" rx="8" fill="url(#mysqlGradient)" filter="url(#shadow)" opacity="0.9"/>
+                                        <text x="450" y="80" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Instancia</text>
+                                        
+                                        <rect x="370" y="100" width="80" height="40" rx="5" fill="url(#userGradient)" opacity="0.9"/>
+                                        <text x="410" y="120" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Esquema1</text>
+                                        <text x="410" y="135" text-anchor="middle" fill="white" font-size="9">(tablas)</text>
+                                        <text x="470" y="120" text-anchor="start" fill="white" font-size="9">← Database</text>
+                                        
+                                        <rect x="370" y="150" width="80" height="40" rx="5" fill="url(#userGradient)" opacity="0.9"/>
+                                        <text x="410" y="170" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Esquema2</text>
+                                        <text x="410" y="185" text-anchor="middle" fill="white" font-size="9">(tablas)</text>
+                                        <text x="470" y="170" text-anchor="start" fill="white" font-size="9">← Database</text>
+                                    </g>
+
+                                    <!-- POSTGRESQL -->
+                                    <g id="postgres-section">
+                                        <text x="750" y="30" text-anchor="middle" fill="#336791" font-size="18" font-weight="bold">POSTGRESQL</text>
+                                        <rect x="650" y="50" width="200" height="150" rx="8" fill="url(#postgresGradient)" filter="url(#shadow)" opacity="0.9"/>
+                                        <text x="750" y="80" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Base de Datos</text>
+                                        
+                                        <rect x="670" y="100" width="80" height="30" rx="5" fill="url(#userGradient)" opacity="0.9"/>
+                                        <text x="710" y="120" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Esquema1</text>
+                                        
+                                        <rect x="670" y="135" width="80" height="30" rx="5" fill="url(#userGradient)" opacity="0.9"/>
+                                        <text x="710" y="155" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Esquema2</text>
+                                        
+                                        <rect x="670" y="170" width="80" height="30" rx="5" fill="url(#userGradient)" opacity="0.9"/>
+                                        <text x="710" y="190" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Esquema3</text>
+                                        
+                                        <text x="770" y="140" text-anchor="start" fill="white" font-size="9">← Schema</text>
+                                    </g>
+                                </svg>
+                            </div>
+                            <style>
+                                #schema-comparison-diagram .interactive-diagram {
+                                    width: 100%;
+                                    max-width: 900px;
+                                    margin: 2rem auto;
+                                    padding: 1rem;
+                                    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                                    border-radius: 12px;
+                                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                                    overflow: visible;
+                                }
+                                
+                                #schema-svg {
+                                    width: 100%;
+                                    height: auto;
+                                    display: block;
+                                }
+                                
+                                #schema-svg rect {
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                #schema-svg rect:hover {
+                                    opacity: 0.8;
+                                    transform: translateY(-2px);
+                                }
+                                
+                                @media (max-width: 768px) {
+                                    #schema-comparison-diagram .interactive-diagram {
+                                        padding: 0.5rem;
+                                    }
+                                    
+                                    #schema-svg {
+                                        height: 500px;
+                                    }
+                                }
+                            </style>
+                        </div>
+
+                        <strong>Resumen para DBA:</strong>
+                        <ul>
+                            <li><strong>Esquema = Estructura lógica:</strong> Define qué objetos existen</li>
+                            <li><strong>Datos = Contenido físico:</strong> Los valores reales almacenados</li>
+                            <li><strong>En Oracle:</strong> Esquema y usuario son prácticamente lo mismo</li>
+                            <li><strong>En MySQL:</strong> Esquema es sinónimo de base de datos</li>
+                            <li><strong>En PostgreSQL:</strong> Esquema es un namespace dentro de una base de datos</li>
+                            <li><strong>En SQL Server:</strong> Esquema es un contenedor lógico independiente de usuarios</li>
+                        </ul>
+
+                        <p><strong>Importante para DBA:</strong> Entender estas diferencias es crucial para:</p>
+                        <ul>
+                            <li>Gestionar permisos y seguridad correctamente</li>
+                            <li>Planificar migraciones entre SGBD</li>
+                            <li>Optimizar el rendimiento de consultas</li>
+                            <li>Organizar objetos de base de datos eficientemente</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Concepto: Namespace -->
+                <div id="namespace" class="concept-card">
+                    <h3>¿Qué es un Namespace en Bases de Datos?</h3>
+                    <p>Un <strong>namespace</strong> (espacio de nombres) es un contexto que agrupa objetos (tablas, vistas, funciones, etc.) para evitar conflictos de nombres y permitir que objetos con el mismo nombre coexistan en diferentes contextos.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Definición General:</strong>
+                        <p>Un namespace es como un "apellido" para los objetos de base de datos. Permite que dos objetos tengan el mismo nombre siempre que estén en namespaces diferentes. La sintaxis es: <code>namespace.objeto</code>.</p>
+
+                        <strong>Analogía Simple:</strong>
+                        <p>Imagina que tienes dos archivos con el mismo nombre "reporte.pdf" en diferentes carpetas. El namespace es como la "carpeta" que permite diferenciarlos. En bases de datos, <code>ventas.productos</code> y <code>inventario.productos</code> son dos tablas diferentes aunque ambas se llamen "productos".</p>
+
+                        <strong>Implementación por SGBD:</strong>
+                        <p>El concepto de namespace varía según el sistema gestor de bases de datos:</p>
+
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SGBD</th>
+                                        <th>Concepto de Namespace</th>
+                                        <th>Características</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>PostgreSQL</strong></td>
+                                        <td>Schema explícito</td>
+                                        <td>
+                                            <ul>
+                                                <li>Múltiples schemas por base de datos</li>
+                                                <li>Schema por defecto: <code>public</code></li>
+                                                <li><code>search_path</code> define orden de búsqueda</li>
+                                                <li>Sintaxis: <code>schema.objeto</code></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Oracle</strong></td>
+                                        <td>Schema = Usuario</td>
+                                        <td>
+                                            <ul>
+                                                <li>Un usuario = un namespace (esquema)</li>
+                                                <li>El namespace es el nombre del usuario</li>
+                                                <li>Acceso: <code>usuario.objeto</code> o <code>esquema.objeto</code></li>
+                                                <li>Sin configuración de search_path</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SQL Server</strong></td>
+                                        <td>Schema independiente</td>
+                                        <td>
+                                            <ul>
+                                                <li>Múltiples schemas por base de datos</li>
+                                                <li>Schema separado del usuario</li>
+                                                <li>Un usuario puede tener schema por defecto</li>
+                                                <li>Sintaxis: <code>esquema.objeto</code></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Ejemplos Prácticos:</strong>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>PostgreSQL: Namespace Explícito</h4>
+                                <div class="code-block">
+-- Crear un namespace (esquema)
+CREATE SCHEMA ventas;
+
+-- Crear objetos dentro del namespace
+CREATE TABLE ventas.productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    precio DECIMAL(10,2)
+);
+
+CREATE TABLE ventas.clientes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(100)
+);
+
+-- Crear otro namespace
+CREATE SCHEMA recursos_humanos;
+
+-- Puedo tener otra tabla "productos" en otro namespace sin conflicto
+CREATE TABLE recursos_humanos.productos (
+    id SERIAL PRIMARY KEY,
+    nombre_producto VARCHAR(100),
+    descripcion TEXT
+);
+
+-- Consultar objetos usando el namespace completo
+SELECT * FROM ventas.productos;
+SELECT * FROM recursos_humanos.productos;
+
+-- Configurar search_path para usar namespaces sin especificarlos
+SET search_path TO ventas, public;
+
+-- Ahora puedo consultar sin especificar el namespace
+SELECT * FROM productos; -- Busca en ventas.productos primero
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Oracle: Namespace = Esquema</h4>
+                                <div class="code-block">
+-- Crear usuario (automáticamente crea su namespace/esquema)
+CREATE USER hr IDENTIFIED BY password;
+GRANT CONNECT, RESOURCE TO hr;
+
+-- Conectarse como hr
+CONNECT hr/password;
+
+-- Crear objetos en el namespace hr
+CREATE TABLE productos (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100),
+    precio NUMBER(10,2)
+);
+
+-- Desde otro usuario, usar el namespace completo
+CONNECT sys/password AS SYSDBA;
+
+SELECT * FROM hr.productos; -- Usa el namespace hr
+
+-- Crear otro usuario con su propio namespace
+CREATE USER ventas IDENTIFIED BY password;
+GRANT CONNECT, RESOURCE TO ventas;
+
+-- Ambos pueden tener tabla "productos" sin conflicto
+-- hr.productos y ventas.productos son diferentes
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>SQL Server: Namespace = Esquema</h4>
+                                <div class="code-block">
+-- Crear namespace (esquema)
+CREATE SCHEMA ventas;
+GO
+
+-- Crear usuario (separado del esquema)
+CREATE USER usuario1 FOR LOGIN login1;
+GO
+
+-- Asignar esquema por defecto al usuario
+ALTER USER usuario1 WITH DEFAULT_SCHEMA = ventas;
+GO
+
+-- Crear objetos en el namespace
+CREATE TABLE ventas.productos (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    precio DECIMAL(10,2)
+);
+GO
+
+-- Crear otro namespace
+CREATE SCHEMA recursos_humanos;
+GO
+
+-- Crear objetos en el nuevo namespace
+CREATE TABLE recursos_humanos.empleados (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    salario DECIMAL(10,2)
+);
+GO
+
+-- Consultar usando namespace completo
+SELECT * FROM ventas.productos;
+SELECT * FROM recursos_humanos.empleados;
+
+-- Si el usuario tiene esquema por defecto, puede omitirlo
+CREATE TABLE productos (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100)
+);
+-- Se crea automáticamente en ventas.productos (esquema por defecto)
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Sistema ERP con Múltiples Módulos</h4>
+                                <div class="code-block">
+-- PostgreSQL: Sistema ERP con múltiples módulos
+CREATE SCHEMA ventas;
+CREATE SCHEMA compras;
+CREATE SCHEMA inventario;
+CREATE SCHEMA recursos_humanos;
+CREATE SCHEMA finanzas;
+
+-- Cada módulo tiene sus propias tablas
+CREATE TABLE ventas.ordenes (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT,
+    fecha DATE,
+    total DECIMAL(10,2)
+);
+
+CREATE TABLE compras.ordenes (
+    id SERIAL PRIMARY KEY,
+    proveedor_id INT,
+    fecha DATE,
+    total DECIMAL(10,2)
+);
+
+-- Ambas tablas "ordenes" coexisten sin conflicto
+-- ventas.ordenes y compras.ordenes son diferentes
+
+-- Consultas específicas por módulo
+SELECT * FROM ventas.ordenes WHERE fecha = CURRENT_DATE;
+SELECT * FROM compras.ordenes WHERE fecha = CURRENT_DATE;
+
+-- Permisos por namespace
+GRANT SELECT, INSERT, UPDATE 
+ON ALL TABLES IN SCHEMA ventas 
+TO rol_vendedores;
+
+GRANT SELECT, INSERT, UPDATE 
+ON ALL TABLES IN SCHEMA compras 
+TO rol_compradores;
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Ventajas de Usar Namespaces:</strong>
+                        <ul>
+                            <li><strong>Organización:</strong> Permite agrupar objetos relacionados (ej: todas las tablas de ventas en el namespace "ventas")</li>
+                            <li><strong>Evitar Conflictos:</strong> Permite que dos objetos tengan el mismo nombre en diferentes namespaces</li>
+                            <li><strong>Seguridad:</strong> Facilita el control de acceso por namespace (ej: permisos por esquema)</li>
+                            <li><strong>Mantenibilidad:</strong> Facilita la organización y mantenimiento de objetos relacionados</li>
+                        </ul>
+
+                        <strong>Comparación Visual:</strong>
+                        <div class="visual-diagram">
+                            <h4>Estructura de Namespaces</h4>
+                            <div id="namespace-diagram" class="interactive-diagram">
+                                <svg id="namespace-svg" width="900" height="700" viewBox="0 0 900 700">
+                                    <defs>
+                                        <linearGradient id="dbGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="namespaceGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="namespaceGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="tableGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#6B7280;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#4B5563;stop-opacity:1" />
+                                        </linearGradient>
+                                        <filter id="shadow">
+                                            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                                        </filter>
+                                    </defs>
+
+                                    <!-- POSTGRESQL -->
+                                    <g id="postgres-namespace">
+                                        <text x="150" y="30" text-anchor="middle" fill="#336791" font-size="18" font-weight="bold">POSTGRESQL</text>
+                                        <rect x="50" y="50" width="200" height="280" rx="8" fill="url(#dbGradient)" filter="url(#shadow)" opacity="0.9"/>
+                                        <text x="150" y="80" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Base de Datos</text>
+                                        
+                                        <!-- Schema 1 -->
+                                        <rect x="70" y="100" width="160" height="80" rx="5" fill="url(#namespaceGradient1)" opacity="0.9"/>
+                                        <text x="150" y="125" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Schema1 (ventas)</text>
+                                        <text x="150" y="145" text-anchor="middle" fill="white" font-size="10">← Namespace 1</text>
+                                        
+                                        <rect x="80" y="155" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="110" y="168" text-anchor="middle" fill="white" font-size="9">tabla1</text>
+                                        
+                                        <rect x="150" y="155" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="180" y="168" text-anchor="middle" fill="white" font-size="9">tabla2</text>
+                                        
+                                        <!-- Schema 2 -->
+                                        <rect x="70" y="190" width="160" height="80" rx="5" fill="url(#namespaceGradient2)" opacity="0.9"/>
+                                        <text x="150" y="215" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Schema2 (compras)</text>
+                                        <text x="150" y="235" text-anchor="middle" fill="white" font-size="10">← Namespace 2</text>
+                                        
+                                        <rect x="80" y="245" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="110" y="258" text-anchor="middle" fill="white" font-size="9">tabla1</text>
+                                        <text x="150" y="258" text-anchor="middle" fill="#FEE2E2" font-size="8">(mismo nombre)</text>
+                                        
+                                        <rect x="150" y="245" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="180" y="258" text-anchor="middle" fill="white" font-size="9">tabla3</text>
+                                    </g>
+
+                                    <!-- ORACLE -->
+                                    <g id="oracle-namespace">
+                                        <text x="450" y="30" text-anchor="middle" fill="#F80000" font-size="18" font-weight="bold">ORACLE</text>
+                                        <rect x="350" y="50" width="200" height="280" rx="8" fill="url(#dbGradient)" filter="url(#shadow)" opacity="0.9"/>
+                                        <text x="450" y="80" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Instancia</text>
+                                        
+                                        <!-- Usuario 1 -->
+                                        <rect x="370" y="100" width="160" height="70" rx="5" fill="url(#namespaceGradient1)" opacity="0.9"/>
+                                        <text x="450" y="125" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Usuario1 (hr)</text>
+                                        <text x="450" y="145" text-anchor="middle" fill="white" font-size="10">← Namespace 1</text>
+                                        
+                                        <rect x="420" y="155" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="450" y="168" text-anchor="middle" fill="white" font-size="9">tabla1</text>
+                                        
+                                        <!-- Usuario 2 -->
+                                        <rect x="370" y="180" width="160" height="70" rx="5" fill="url(#namespaceGradient2)" opacity="0.9"/>
+                                        <text x="450" y="205" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Usuario2 (ventas)</text>
+                                        <text x="450" y="225" text-anchor="middle" fill="white" font-size="10">← Namespace 2</text>
+                                        
+                                        <rect x="420" y="235" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="450" y="248" text-anchor="middle" fill="white" font-size="9">tabla1</text>
+                                        <text x="450" y="265" text-anchor="middle" fill="#FEE2E2" font-size="8">(mismo nombre, diferente namespace)</text>
+                                    </g>
+
+                                    <!-- SQL SERVER -->
+                                    <g id="sqlserver-namespace">
+                                        <text x="750" y="30" text-anchor="middle" fill="#A91D22" font-size="18" font-weight="bold">SQL SERVER</text>
+                                        <rect x="650" y="50" width="200" height="280" rx="8" fill="url(#dbGradient)" filter="url(#shadow)" opacity="0.9"/>
+                                        <text x="750" y="80" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Base de Datos</text>
+                                        
+                                        <!-- Schema 1 -->
+                                        <rect x="670" y="100" width="160" height="80" rx="5" fill="url(#namespaceGradient1)" opacity="0.9"/>
+                                        <text x="750" y="125" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Schema1 (ventas)</text>
+                                        <text x="750" y="145" text-anchor="middle" fill="white" font-size="10">← Namespace 1</text>
+                                        
+                                        <rect x="700" y="155" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="730" y="168" text-anchor="middle" fill="white" font-size="9">tabla1</text>
+                                        
+                                        <!-- Schema 2 -->
+                                        <rect x="670" y="190" width="160" height="80" rx="5" fill="url(#namespaceGradient2)" opacity="0.9"/>
+                                        <text x="750" y="215" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Schema2 (compras)</text>
+                                        <text x="750" y="235" text-anchor="middle" fill="white" font-size="10">← Namespace 2</text>
+                                        
+                                        <rect x="700" y="245" width="60" height="20" rx="3" fill="url(#tableGradient)" opacity="0.8"/>
+                                        <text x="730" y="258" text-anchor="middle" fill="white" font-size="9">tabla1</text>
+                                        <text x="750" y="270" text-anchor="middle" fill="#FEE2E2" font-size="8">(mismo nombre, diferente namespace)</text>
+                                    </g>
+                                </svg>
+                            </div>
+                            <style>
+                                #namespace-diagram .interactive-diagram {
+                                    width: 100%;
+                                    max-width: 900px;
+                                    margin: 2rem auto;
+                                    padding: 1rem;
+                                    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                                    border-radius: 12px;
+                                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                                    overflow: visible;
+                                }
+                                
+                                #namespace-svg {
+                                    width: 100%;
+                                    height: auto;
+                                    display: block;
+                                }
+                                
+                                #namespace-svg rect {
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                #namespace-svg rect:hover {
+                                    opacity: 0.8;
+                                    transform: translateY(-2px);
+                                }
+                                
+                                @media (max-width: 768px) {
+                                    #namespace-diagram .interactive-diagram {
+                                        padding: 0.5rem;
+                                    }
+                                    
+                                    #namespace-svg {
+                                        height: 600px;
+                                    }
+                                }
+                            </style>
+                        </div>
+
+                        <strong>Resumen para DBA Senior:</strong>
+                        <ul>
+                            <li><strong>Namespace = Contexto lógico:</strong> Agrupa objetos para evitar conflictos de nombres</li>
+                            <li><strong>En PostgreSQL:</strong> Schema explícito, múltiples schemas por DB, configurable con <code>search_path</code></li>
+                            <li><strong>En Oracle:</strong> Schema = Usuario, un namespace por usuario, siempre especificar</li>
+                            <li><strong>En SQL Server:</strong> Schema independiente, múltiples schemas por DB, separado de usuarios</li>
+                            <li><strong>Uso práctico:</strong> Organización modular, seguridad por namespace, evitar conflictos de nombres</li>
+                        </ul>
+
+                        <p><strong>Importante para DBA:</strong> Entender los namespaces es crucial para:</p>
+                        <ul>
+                            <li>Organizar grandes bases de datos de forma modular</li>
+                            <li>Gestionar permisos y seguridad de manera granular</li>
+                            <li>Evitar conflictos de nombres en sistemas complejos</li>
+                            <li>Planificar migraciones entre diferentes SGBD</li>
+                            <li>Optimizar el rendimiento mediante la organización lógica de objetos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Concepto: Instancia vs Conexión -->
+                <div id="instancia-conexion" class="concept-card">
+                    <h3>Instancia vs Conexión: ¿Cuál es la Diferencia?</h3>
+                    <p>Una <strong>instancia</strong> y una <strong>conexión</strong> son conceptos diferentes pero relacionados. Una instancia es el servidor de base de datos ejecutándose, mientras que una conexión es una sesión establecida por un cliente para comunicarse con la instancia.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Definición General:</strong>
+                        <p><strong>Instancia:</strong> Es el conjunto de procesos y memoria que ejecutan el Sistema Gestor de Bases de Datos (SGBD) para manejar una base de datos. Incluye procesos del servidor, memoria compartida, archivos de configuración activos y procesos de background.</p>
+                        <p><strong>Conexión:</strong> Es una sesión establecida por un cliente (aplicación o usuario) para comunicarse con la instancia. Es un canal de comunicación entre el cliente y el servidor de base de datos.</p>
+
+                        <strong>Analogía Simple:</strong>
+                        <p>Piensa en un restaurante:</p>
+                        <ul>
+                            <li><strong>Instancia:</strong> El restaurante en sí (el local, cocina, personal, etc.) - está activo todo el tiempo</li>
+                            <li><strong>Conexión:</strong> Una mesa ocupada por clientes - se abre cuando llegan y se cierra cuando se van</li>
+                        </ul>
+                        <p>Un restaurante (instancia) puede atender múltiples mesas (conexiones) simultáneamente.</p>
+
+                        <strong>Diferencias Clave:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Concepto</th>
+                                        <th>Instancia</th>
+                                        <th>Conexión</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Naturaleza</strong></td>
+                                        <td>Servidor/SGBD ejecutándose</td>
+                                        <td>Sesión entre cliente y servidor</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cantidad</strong></td>
+                                        <td>Una o pocas por servidor</td>
+                                        <td>Múltiples simultáneas</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Duración</strong></td>
+                                        <td>Persiste mientras el SGBD está activo</td>
+                                        <td>Se crea y se cierra según necesidad</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Recursos</strong></td>
+                                        <td>Memoria compartida, procesos del sistema</td>
+                                        <td>Sesión, cursor, buffer de trabajo</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Propósito</strong></td>
+                                        <td>Procesar consultas y gestionar datos</td>
+                                        <td>Canal de comunicación del cliente</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Relación entre Instancia y Conexión:</strong>
+                        <div class="visual-diagram">
+                            <h4>Arquitectura: Instancia y Conexiones</h4>
+                            <div id="instance-diagram" class="interactive-diagram">
+                                <svg id="instance-svg" width="800" height="500" viewBox="0 0 800 500">
+                                    <!-- Definiciones para gradientes y efectos -->
+                                    <defs>
+                                        <linearGradient id="instanceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="appGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+                                        </linearGradient>
+                                        <filter id="shadow">
+                                            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                                        </filter>
+                                    </defs>
+
+                                    <!-- Instancia (Servidor) -->
+                                    <rect id="instance-box" x="200" y="50" width="400" height="120" rx="10" fill="url(#instanceGradient)" filter="url(#shadow)" class="instance-box"/>
+                                    <text x="400" y="85" text-anchor="middle" fill="white" font-size="18" font-weight="bold">INSTANCIA</text>
+                                    <text x="400" y="105" text-anchor="middle" fill="white" font-size="14">(Servidor de Base de Datos)</text>
+                                    
+                                    <!-- Componentes de la Instancia -->
+                                    <g id="instance-components">
+                                        <rect x="220" y="125" width="110" height="35" rx="5" fill="#2C5282" opacity="0.8"/>
+                                        <text x="275" y="145" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Procesos</text>
+                                        
+                                        <rect x="345" y="125" width="110" height="35" rx="5" fill="#2C5282" opacity="0.8"/>
+                                        <text x="400" y="145" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Memoria</text>
+                                        
+                                        <rect x="470" y="125" width="110" height="35" rx="5" fill="#2C5282" opacity="0.8"/>
+                                        <text x="525" y="145" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Archivos</text>
+                                    </g>
+
+                                    <!-- Conexiones -->
+                                    <g id="connections">
+                                        <!-- Conexión 1 -->
+                                        <rect x="150" y="220" width="130" height="50" rx="8" fill="url(#connectionGradient)" filter="url(#shadow)" class="connection-box"/>
+                                        <text x="215" y="240" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Conexión 1</text>
+                                        <text x="215" y="258" text-anchor="middle" fill="white" font-size="11">(App 1)</text>
+                                        <line x1="300" y1="245" x2="240" y2="220" stroke="#10B981" stroke-width="3" marker-end="url(#arrowhead)" class="connection-line"/>
+                                        
+                                        <!-- Conexión 2 -->
+                                        <rect x="335" y="220" width="130" height="50" rx="8" fill="url(#connectionGradient)" filter="url(#shadow)" class="connection-box"/>
+                                        <text x="400" y="240" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Conexión 2</text>
+                                        <text x="400" y="258" text-anchor="middle" fill="white" font-size="11">(App 2)</text>
+                                        <line x1="400" y1="170" x2="400" y2="220" stroke="#10B981" stroke-width="3" marker-end="url(#arrowhead)" class="connection-line"/>
+                                        
+                                        <!-- Conexión 3 -->
+                                        <rect x="520" y="220" width="130" height="50" rx="8" fill="url(#connectionGradient)" filter="url(#shadow)" class="connection-box"/>
+                                        <text x="585" y="240" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Conexión 3</text>
+                                        <text x="585" y="258" text-anchor="middle" fill="white" font-size="11">(App 3)</text>
+                                        <line x1="500" y1="245" x2="560" y2="220" stroke="#10B981" stroke-width="3" marker-end="url(#arrowhead)" class="connection-line"/>
+                                    </g>
+
+                                    <!-- Aplicaciones -->
+                                    <g id="applications">
+                                        <!-- App 1 -->
+                                        <rect x="100" y="320" width="100" height="50" rx="8" fill="url(#appGradient)" filter="url(#shadow)" class="app-box"/>
+                                        <text x="150" y="342" text-anchor="middle" fill="white" font-size="13" font-weight="bold">App 1</text>
+                                        <line x1="215" y1="270" x2="150" y2="320" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="app-line"/>
+                                        
+                                        <!-- App 2 -->
+                                        <rect x="250" y="320" width="100" height="50" rx="8" fill="url(#appGradient)" filter="url(#shadow)" class="app-box"/>
+                                        <text x="300" y="342" text-anchor="middle" fill="white" font-size="13" font-weight="bold">App 2</text>
+                                        <line x1="400" y1="270" x2="300" y2="320" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="app-line"/>
+                                        
+                                        <!-- App 3 -->
+                                        <rect x="400" y="320" width="100" height="50" rx="8" fill="url(#appGradient)" filter="url(#shadow)" class="app-box"/>
+                                        <text x="450" y="342" text-anchor="middle" fill="white" font-size="13" font-weight="bold">App 3</text>
+                                        <line x1="585" y1="270" x2="450" y2="320" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="app-line"/>
+                                    </g>
+
+                                    <!-- Flechas -->
+                                    <defs>
+                                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                            <polygon points="0 0, 10 3, 0 6" fill="#10B981"/>
+                                        </marker>
+                                    </defs>
+
+                                    <!-- Texto explicativo -->
+                                    <text x="400" y="420" text-anchor="middle" fill="#1f2937" font-size="14" font-weight="bold">
+                                        Una instancia puede manejar múltiples conexiones simultáneamente
+                                    </text>
+                                </svg>
+                            </div>
+                            <style>
+                                .interactive-diagram {
+                                    width: 100%;
+                                    max-width: 800px;
+                                    margin: 2rem auto;
+                                    padding: 1rem;
+                                    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                                    border-radius: 12px;
+                                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                                    overflow: visible;
+                                }
+                                
+                                #instance-svg {
+                                    width: 100%;
+                                    height: auto;
+                                    display: block;
+                                }
+                                
+                                .instance-box {
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                .instance-box:hover {
+                                    opacity: 0.9;
+                                    transform: translateY(-2px);
+                                }
+                                
+                                .connection-box {
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                .connection-box:hover {
+                                    opacity: 0.9;
+                                    transform: scale(1.05);
+                                }
+                                
+                                .app-box {
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                .app-box:hover {
+                                    opacity: 0.9;
+                                    transform: scale(1.05);
+                                }
+                                
+                                .connection-line {
+                                    animation: pulse 2s ease-in-out infinite;
+                                }
+                                
+                                .app-line {
+                                    animation: pulse 2s ease-in-out infinite 0.5s;
+                                }
+                                
+                                @keyframes pulse {
+                                    0%, 100% { opacity: 0.6; }
+                                    50% { opacity: 1; }
+                                }
+                                
+                                @media (max-width: 768px) {
+                                    .interactive-diagram {
+                                        padding: 0.5rem;
+                                    }
+                                    
+                                    #instance-svg {
+                                        height: 400px;
+                                    }
+                                }
+                            </style>
+                        </div>
+
+                        <strong>Ejemplos Prácticos por SGBD:</strong>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>PostgreSQL: Instancia y Conexiones</h4>
+                                <div class="code-block">
+-- INSTANCIA: El servidor PostgreSQL ejecutándose
+-- Se inicia con: pg_ctl start
+-- Una instancia puede manejar múltiples bases de datos
+
+-- CONEXIÓN: Cada cliente se conecta a la instancia
+-- Ejemplo: 3 aplicaciones conectándose simultáneamente
+
+-- Aplicación 1
+psql -h localhost -U usuario1 -d base_datos1
+
+-- Aplicación 2 (otra conexión)
+psql -h localhost -U usuario2 -d base_datos2
+
+-- Aplicación 3 (otra conexión)
+psql -h localhost -U usuario1 -d base_datos1
+
+-- Las 3 conexiones usan la MISMA instancia de PostgreSQL
+-- Pero son 3 conexiones diferentes
+
+-- Ver conexiones activas
+SELECT 
+    pid,
+    usename,
+    datname,
+    client_addr,
+    state,
+    query_start
+FROM pg_stat_activity
+WHERE state = 'active';
+
+-- Verificar instancia (servidor)
+SELECT version(); -- Muestra información de la instancia
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Oracle: Instancia y Sesiones</h4>
+                                <div class="code-block">
+-- INSTANCIA: El servidor Oracle ejecutándose
+-- Se inicia con: startup
+-- Una instancia puede manejar una base de datos (normalmente)
+
+-- CONEXIÓN: Cada cliente se conecta a la instancia
+-- Ejemplo: Múltiples usuarios conectándose
+
+-- Usuario 1
+sqlplus hr/password@localhost:1521/orcl
+
+-- Usuario 2 (otra conexión)
+sqlplus scott/password@localhost:1521/orcl
+
+-- Usuario 3 (otra conexión)
+sqlplus hr/password@localhost:1521/orcl
+
+-- Las 3 conexiones usan la MISMA instancia de Oracle
+-- Pero son 3 sesiones diferentes
+
+-- Ver conexiones activas (sesiones)
+SELECT 
+    sid,
+    serial#,
+    username,
+    status,
+    machine,
+    program
+FROM v$session
+WHERE username IS NOT NULL;
+
+-- Verificar instancia
+SELECT instance_name, host_name, version 
+FROM v$instance;
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>SQL Server: Instancia y Conexiones</h4>
+                                <div class="code-block">
+-- INSTANCIA: El servidor SQL Server ejecutándose
+-- Una instancia puede manejar múltiples bases de datos
+
+-- CONEXIÓN: Cada cliente se conecta a la instancia
+-- Ejemplo: Múltiples aplicaciones conectándose
+
+-- Aplicación 1
+-- ConnectionString: "Server=localhost;Database=DB1;User Id=user1;Password=pass1;"
+
+-- Aplicación 2 (otra conexión)
+-- ConnectionString: "Server=localhost;Database=DB2;User Id=user2;Password=pass2;"
+
+-- Aplicación 3 (otra conexión)
+-- ConnectionString: "Server=localhost;Database=DB1;User Id=user1;Password=pass1;"
+
+-- Las 3 conexiones usan la MISMA instancia de SQL Server
+-- Pero son 3 conexiones diferentes
+
+-- Ver conexiones activas
+SELECT 
+    session_id,
+    login_name,
+    database_id,
+    program_name,
+    status,
+    cpu_time,
+    memory_usage
+FROM sys.dm_exec_sessions
+WHERE is_user_process = 1;
+
+-- Verificar instancia
+SELECT 
+    @@SERVERNAME AS InstanceName,
+    @@VERSION AS Version,
+    SERVERPROPERTY('InstanceName') AS Instance;
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Conceptos Relacionados Importantes:</strong>
+
+                        <div class="example-card">
+                            <h4>1. Pool de Conexiones (Connection Pool)</h4>
+                            <p>El pool de conexiones es un mecanismo que reutiliza conexiones existentes en lugar de crear nuevas cada vez. Esto reduce la sobrecarga de crear/cerrar conexiones.</p>
+                            <div class="code-block">
+// Ejemplo en Java con HikariCP (Pool de Conexiones)
+HikariConfig config = new HikariConfig();
+config.setMaximumPoolSize(10); // Máximo 10 conexiones
+config.setMinimumIdle(5);     // Mínimo 5 conexiones activas
+config.setJdbcUrl("jdbc:postgresql://localhost:5432/mydb");
+config.setUsername("usuario");
+config.setPassword("password");
+
+// Todas las aplicaciones comparten estas 10 conexiones
+// NO se crean 100 conexiones para 100 aplicaciones
+
+// Ventajas:
+// - Reduce latencia de conexión
+// - Optimiza uso de recursos
+// - Mejora rendimiento general
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>2. Múltiples Instancias</h4>
+                            <p>Un servidor puede ejecutar múltiples instancias de un SGBD. Cada instancia maneja sus propias bases de datos y es independiente de las demás.</p>
+                            <div class="code-block">
+# PostgreSQL: Múltiples instancias en diferentes puertos
+# Instancia 1
+pg_ctl -D /data/postgresql1 -o "-p 5432" start
+
+# Instancia 2
+pg_ctl -D /data/postgresql2 -o "-p 5433" start
+
+# Cada instancia es independiente
+# Las conexiones deben especificar el puerto correcto
+
+# Oracle: Múltiples instancias (menos común)
+# Normalmente una instancia por base de datos
+
+# SQL Server: Múltiples instancias nombradas
+# Instancia por defecto: localhost
+# Instancia nombrada: localhost\INSTANCIA1
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>3. Límites de Conexiones</h4>
+                            <p>Cada instancia tiene un límite de conexiones simultáneas configurable en los parámetros del SGBD.</p>
+                            <div class="code-block">
+-- PostgreSQL: Ver y configurar límite de conexiones
+SHOW max_connections; -- Límite actual
+-- Configurar en postgresql.conf: max_connections = 100
+
+-- Oracle: Ver límite de procesos
+SHOW PARAMETER processes; -- Límite de procesos
+
+-- SQL Server: Ver límite de conexiones
+SELECT @@MAX_CONNECTIONS; -- Límite actual
+
+-- Importante: Cada conexión consume recursos
+-- - Memoria (cada conexión tiene su buffer)
+-- - CPU (procesamiento de consultas)
+-- - Locks y recursos compartidos
+
+-- Buenas prácticas:
+-- - Usar pool de conexiones
+-- - Cerrar conexiones cuando no se usen
+-- - Configurar límites apropiados según recursos del servidor
+                            </div>
+                        </div>
+
+                        <strong>Resumen para DBA Senior:</strong>
+                        <ul>
+                            <li><strong>Instancia ≠ Conexión:</strong> Son conceptos diferentes pero relacionados</li>
+                            <li><strong>Instancia:</strong> Servidor ejecutándose (una o pocas por servidor)</li>
+                            <li><strong>Conexión:</strong> Sesión de un cliente (muchas simultáneas)</li>
+                            <li><strong>Relación:</strong> Una instancia puede tener múltiples conexiones</li>
+                            <li><strong>Pool de Conexiones:</strong> Reutiliza conexiones para optimizar recursos</li>
+                            <li><strong>Múltiples Instancias:</strong> Un servidor puede ejecutar varias instancias</li>
+                            <li><strong>Límites:</strong> Cada instancia tiene límites de conexiones configurable</li>
+                        </ul>
+
+                        <p><strong>Importante para DBA:</strong> Entender la diferencia entre instancia y conexión es crucial para:</p>
+                        <ul>
+                            <li>Optimizar el rendimiento mediante pool de conexiones</li>
+                            <li>Gestionar recursos del servidor eficientemente</li>
+                            <li>Configurar límites apropiados de conexiones</li>
+                            <li>Troubleshooting de problemas de rendimiento</li>
+                            <li>Planificar capacidad y escalabilidad</li>
+                            <li>Monitorear y administrar conexiones activas</li>
+                            <li>Entender la arquitectura de bases de datos para tomar decisiones técnicas</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

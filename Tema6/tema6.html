@@ -51,79 +51,1067 @@
                     </div>
                     Conceptos Clave
                 </h2>
-                
+
+                <!-- 6.1 ¿Cómo estudiar este tema? -->
                 <div class="concept-card">
-                    <h3>Tipos de Índices</h3>
-                    <p>Estructuras de datos que aceleran las consultas al proporcionar acceso directo a filas específicas.</p>
+                    <h3>6.1 ¿Cómo estudiar este tema?</h3>
+                    <p>En este tema analizaremos los aspectos fundamentales para conocer cómo se organizan los índices en una base de datos y saber el coste desde el punto de vista de almacenamiento y gestión que supone un índice.</p>
                     <div class="concept-details">
-                        <strong>Clasificación por estructura:</strong>
+                        <p><strong>Objetivos de aprendizaje:</strong></p>
                         <ul>
-                            <li><strong>B-Tree:</strong> Índices balanceados para consultas de rango</li>
-                            <li><strong>Hash:</strong> Acceso directo para consultas de igualdad</li>
-                            <li><strong>Bitmap:</strong> Eficientes para columnas con pocos valores únicos</li>
-                            <li><strong>GIN/GiST:</strong> Índices para tipos de datos complejos</li>
+                            <li>Entender la organización de índices en bases de datos</li>
+                            <li>Conocer el coste de almacenamiento de índices</li>
+                            <li>Comprender el coste de gestión y mantenimiento de índices</li>
+                            <li>Evaluar cuándo usar diferentes técnicas de indexación</li>
                         </ul>
-                        <strong>Consideraciones:</strong> Selectividad, cardinalidad, overhead de mantenimiento
                     </div>
                 </div>
 
+                <!-- 6.2 Introducción -->
                 <div class="concept-card">
-                    <h3>Índices Compuestos</h3>
-                    <p>Índices que incluyen múltiples columnas, optimizando consultas que filtran por varias condiciones.</p>
+                    <h3>6.2 Introducción</h3>
+                    <p>Desde el punto de vista del sistema, un <strong>índice de un archivo</strong> funciona igual que el índice de un libro: permite consultar un aspecto determinado e ir de manera directa a su ubicación.</p>
+                    
                     <div class="concept-details">
-                        <strong>Principios de diseño:</strong>
+                        <p>En bases de datos, los índices <strong>reducen el tiempo de búsqueda y acceso a los datos</strong>. Los índices se podrían guardar en una lista y consultarla cuando se haga referencia a uno, sin embargo, existen técnicas específicas para almacenar los índices.</p>
+                        
+                        <strong>Tipos de índices:</strong>
                         <ul>
-                            <li><strong>Orden de columnas:</strong> Más selectiva primero</li>
-                            <li><strong>Regla de prefijo:</strong> Solo se puede usar si se incluyen las columnas en orden</li>
-                            <li><strong>Cardinalidad:</strong> Producto de cardinalidades de columnas</li>
-                            <li><strong>Cobertura:</strong> Índices que incluyen todas las columnas necesarias</li>
+                            <li><strong>Índices ordenados:</strong> Basados en ordenamiento secuencial</li>
+                            <li><strong>Índices asociativos:</strong> Basados en funciones de hash</li>
                         </ul>
-                        <strong>Fórmula de selectividad:</strong> Selectividad = 1 / (Valores únicos columna1 × Valores únicos columna2)
+
+                        <strong>Criterios para evaluar técnicas de indexación:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Criterio</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Tipos de acceso</strong></td>
+                                        <td>Búsquedas de registros con valor concreto o valores dentro de un rango</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tiempo de acceso</strong></td>
+                                        <td>Velocidad para encontrar y recuperar datos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tiempo de inserción</strong></td>
+                                        <td>Tiempo necesario para insertar un valor, incluyendo actualización de índices</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tiempo de borrado</strong></td>
+                                        <td>Tiempo necesario para eliminar un registro y actualizar índices</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Espacio adicional requerido</strong></td>
+                                        <td>Espacio adicional requerido por la tabla de índices</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p><strong>Importante:</strong> No existe una técnica mejor que otra, todo depende del tipo de aplicación que se esté utilizando.</p>
                     </div>
                 </div>
 
+                <!-- 6.3 Índices Ordenados -->
                 <div class="concept-card">
-                    <h3>Índices Parciales</h3>
-                    <p>Índices que solo incluyen un subconjunto de filas que cumplen una condición específica.</p>
+                    <h3>6.3 Índices Ordenados</h3>
+                    <p>Cada estructura de índice tiene una asociación con una <strong>clave de búsqueda determinada</strong>. Desde el punto de vista de un archivo, los registros almacenados pueden seguir un cierto orden. Además, un archivo puede contener varios índices de claves de búsqueda.</p>
+                    
                     <div class="concept-details">
-                        <strong>Casos de uso:</strong>
-                        <ul>
-                            <li><strong>Filtros frecuentes:</strong> WHERE status = 'active'</li>
-                            <li><strong>Valores nulos:</strong> WHERE column IS NOT NULL</li>
-                            <li><strong>Rangos específicos:</strong> WHERE date >= '2024-01-01'</li>
-                            <li><strong>Datos históricos:</strong> WHERE created_at > '2023-01-01'</li>
-                        </ul>
-                        <strong>Beneficios:</strong> Menor tamaño, mayor velocidad, menos overhead
+                        <strong>Clasificación de índices ordenados:</strong>
+                        
+                        <div class="visual-diagram">
+                            <h4>Tipos de Índices Ordenados</h4>
+                            <div class="nosql-types">
+                                <div class="nosql-type">
+                                    <div class="type-icon">
+                                        <i class="fas fa-list-ol"></i>
+                                    </div>
+                                    <h4>Índices con Agrupación (Primarios)</h4>
+                                    <p>La clave de búsqueda especifica el <strong>orden secuencial</strong> del archivo</p>
+                                    <div class="type-example">
+                                        <pre>Índice Primario (ID):
+1 → Bloque 1, Offset 0
+2 → Bloque 1, Offset 100
+3 → Bloque 2, Offset 0
+4 → Bloque 2, Offset 100</pre>
+                                    </div>
+                                    <p><strong>Nota:</strong> Normalmente hace referencia a la clave primaria, pero puede usarse sobre cualquier clave de búsqueda</p>
+                                </div>
+                                <div class="nosql-type">
+                                    <div class="type-icon">
+                                        <i class="fas fa-list"></i>
+                                    </div>
+                                    <h4>Índices sin Agrupación (Secundarios)</h4>
+                                    <p>Las claves de búsqueda siguen un <strong>orden diferente al secuencial</strong></p>
+                                    <div class="type-example">
+                                        <pre>Índice Secundario (Nombre):
+A → Bloque 3, Offset 50
+B → Bloque 1, Offset 200
+C → Bloque 2, Offset 150
+D → Bloque 1, Offset 50</pre>
+                                    </div>
+                                    <p><strong>Característica:</strong> Permite acceso rápido por criterios no primarios</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- 6.4 Índices Densos y Dispersos -->
                 <div class="concept-card">
-                    <h3>Índices de Expresión</h3>
-                    <p>Índices basados en expresiones o funciones aplicadas a las columnas.</p>
+                    <h3>6.4 Índices Densos y Dispersos</h3>
+                    <p>Una entrada del índice está formada por un <strong>valor que sirve de clave de búsqueda</strong> y por <strong>punteros a uno o varios registros</strong>. El puntero contiene la información sobre el identificador de un bloque de disco y un desplazamiento dentro del bloque para el acceso directo a los datos.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de expresiones:</strong>
-                        <ul>
-                            <li><strong>Funciones:</strong> UPPER(nombre), LOWER(email)</li>
-                            <li><strong>Operaciones:</strong> precio * cantidad, fecha + INTERVAL '1 day'</li>
-                            <li><strong>Concatenaciones:</strong> nombre || ' ' || apellido</li>
-                            <li><strong>Extracciones:</strong> EXTRACT(year FROM fecha)</li>
-                        </ul>
-                        <strong>Consideraciones:</strong> Consistencia en consultas, overhead de cálculo
+                        <strong>Estructura de una entrada de índice:</strong>
+                        <div class="code-block">
+Entrada de Índice:
+┌─────────────────┬──────────────────┐
+│ Clave Búsqueda │ Puntero (Bloque) │
+├─────────────────┼──────────────────┤
+│ "Alice"         │ Bloque 5, Offset │
+│ "Bob"           │ Bloque 3, Offset │
+│ "Charlie"       │ Bloque 7, Offset │
+└─────────────────┴──────────────────┘
+                        </div>
+
+                        <strong>Tipos de índices ordenados:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>Índice Denso</th>
+                                        <th>Índice Disperso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Entradas</strong></td>
+                                        <td>Una entrada por cada valor de clave</td>
+                                        <td>Entradas solo para ciertos valores</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tiempo de acceso</strong></td>
+                                        <td>Generalmente más rápido</td>
+                                        <td>Puede requerir búsqueda adicional</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Espacio requerido</strong></td>
+                                        <td>Mayor espacio</td>
+                                        <td>Menor espacio</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tiempo de actualización</strong></td>
+                                        <td>Mayor tiempo</td>
+                                        <td>Menor tiempo</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mantenibilidad</strong></td>
+                                        <td>Más compleja</td>
+                                        <td>Más simple</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Ejemplo visual:</strong>
+                        <div class="visual-diagram">
+                            <h4>Comparación Denso vs Disperso</h4>
+                            <div class="table-comparison">
+                                <div class="table-before">
+                                    <h5>Índice Denso</h5>
+                                    <div class="code-block">
+ID    → Bloque
+1     → B1
+2     → B1
+3     → B2
+4     → B2
+5     → B3
+6     → B3
+7     → B4
+8     → B4
+                                    </div>
+                                    <p><strong>Ventaja:</strong> Acceso directo rápido</p>
+                                    <p><strong>Desventaja:</strong> Más espacio</p>
+                                </div>
+                                <div class="table-after">
+                                    <h5>Índice Disperso</h5>
+                                    <div class="code-block">
+ID    → Bloque
+1     → B1
+4     → B2
+7     → B4
+                                    </div>
+                                    <p><strong>Ventaja:</strong> Menor espacio</p>
+                                    <p><strong>Desventaja:</strong> Requiere búsqueda secuencial</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- 6.5 Índices Multinivel -->
                 <div class="concept-card">
-                    <h3>Asociación y Join Optimization</h3>
-                    <p>Técnicas para optimizar operaciones de unión entre tablas mediante índices y algoritmos eficientes.</p>
+                    <h3>6.5 Índices Multinivel</h3>
+                    <p>La creación de índices multinivel viene motivada para <strong>reducir aún más el espacio</strong> que pueden ocupar los índices. Aunque utilicemos índices dispersos, puede ocurrir que el espacio requerido sea demasiado grande.</p>
+                    
                     <div class="concept-details">
-                        <strong>Algoritmos de JOIN:</strong>
+                        <strong>Objetivo:</strong>
+                        <p>Si logramos que un índice sea lo suficientemente pequeño como para almacenarlo en la <strong>memoria principal</strong> (y no tener que acudir al disco), el tiempo de búsqueda disminuirá significativamente, pues se reduce también el tiempo de acceso.</p>
+
+                        <strong>Proceso de búsqueda:</strong>
                         <ul>
-                            <li><strong>Nested Loop Join:</strong> O(n×m) - Para tablas pequeñas</li>
-                            <li><strong>Hash Join:</strong> O(n+m) - Para tablas grandes sin orden</li>
-                            <li><strong>Merge Join:</strong> O(n log n + m log m) - Para datos ordenados</li>
-                            <li><strong>Index Nested Loop:</strong> Usando índices para búsquedas</li>
+                            <li><strong>Búsqueda binaria:</strong> Si es posible, más eficiente</li>
+                            <li><strong>Búsqueda lineal:</strong> Si no es posible, más lenta</li>
                         </ul>
-                        <strong>Factores de decisión:</strong> Tamaño de tablas, índices disponibles, memoria
+
+                        <strong>Solución: Índices Multinivel</strong>
+                        <div class="normalization-process">
+                            <div class="normalization-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h5>Índice como archivo secuencial</h5>
+                                    <p>Tratar el índice como archivo</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h5>Crear índice disperso sobre índice</h5>
+                                    <p>Índice de segundo nivel</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="normalization-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h5>Búsqueda en dos pasos</h5>
+                                    <p>Índice externo → binaria<br>Índice interno → secuencial</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Estructura de Índice Multinivel:</strong>
+                        <div class="visual-diagram">
+                            <h4>Arquitectura de Índice Multinivel</h4>
+                            <div class="memory-architecture">
+                                <div class="memory-layer main">
+                                    <div class="layer-title">Memoria Principal</div>
+                                    <div class="memory-section">
+                                        <div class="section-title">Índice Externo (Nivel 2)</div>
+                                        <div class="section-content">
+                                            1 → Índice interno 1<br>
+                                            100 → Índice interno 2<br>
+                                            200 → Índice interno 3
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="arrow">↓</div>
+                                <div class="memory-layer">
+                                    <div class="layer-title">Disco</div>
+                                    <div class="memory-section">
+                                        <div class="section-title">Índice Interno (Nivel 1)</div>
+                                        <div class="section-content">
+                                            1 → Bloque 1<br>
+                                            2 → Bloque 1<br>
+                                            3 → Bloque 2<br>
+                                            ...<br>
+                                            99 → Bloque 50
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p><strong>Nota:</strong> Si el índice externo crece demasiado y no cabe en la memoria principal, se puede repetir el proceso creando otro índice más externo. Los índices con dos o más niveles se llaman <strong>índices multinivel</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- 6.6 Actualización del Índice -->
+                <div class="concept-card">
+                    <h3>6.6 Actualización del Índice</h3>
+                    <p>Independientemente del tipo de índice que estemos utilizando, estos deben <strong>actualizarse siempre que se inserte o borre un registro</strong>. Existen diferentes algoritmos para actualizar los índices.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Operación de Inserción:</strong>
+                        <p>En primer lugar se realiza una búsqueda usando el valor de clave de búsqueda del registro a insertar.</p>
+
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Proceso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Índices Densos</strong></td>
+                                        <td>
+                                            <ul>
+                                                <li>Si el valor no existe: Crear nueva entrada de índice</li>
+                                                <li>Si el valor existe: Depende de si el sistema almacena punteros a todos los registros</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Índices Dispersos</strong></td>
+                                        <td>
+                                            <ul>
+                                                <li>Si se crea un nuevo bloque: Insertar primer valor de clave</li>
+                                                <li>Si el registro nuevo tiene menor valor: Actualizar entrada del índice</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Operación de Borrado:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Proceso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Índices Densos</strong></td>
+                                        <td>
+                                            <ul>
+                                                <li>Si era el único registro con esa clave: Borrar entrada del índice</li>
+                                                <li>Si hay más registros: Actualizar punteros según corresponda</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Índices Dispersos</strong></td>
+                                        <td>
+                                            <ul>
+                                                <li>Si el índice no contiene ese valor: No borrar nada</li>
+                                                <li>Si era el único: Cambiar valor al siguiente valor de clave</li>
+                                                <li>Si existen más: Actualizar puntero al registro correcto</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.7 Asociación Estática -->
+                <div class="concept-card">
+                    <h3>6.7 Asociación Estática</h3>
+                    <p>Uno de los problemas de utilizar archivos secuenciales es la necesidad de tener que crear una estructura adicional (índices) para saber dónde están los datos. Esta forma de funcionamiento implica la realización de mayor número de E/S independientemente del método de búsqueda que se utilice.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Objetivo:</strong>
+                        <p>El objetivo de las técnicas de asociación se centra en poder <strong>prescindir de la estructura de índices</strong>, pero no de su utilización.</p>
+
+                        <strong>Definiciones previas:</strong>
+                        <ul>
+                            <li><strong>Cajón (Bucket):</strong> Unidad de almacenamiento para uno o más registros</li>
+                            <li><strong>Función de asociación (Hash):</strong> Función que, dado un valor de clave, indica el cajón en el que está</li>
+                        </ul>
+
+                        <strong>Usos de la asociación:</strong>
+                        <ul>
+                            <li><strong>Organización del índice asociativo:</strong> Índice basado en hash</li>
+                            <li><strong>Organización del archivo asociativo:</strong> Archivo completo organizado por hash</li>
+                        </ul>
+
+                        <strong>Función de Asociación:</strong>
+                        <p>La fuerza de la asociación radica, en primer lugar, en la función de asociación utilizada:</p>
+                        <ul>
+                            <li><strong>Peor función:</strong> Asignaría a todos los valores de clave el mismo cajón</li>
+                            <li><strong>Función ideal:</strong> Distribuye todos los valores de claves uniformemente por todos los cajones</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Ejemplo de función hash simple
+hash(clave) = clave MOD numero_cajones
+
+-- Ejemplo:
+hash(123) = 123 MOD 10 = 3  → Cajón 3
+hash(456) = 456 MOD 10 = 6  → Cajón 6
+hash(789) = 789 MOD 10 = 9  → Cajón 9
+                        </div>
+
+                        <strong>Desbordamiento (Overflow):</strong>
+                        <p>Cuando no caben más registros en un cajón, se habla de <strong>desbordamiento</strong>. Los desbordamientos pueden ser causados por:</p>
+                        <ul>
+                            <li><strong>Cajones insuficientes:</strong> No hay suficientes cajones para todos los registros</li>
+                            <li><strong>Atasco (Collision):</strong> Hay cajones con más registros que otros
+                                <ul>
+                                    <li>Misma clave de búsqueda para diferentes registros</li>
+                                    <li>Función de asociación no genera distribución uniforme</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <strong>Índices Asociativos:</strong>
+                        <p>La asociación permite crear <strong>índices asociativos</strong>. Estos organizan las claves de búsquedas y sus punteros en una estructura de archivo asociativo.</p>
+
+                        <div class="visual-diagram">
+                            <h4>Estructura de Archivo Asociativo</h4>
+                            <div class="code-block">
+Cajón 0: [Registro A, Registro B]
+Cajón 1: [Registro C]
+Cajón 2: [Registro D, Registro E, Registro F]
+Cajón 3: [Registro G]
+Cajón 4: [Registro H] → Desbordamiento → Cajón 4.1
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.8 Cómo usar índices en bases de datos -->
+                <div class="concept-card">
+                    <h3>6.8 Cómo usar índices en bases de datos</h3>
+                    <p>El propósito de crear índices en una tabla de una base de datos es <strong>optimizar los tiempos de consulta</strong> encontrando más rápido la fila o filas deseadas. La parte negativa es que añaden complejidad a la inserción o modificación de datos.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Ventajas de los índices:</strong>
+                        <div class="advantages-grid">
+                            <div class="advantage-item">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <h4>Mejora de Rendimiento</h4>
+                                <p>Los datos que responden a la consulta existen en el propio índice</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-hdd"></i>
+                                <h4>Reducción de E/S</h4>
+                                <p>Se necesitan solo páginas de índice, no páginas de datos completas</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-eye"></i>
+                                <h4>Índices en Vistas</h4>
+                                <p>Mejoran rendimiento si la vista contiene agregaciones o combinaciones</p>
+                            </div>
+                        </div>
+
+                        <strong>Inconvenientes de los índices:</strong>
+                        <ul>
+                            <li><strong>Espacio adicional:</strong> Las tablas de índices ocupan espacio</li>
+                            <li><strong>Consumo de recursos:</strong> Cada operación de actualización, inserción o borrado requiere actualizar todos los índices</li>
+                            <li><strong>Overhead de mantenimiento:</strong> Mayor complejidad en operaciones de escritura</li>
+                        </ul>
+
+                        <strong>Ejemplo Práctico:</strong>
+                        <p>Pensemos en el campo <code>_id</code> de una tabla. Este campo suele ser la clave primaria y normalmente es un dígito que va incrementando su valor en cada inserción. Cuando recuperamos una fila usando <code>_id</code>, la base de datos no necesita buscar por cada fila - los datos están ordenados y se buscan gracias a los algoritmos creados para tal efecto.</p>
+
+                        <div class="code-block">
+-- Tabla de usuarios
+CREATE TABLE usuarios (
+    _id INTEGER PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellidos VARCHAR(100),
+    pais VARCHAR(50),
+    fecha_alta DATE
+);
+
+-- Índice para búsqueda por país
+CREATE INDEX idx_usuarios_pais ON usuarios(pais);
+-- Esto crea una copia ordenada por país
+
+-- Consulta optimizada
+SELECT * FROM usuarios WHERE pais = 'España';
+-- Usa el índice idx_usuarios_pais para búsqueda rápida
+
+-- Índice para búsqueda por rango de fechas
+CREATE INDEX idx_usuarios_fecha ON usuarios(fecha_alta);
+-- Permite búsqueda rápida por rangos de fechas
+
+SELECT * FROM usuarios 
+WHERE fecha_alta BETWEEN '2024-01-01' AND '2024-12-31';
+-- Usa el índice idx_usuarios_fecha
+                        </div>
+
+                        <strong>Índices Compuestos:</strong>
+                        <p>También se puede crear un índice para varias columnas. Por ejemplo, una tabla «artículos» que almacena artículos publicados por un autor en un momento determinado:</p>
+
+                        <div class="code-block">
+-- Tabla de artículos
+CREATE TABLE articulos (
+    id SERIAL PRIMARY KEY,
+    author_id INTEGER,
+    published_at TIMESTAMP,
+    titulo VARCHAR(255),
+    contenido TEXT
+);
+
+-- Índice compuesto
+CREATE INDEX idx_articulos_author_published 
+ON articulos(author_id, published_at);
+
+-- Consulta optimizada
+SELECT * FROM articulos 
+WHERE author_id = 123 
+ORDER BY published_at DESC;
+-- Usa el índice compuesto para búsqueda eficiente
+
+-- Consulta también optimizada (usa parte del índice)
+SELECT * FROM articulos 
+WHERE author_id = 123;
+-- Usa la primera columna del índice compuesto
+                        </div>
+
+                        <p><strong>Importante:</strong> Cuando se crea un índice sobre múltiples columnas, es fundamental especificar correctamente el <strong>orden de las columnas</strong>. El orden afecta significativamente el rendimiento de las consultas.</p>
+
+                        <strong>Guías de diseño:</strong>
+                        <ul>
+                            <li><strong>Evitar demasiados índices:</strong> En tablas que se actualizan frecuentemente</li>
+                            <li><strong>Mínimo número de columnas:</strong> Definir índices con el menor número de columnas posible</li>
+                            <li><strong>Más índices cuando:</strong> Tablas con grandes volúmenes de datos, muchas consultas de búsqueda y pocas actualizaciones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 6.9 Estructura Interna de B-Tree (Complementario) -->
+                <div class="concept-card">
+                    <h3>6.9 Estructura Interna de B-Tree</h3>
+                    <p>Los <strong>B-Trees</strong> son la estructura de datos más comúnmente usada para índices en bases de datos relacionales debido a su eficiencia para operaciones de lectura y escritura.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Características de B-Tree:</strong>
+                        <ul>
+                            <li><strong>Árbol balanceado:</strong> Todas las hojas están al mismo nivel</li>
+                            <li><strong>Orden (m):</strong> Cada nodo puede tener hasta m hijos</li>
+                            <li><strong>Nodos internos:</strong> Contienen claves y punteros a hijos</li>
+                            <li><strong>Nodos hoja:</strong> Contienen claves y punteros a datos reales</li>
+                        </ul>
+
+                        <div class="visual-diagram">
+                            <h4>Estructura de B-Tree</h4>
+                            <div class="code-block">
+                    [Raíz]
+                    /    |    \
+              [50]    [100]   [150]
+              / | \    / | \    / | \
+          [10][30][70] [80][90] [120][130]
+          
+Nodos internos: Almacenan claves separadoras
+Nodos hoja: Almacenan claves y punteros a datos
+                            </div>
+                        </div>
+
+                        <strong>B+ Tree (Mejora de B-Tree):</strong>
+                        <p>Los <strong>B+ Trees</strong> son una variante donde todos los datos se almacenan en las hojas, y los nodos internos solo contienen claves separadoras.</p>
+                        <ul>
+                            <li><strong>Ventaja:</strong> Mejor para rangos (todas las hojas están enlazadas)</li>
+                            <li><strong>Ventaja:</strong> Más datos por nodo interno (solo claves, no punteros a datos)</li>
+                            <li><strong>Ventaja:</strong> Menos niveles de árbol (más eficiente)</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Ejemplo de búsqueda en B-Tree
+-- Buscar clave 85:
+
+1. Empezar en raíz: 85 < 100? → Sí → Ir a nodo izquierdo
+2. Nodo [50]: 85 > 50? → Sí → Ir a nodo derecho
+3. Nodo [70-90]: 85 está en este rango → Encontrar en hoja
+4. Tiempo: O(log n) donde n = número de registros
+
+-- Búsqueda típica: 3-4 niveles para millones de registros
+                        </div>
+
+                        <strong>Operaciones en B-Tree:</strong>
+                        <ul>
+                            <li><strong>Búsqueda:</strong> O(log n) - navegar desde raíz hasta hoja</li>
+                            <li><strong>Inserción:</strong> O(log n) - encontrar posición e insertar, balancear si es necesario</li>
+                            <li><strong>Eliminación:</strong> O(log n) - encontrar y eliminar, balancear si es necesario</li>
+                            <li><strong>Rango:</strong> O(log n + k) donde k = número de resultados</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 6.10 Selectividad de Índices (Complementario) -->
+                <div class="concept-card">
+                    <h3>6.10 Selectividad de Índices</h3>
+                    <p>La <strong>selectividad</strong> de un índice determina qué tan efectivo es para reducir el conjunto de resultados de una consulta.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Cálculo de Selectividad:</strong>
+                        <p>Selectividad = Número de valores únicos / Número total de filas</p>
+                        <ul>
+                            <li><strong>Alta selectividad:</strong> Muchos valores únicos (cerca de 1.0) → Índice muy útil</li>
+                            <li><strong>Baja selectividad:</strong> Pocos valores únicos (cerca de 0.0) → Índice menos útil</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Ejemplo de selectividad
+-- Tabla: 1,000,000 de empleados
+-- Columna género: 2 valores únicos (M, F)
+Selectividad = 2 / 1,000,000 = 0.000002
+-- Muy baja selectividad → Índice no muy útil
+
+-- Columna email: 950,000 valores únicos
+Selectividad = 950,000 / 1,000,000 = 0.95
+-- Alta selectividad → Índice muy útil
+
+-- Columna id: 1,000,000 valores únicos
+Selectividad = 1,000,000 / 1,000,000 = 1.0
+-- Selectividad perfecta → Índice óptimo (clave primaria)
+                        </div>
+
+                        <strong>Cardinalidad:</strong>
+                        <p>Número de valores únicos en una columna. Alta cardinalidad = alta selectividad.</p>
+
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Columna</th>
+                                        <th>Valores Únicos</th>
+                                        <th>Selectividad</th>
+                                        <th>¿Índice Útil?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>ID (PK)</strong></td>
+                                        <td>1,000,000</td>
+                                        <td>1.0</td>
+                                        <td>✅ Excelente</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email</strong></td>
+                                        <td>950,000</td>
+                                        <td>0.95</td>
+                                        <td>✅ Muy bueno</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>País</strong></td>
+                                        <td>195</td>
+                                        <td>0.000195</td>
+                                        <td>⚠️ Depende del uso</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Género</strong></td>
+                                        <td>2</td>
+                                        <td>0.000002</td>
+                                        <td>❌ Generalmente inútil</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Regla general:</strong>
+                        <p>Crear índices en columnas con <strong>alta selectividad</strong> (más del 10-20% de valores únicos). Para columnas con baja selectividad, considerar índices compuestos o parciales.</p>
+                    </div>
+                </div>
+
+                <!-- 6.11 Covering Indexes (Complementario) -->
+                <div class="concept-card">
+                    <h3>6.11 Covering Indexes (Índices de Cobertura)</h3>
+                    <p>Un <strong>covering index</strong> (índice de cobertura) contiene todas las columnas necesarias para una consulta, permitiendo que se ejecute sin acceder a la tabla principal.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Ventaja principal:</strong>
+                        <p>Cuando un índice cubre una consulta, el optimizador puede usar solo el índice (index-only scan) sin leer la tabla de datos, reduciendo significativamente las operaciones I/O.</p>
+
+                        <div class="code-block">
+-- Tabla de productos
+CREATE TABLE productos (
+    id INTEGER PRIMARY KEY,
+    categoria_id INTEGER,
+    nombre VARCHAR(255),
+    precio DECIMAL(10,2),
+    stock INTEGER
+);
+
+-- Índice normal (no covering)
+CREATE INDEX idx_categoria ON productos(categoria_id);
+
+-- Consulta: necesita acceder a tabla
+SELECT id, nombre, precio 
+FROM productos 
+WHERE categoria_id = 5;
+-- Lee índice → Lee tabla para obtener nombre, precio
+
+-- Índice covering (incluye todas las columnas necesarias)
+CREATE INDEX idx_categoria_covering 
+ON productos(categoria_id, id, nombre, precio);
+
+-- Misma consulta: solo usa índice
+SELECT id, nombre, precio 
+FROM productos 
+WHERE categoria_id = 5;
+-- Solo lee índice → No lee tabla (index-only scan)
+                        </div>
+
+                        <strong>Beneficios:</strong>
+                        <ul>
+                            <li><strong>Reducción de I/O:</strong> No necesita leer páginas de datos</li>
+                            <li><strong>Mejor rendimiento:</strong> Índices suelen estar en memoria más frecuentemente</li>
+                            <li><strong>Menor uso de disco:</strong> Índices más pequeños que tabla completa</li>
+                        </ul>
+
+                        <strong>Consideraciones:</strong>
+                        <ul>
+                            <li><strong>Tamaño:</strong> Covering indexes ocupan más espacio</li>
+                            <li><strong>Mantenimiento:</strong> Más columnas = más overhead en escrituras</li>
+                            <li><strong>Uso:</strong> Solo útil para consultas específicas que coincidan exactamente</li>
+                        </ul>
+
+                        <strong>Cuándo usar:</strong>
+                        <ul>
+                            <li>Consultas frecuentes que leen pocas columnas</li>
+                            <li>Tablas con muchas columnas pero consultas específicas</li>
+                            <li>Cuando el espacio no es una limitación crítica</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 6.12 Query Execution Plans (Complementario) -->
+                <div class="concept-card">
+                    <h3>6.12 Query Execution Plans</h3>
+                    <p>El <strong>execution plan</strong> (plan de ejecución) muestra cómo el optimizador de la base de datos ejecutará una consulta, incluyendo qué índices usará.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Ver el plan de ejecución:</strong>
+                        <div class="code-block">
+-- PostgreSQL
+EXPLAIN ANALYZE
+SELECT * FROM productos 
+WHERE categoria_id = 5 AND precio > 100;
+
+-- Resultado muestra:
+-- - Tipo de scan (Index Scan, Sequential Scan)
+-- - Índices usados
+-- - Costo estimado
+-- - Tiempo real de ejecución
+-- - Número de filas procesadas
+                        </div>
+
+                        <strong>Tipos de operaciones comunes:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Operación</th>
+                                        <th>Descripción</th>
+                                        <th>Cuándo se usa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Index Scan</strong></td>
+                                        <td>Usa índice para encontrar filas</td>
+                                        <td>Índice disponible y selectivo</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Index Only Scan</strong></td>
+                                        <td>Solo lee índice, no tabla</td>
+                                        <td>Covering index disponible</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sequential Scan</strong></td>
+                                        <td>Lee toda la tabla secuencialmente</td>
+                                        <td>Sin índice útil o tabla pequeña</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bitmap Index Scan</strong></td>
+                                        <td>Usa bitmap de índices</td>
+                                        <td>Múltiples condiciones con índices</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Nested Loop</strong></td>
+                                        <td>Bucle anidado para JOINs</td>
+                                        <td>Tablas pequeñas o con índice</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hash Join</strong></td>
+                                        <td>Hash table para JOINs</td>
+                                        <td>Tablas grandes sin orden</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Merge Join</strong></td>
+                                        <td>Merge de datos ordenados</td>
+                                        <td>Datos pre-ordenados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <strong>Interpretación del plan:</strong>
+                        <ul>
+                            <li><strong>Cost:</strong> Estimación de costo relativo (no tiempo real)</li>
+                            <li><strong>Actual time:</strong> Tiempo real de ejecución en milisegundos</li>
+                            <li><strong>Rows:</strong> Número de filas procesadas</li>
+                            <li><strong>Width:</strong> Tamaño promedio de fila en bytes</li>
+                        </ul>
+
+                        <strong>Ejemplo de análisis:</strong>
+                        <div class="code-block">
+-- Plan sin índice
+EXPLAIN ANALYZE SELECT * FROM productos WHERE categoria_id = 5;
+-- Sequential Scan on productos (cost=0.00..1000.00 rows=1000 width=100)
+--   (actual time=50.123..50.123 rows=1000 loops=1)
+-- Tiempo: 50ms
+
+-- Después de crear índice
+CREATE INDEX idx_categoria ON productos(categoria_id);
+EXPLAIN ANALYZE SELECT * FROM productos WHERE categoria_id = 5;
+-- Index Scan using idx_categoria (cost=0.29..50.00 rows=1000 width=100)
+--   (actual time=0.123..5.123 rows=1000 loops=1)
+-- Tiempo: 5ms (10x más rápido)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.13 Fragmentación de Índices (Complementario) -->
+                <div class="concept-card">
+                    <h3>6.13 Fragmentación de Índices</h3>
+                    <p>La <strong>fragmentación</strong> ocurre cuando las páginas de índice están desordenadas o tienen espacio no utilizado, reduciendo el rendimiento.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Causas de fragmentación:</strong>
+                        <ul>
+                            <li><strong>Inserciones y eliminaciones:</strong> Las páginas se llenan y vacían irregularmente</li>
+                            <li><strong>Actualizaciones:</strong> Datos movidos a diferentes páginas</li>
+                            <li><strong>Bloques libres:</strong> Espacio desperdiciado en páginas</li>
+                            <li><strong>Orden lógico vs físico:</strong> Páginas lógicamente ordenadas pero físicamente dispersas</li>
+                        </ul>
+
+                        <strong>Tipos de fragmentación:</strong>
+                        <ul>
+                            <li><strong>Fragmentación interna:</strong> Espacio no utilizado dentro de páginas</li>
+                            <li><strong>Fragmentación externa:</strong> Páginas desordenadas en disco</li>
+                        </ul>
+
+                        <strong>Impacto en rendimiento:</strong>
+                        <ul>
+                            <li><strong>Más I/O:</strong> Más páginas necesarias para leer</li>
+                            <li><strong>Pérdida de cache:</strong> Páginas dispersas ocupan más cache</li>
+                            <li><strong>Mayor tiempo de búsqueda:</strong> Saltos entre páginas dispersas</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Verificar fragmentación (SQL Server)
+SELECT 
+    OBJECT_NAME(object_id) AS TableName,
+    name AS IndexName,
+    avg_fragmentation_in_percent,
+    page_count
+FROM sys.dm_db_index_physical_stats(
+    DB_ID(), 
+    NULL, 
+    NULL, 
+    NULL, 
+    'DETAILED'
+)
+WHERE avg_fragmentation_in_percent > 30
+ORDER BY avg_fragmentation_in_percent DESC;
+
+-- Reconstruir índice (fragmentación > 30%)
+ALTER INDEX idx_categoria ON productos REBUILD;
+
+-- Reorganizar índice (fragmentación 10-30%)
+ALTER INDEX idx_categoria ON productos REORGANIZE;
+                        </div>
+
+                        <strong>Estrategias de mantenimiento:</strong>
+                        <ul>
+                            <li><strong>Rebuild (Reconstruir):</strong> Recrea el índice completamente (más eficiente pero bloquea)</li>
+                            <li><strong>Reorganize (Reorganizar):</strong> Compacta páginas y reordena (menos bloqueo pero menos eficiente)</li>
+                            <li><strong>Fill Factor:</strong> Configurar porcentaje de llenado para dejar espacio para futuras inserciones</li>
+                        </ul>
+
+                        <strong>Fill Factor:</strong>
+                        <div class="code-block">
+-- Crear índice con fill factor 80%
+-- Deja 20% de espacio para futuras inserciones
+CREATE INDEX idx_categoria 
+ON productos(categoria_id) 
+WITH (FILLFACTOR = 80);
+
+-- Fill Factor 80% significa:
+-- - Cada página usa 80% del espacio
+-- - 20% queda libre para nuevas inserciones
+-- - Reduce fragmentación pero ocupa más espacio
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.14 Cardinality Estimation (Complementario) -->
+                <div class="concept-card">
+                    <h3>6.14 Cardinality Estimation</h3>
+                    <p>La <strong>estimación de cardinalidad</strong> es el proceso por el cual el optimizador predice cuántas filas devolverá una consulta.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Importancia:</strong>
+                        <p>El optimizador usa la cardinalidad estimada para decidir qué índices usar y qué algoritmos de JOIN aplicar. Una estimación incorrecta puede llevar a planes de ejecución subóptimos.</p>
+
+                        <strong>Estadísticas de índices:</strong>
+                        <p>Las bases de datos mantienen estadísticas sobre la distribución de valores en columnas indexadas:</p>
+                        <ul>
+                            <li><strong>Histogramas:</strong> Distribución de valores en buckets</li>
+                            <li><strong>Cardinalidad:</strong> Número de valores únicos</li>
+                            <li><strong>Densidad:</strong> Selectividad promedio</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Actualizar estadísticas (PostgreSQL)
+ANALYZE productos;
+
+-- Ver estadísticas (PostgreSQL)
+SELECT 
+    schemaname,
+    tablename,
+    attname,
+    n_distinct,
+    correlation
+FROM pg_stats
+WHERE tablename = 'productos';
+
+-- n_distinct: número de valores únicos
+-- correlation: correlación con orden físico (-1 a 1)
+--   +1: orden ascendente
+--   -1: orden descendente
+--   0: sin orden
+                        </div>
+
+                        <strong>Problemas comunes:</strong>
+                        <ul>
+                            <li><strong>Estadísticas desactualizadas:</strong> Después de grandes cambios de datos</li>
+                            <li><strong>Distribución sesgada:</strong> Datos no uniformemente distribuidos</li>
+                            <li><strong>Correlación entre columnas:</strong> Columnas relacionadas no capturadas</li>
+                        </ul>
+
+                        <strong>Mantenimiento de estadísticas:</strong>
+                        <ul>
+                            <li><strong>Auto-update:</strong> Muchos SGBD actualizan automáticamente</li>
+                            <li><strong>Manual:</strong> Ejecutar ANALYZE/UPDATE STATISTICS periódicamente</li>
+                            <li><strong>Después de cambios grandes:</strong> Actualizar después de INSERT/DELETE masivos</li>
+                        </ul>
+
+                        <div class="code-block">
+-- Ejemplo: Estadísticas desactualizadas
+-- Después de insertar 1 millón de filas nuevas
+INSERT INTO productos SELECT ... FROM otra_tabla;
+
+-- Estadísticas pueden estar desactualizadas
+-- Actualizar manualmente
+ANALYZE productos;
+
+-- Esto actualiza:
+-- - Número de filas
+-- - Distribución de valores
+-- - Histogramas
+-- - Correlaciones
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.15 Best Practices de Composite Indexes (Complementario) -->
+                <div class="concept-card">
+                    <h3>6.15 Best Practices de Composite Indexes</h3>
+                    <p>Los índices compuestos requieren consideraciones especiales sobre el orden y la inclusión de columnas para maximizar su efectividad.</p>
+                    
+                    <div class="concept-details">
+                        <strong>Regla del Prefijo Izquierdo (Left-Prefix Rule):</strong>
+                        <p>Un índice compuesto puede usarse para consultas que incluyen las columnas desde la izquierda en orden, pero no para consultas que omiten columnas del principio.</p>
+
+                        <div class="code-block">
+-- Índice compuesto
+CREATE INDEX idx_compuesto 
+ON productos(categoria_id, precio, fecha_creacion);
+
+-- ✅ Puede usar el índice completo
+SELECT * FROM productos 
+WHERE categoria_id = 5 
+  AND precio > 100 
+  AND fecha_creacion > '2024-01-01';
+
+-- ✅ Puede usar parte del índice (categoria_id)
+SELECT * FROM productos 
+WHERE categoria_id = 5;
+
+-- ✅ Puede usar parte del índice (categoria_id, precio)
+SELECT * FROM productos 
+WHERE categoria_id = 5 AND precio > 100;
+
+-- ❌ NO puede usar el índice (omite categoria_id)
+SELECT * FROM productos 
+WHERE precio > 100;
+
+-- ❌ NO puede usar el índice (omite precio)
+SELECT * FROM productos 
+WHERE categoria_id = 5 AND fecha_creacion > '2024-01-01';
+-- (Aunque puede usar solo categoria_id, no el índice completo)
+                        </div>
+
+                        <strong>Orden de columnas - Regla de oro:</strong>
+                        <ol>
+                            <li><strong>Columna más selectiva primero:</strong> La que reduce más el conjunto de resultados</li>
+                            <li><strong>Columnas de igualdad antes que rangos:</strong> WHERE col1 = X AND col2 > Y</li>
+                            <li><strong>Columnas usadas en ORDER BY:</strong> Al final si es necesario para evitar sorting</li>
+                        </ol>
+
+                        <div class="code-block">
+-- Ejemplo: Orden óptimo
+-- Consulta frecuente:
+SELECT * FROM productos 
+WHERE categoria_id = 5      -- Igualdad
+  AND precio > 100          -- Rango
+ORDER BY fecha_creacion DESC;
+
+-- Índice óptimo:
+CREATE INDEX idx_optimo 
+ON productos(categoria_id, precio, fecha_creacion DESC);
+-- 1. categoria_id (igualdad, selectiva)
+-- 2. precio (rango después de igualdad)
+-- 3. fecha_creacion (ORDER BY, DESC para descenso)
+                        </div>
+
+                        <strong>Columnas inclusivas vs clave:</strong>
+                        <ul>
+                            <li><strong>Columnas clave:</strong> Usadas para búsqueda y ordenamiento</li>
+                            <li><strong>Columnas inclusivas (INCLUDE):</strong> Solo para covering index, no para búsqueda</li>
+                        </ul>
+
+                        <div class="code-block">
+-- SQL Server: INCLUDE columns
+CREATE INDEX idx_categoria_covering 
+ON productos(categoria_id) 
+INCLUDE (nombre, precio);
+-- categoria_id: usado para búsqueda
+-- nombre, precio: solo para covering (no para búsqueda)
+
+-- PostgreSQL: Columnas adicionales
+CREATE INDEX idx_categoria_covering 
+ON productos(categoria_id, nombre, precio);
+-- Todas las columnas pueden usarse para búsqueda
+                        </div>
+
+                        <strong>Cuándo usar índices compuestos:</strong>
+                        <ul>
+                            <li>Consultas frecuentes con múltiples condiciones</li>
+                            <li>Cuando ORDER BY coincide con columnas del índice</li>
+                            <li>Para crear covering indexes eficientes</li>
+                            <li>Cuando múltiples consultas comparten prefijo común</li>
+                        </ul>
+
+                        <strong>Cuándo evitar:</strong>
+                        <ul>
+                            <li>Demasiadas columnas (más de 3-4 generalmente ineficiente)</li>
+                            <li>Columnas con baja selectividad al principio</li>
+                            <li>Tablas con muchas escrituras (alto overhead)</li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -139,8 +1127,8 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Diseño de Índices para E-commerce</h4>
-                        <p><strong>Escenario:</strong> Sistema de comercio electrónico con múltiples consultas</p>
+                        <h4>Ejemplo 1: Creación de Índices Básicos</h4>
+                        <p><strong>Escenario:</strong> Optimizar consultas en una tabla de productos</p>
                         <div class="code-block">
 -- Tabla de productos
 CREATE TABLE productos (
@@ -153,38 +1141,442 @@ CREATE TABLE productos (
     fecha_creacion TIMESTAMP DEFAULT NOW()
 );
 
--- Índice compuesto optimizado para consultas frecuentes
-CREATE INDEX idx_productos_categoria_precio_activo 
+-- Índice primario (automático con PRIMARY KEY)
+-- Índice en categoria_id para JOINs rápidos
+CREATE INDEX idx_productos_categoria ON productos(categoria_id);
+
+-- Índice en precio para búsquedas por rango
+CREATE INDEX idx_productos_precio ON productos(precio);
+
+-- Índice parcial para productos activos
+CREATE INDEX idx_productos_activos ON productos(id, nombre, precio)
+WHERE activo = true;
+
+-- Consultas optimizadas
+SELECT * FROM productos 
+WHERE categoria_id = 5;  -- Usa idx_productos_categoria
+
+SELECT * FROM productos 
+WHERE precio BETWEEN 100 AND 500;  -- Usa idx_productos_precio
+
+SELECT * FROM productos 
+WHERE activo = true;  -- Usa idx_productos_activos
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Índices Compuestos</h4>
+                        <p><strong>Escenario:</strong> Optimizar consultas con múltiples condiciones</p>
+                        <div class="code-block">
+-- Índice compuesto optimizado
+CREATE INDEX idx_productos_cat_precio_activo 
 ON productos (categoria_id, precio, activo) 
 WHERE activo = true;
 
--- Índice parcial para productos con stock
-CREATE INDEX idx_productos_stock 
-ON productos (categoria_id, precio) 
-WHERE stock > 0;
-
--- Índice de expresión para búsqueda case-insensitive
-CREATE INDEX idx_productos_nombre_lower 
-ON productos (LOWER(nombre));
-
--- Índice para consultas de rango de precios
-CREATE INDEX idx_productos_precio_rango 
-ON productos (precio) 
-WHERE precio BETWEEN 10 AND 1000;
-
--- Consultas optimizadas
 -- ✅ Usa el índice completo
 SELECT * FROM productos 
-WHERE categoria_id = 5 AND precio BETWEEN 100 AND 500 AND activo = true;
+WHERE categoria_id = 5 
+  AND precio BETWEEN 100 AND 500 
+  AND activo = true;
 
 -- ✅ Usa parte del índice (categoria_id)
 SELECT * FROM productos 
 WHERE categoria_id = 5 AND activo = true;
 
--- ✅ Usa índice de expresión
-SELECT * FROM productos 
-WHERE LOWER(nombre) LIKE '%laptop%';
-
 -- ❌ No usa el índice (precio sin categoria_id)
 SELECT * FROM productos 
 WHERE precio BETWEEN 100 AND 500;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Índices de Expresión</h4>
+                        <p><strong>Escenario:</strong> Búsqueda case-insensitive</p>
+                        <div class="code-block">
+-- Índice de expresión para búsqueda sin distinción de mayúsculas
+CREATE INDEX idx_productos_nombre_lower 
+ON productos (LOWER(nombre));
+
+-- ✅ Usa el índice de expresión
+SELECT * FROM productos 
+WHERE LOWER(nombre) LIKE '%laptop%';
+
+-- ❌ No usa el índice (función diferente)
+SELECT * FROM productos 
+WHERE nombre LIKE '%Laptop%';
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 4: Índices Denso vs Disperso</h4>
+                        <p><strong>Escenario:</strong> Comparación de rendimiento</p>
+                        <div class="code-block">
+-- Simulación de índice denso (PostgreSQL)
+-- Cada valor tiene entrada
+CREATE INDEX idx_denso ON tabla(columna);
+
+-- Simulación de índice disperso (PostgreSQL)
+-- Solo entradas para valores clave
+-- PostgreSQL usa B-Tree que es similar a disperso
+-- pero más eficiente
+
+-- Ejemplo de uso
+EXPLAIN ANALYZE
+SELECT * FROM tabla 
+WHERE columna BETWEEN 100 AND 200;
+-- Muestra si usa el índice y cómo
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 5: Función Hash para Asociación</h4>
+                        <p><strong>Escenario:</strong> Implementar hash table básica</p>
+                        <div class="code-block">
+-- Función hash simple en PostgreSQL
+CREATE OR REPLACE FUNCTION hash_function(
+    clave INTEGER, 
+    num_cajones INTEGER
+) RETURNS INTEGER AS $$
+BEGIN
+    RETURN clave % num_cajones;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Ejemplo de uso
+SELECT hash_function(123, 10);  -- Resultado: 3
+SELECT hash_function(456, 10);  -- Resultado: 6
+SELECT hash_function(789, 10);  -- Resultado: 9
+
+-- Hash index en PostgreSQL (para igualdades exactas)
+CREATE INDEX idx_hash_usuarios_email 
+ON usuarios USING HASH (email);
+
+-- Solo útil para consultas de igualdad
+SELECT * FROM usuarios WHERE email = 'usuario@example.com';
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 6: Análisis de Uso de Índices</h4>
+                        <p><strong>Escenario:</strong> Monitorear y optimizar índices</p>
+                        <div class="code-block">
+-- Ver índices de una tabla (PostgreSQL)
+SELECT 
+    indexname,
+    indexdef
+FROM pg_indexes 
+WHERE tablename = 'productos';
+
+-- Ver uso de índices (PostgreSQL)
+SELECT 
+    schemaname,
+    tablename,
+    indexname,
+    idx_scan,  -- Número de veces usado
+    idx_tup_read,  -- Tuplas leídas
+    idx_tup_fetch  -- Tuplas obtenidas
+FROM pg_stat_user_indexes
+WHERE tablename = 'productos'
+ORDER BY idx_scan DESC;
+
+-- Índices no utilizados (candidatos a eliminar)
+SELECT 
+    schemaname,
+    tablename,
+    indexname
+FROM pg_stat_user_indexes
+WHERE idx_scan = 0
+  AND schemaname = 'public';
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-item">
+                    <h4>Actividad 1: Cuestionario de Evaluación</h4>
+                    <p>Responde las siguientes preguntas para evaluar tu comprensión del tema:</p>
+                    <div class="concept-details">
+                        <ol>
+                            <li><strong>En una base de datos:</strong>
+                                <ul>
+                                    <li>A. Toda la información está indexada.</li>
+                                    <li>B. Los índices disminuyen el tiempo de respuesta.</li>
+                                    <li>C. Los índices aumentan el tiempo de respuesta.</li>
+                                    <li>D. Ninguna de las anteriores es correcta.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Los índices ordenados:</strong>
+                                <ul>
+                                    <li>A. Se crean por defecto al crear la base de datos.</li>
+                                    <li>B. Surgen debido a la ordenación secuencia de registros.</li>
+                                    <li>C. Contienen apuntadores a los registros.</li>
+                                    <li>D. B y C son correctas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>La existencia de índices:</strong>
+                                <ul>
+                                    <li>A. Supone menos tareas de mantenimiento.</li>
+                                    <li>B. Afecta a las operaciones de inserción y borrado.</li>
+                                    <li>C. Requiere de espacio adicional.</li>
+                                    <li>D. Ninguna de las anteriores.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Los índices con agrupación:</strong>
+                                <ul>
+                                    <li>A. Utilizan índices de claves con un orden secuencial.</li>
+                                    <li>B. Solo sirven para claves primarias.</li>
+                                    <li>C. Requieren menos espacio de almacenamiento.</li>
+                                    <li>D. Ninguna de las anteriores.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Los índices densos:</strong>
+                                <ul>
+                                    <li>A. Poseen diferentes valores dependiendo de la clave primaria.</li>
+                                    <li>B. Solo pueden tener una entrada en la tabla de índices.</li>
+                                    <li>C. Pueden tener varias entradas en la tabla de índices.</li>
+                                    <li>D. A y B son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Los índices dispersos:</strong>
+                                <ul>
+                                    <li>A. Mejoran el rendimiento.</li>
+                                    <li>B. Aumentan el coste de mantenimiento frente a los índices densos.</li>
+                                    <li>C. Reducen el tamaño de la tabla de índices.</li>
+                                    <li>D. A y C son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Los índices multinivel:</strong>
+                                <ul>
+                                    <li>A. Aumentan el tiempo de acceso a la memoria.</li>
+                                    <li>B. Se basan en la utilización masiva del almacenamiento secundario.</li>
+                                    <li>C. Solo se pueden utilizar con índices dispersos.</li>
+                                    <li>D. Ninguna de las anteriores es correcta.</li>
+                                </ul>
+                            </li>
+                            <li><strong>La asociación estática:</strong>
+                                <ul>
+                                    <li>A. Se basa en el almacenamiento secuencial de los datos.</li>
+                                    <li>B. Utiliza una función de asociación.</li>
+                                    <li>C. Utiliza las estructuras de índices.</li>
+                                    <li>D. A y B son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>En la asociación:</strong>
+                                <ul>
+                                    <li>A. Un cajón puede contener un número infinito de registros.</li>
+                                    <li>B. Puede existir una distribución aleatoria de datos.</li>
+                                    <li>C. La función de asociación puede causar el desbordamiento de un cajón.</li>
+                                    <li>D. B y C son ciertas.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Los índices asociativos:</strong>
+                                <ul>
+                                    <li>A. No contienen punteros a los registros.</li>
+                                    <li>B. Se basan en la función de asociación.</li>
+                                    <li>C. Mejoran el tiempo de respuesta con respecto a los no asociativos.</li>
+                                    <li>D. Ninguna de las anteriores es correcta.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p><strong>Respuestas correctas:</strong> 1-B, 2-D, 3-B y C, 4-A, 5-C, 6-D, 7-D, 8-B, 9-D, 10-B</p>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 2: Diseño de Estrategia de Indexación</h4>
+                    <p><strong>Duración:</strong> 30-45 minutos</p>
+                    <p><strong>Objetivo:</strong> Diseñar una estrategia de indexación para un sistema de e-commerce</p>
+                    <div class="concept-details">
+                        <p><strong>Escenario:</strong> Un sistema de comercio electrónico tiene las siguientes tablas y consultas frecuentes:</p>
+                        <ul>
+                            <li><strong>Tabla productos:</strong> id, nombre, categoria_id, precio, stock, fecha_creacion</li>
+                            <li><strong>Tabla pedidos:</strong> id, usuario_id, fecha, estado, total</li>
+                            <li><strong>Tabla usuarios:</strong> id, email, nombre, fecha_registro, pais</li>
+                        </ul>
+                        <p><strong>Consultas frecuentes:</strong></p>
+                        <ol>
+                            <li>Buscar productos por categoría y rango de precio</li>
+                            <li>Listar pedidos de un usuario ordenados por fecha</li>
+                            <li>Buscar usuarios por país</li>
+                            <li>Productos más vendidos (agregación)</li>
+                        </ol>
+                        <p><strong>Tareas:</strong></p>
+                        <ol>
+                            <li>Identifica qué índices crear para cada consulta</li>
+                            <li>Determina si usar índices simples o compuestos</li>
+                            <li>Considera índices parciales si aplica</li>
+                            <li>Evalúa el impacto en operaciones de escritura</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <h4>Actividad 3: Análisis de Rendimiento</h4>
+                    <p><strong>Duración:</strong> 20-30 minutos</p>
+                    <p><strong>Objetivo:</strong> Comparar rendimiento con y sin índices</p>
+                    <div class="concept-details">
+                        <p><strong>Ejercicio:</strong></p>
+                        <ol>
+                            <li>Crea una tabla con 100,000 registros</li>
+                            <li>Ejecuta una consulta sin índice y mide el tiempo</li>
+                            <li>Crea un índice apropiado</li>
+                            <li>Ejecuta la misma consulta y mide el tiempo</li>
+                            <li>Compara los resultados y explica la diferencia</li>
+                        </ol>
+                        <p><strong>Consulta SQL para el ejercicio:</strong></p>
+                        <div class="code-block">
+-- Crear tabla y datos de prueba
+CREATE TABLE test_table (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    valor INTEGER,
+    fecha TIMESTAMP
+);
+
+-- Insertar 100,000 registros
+INSERT INTO test_table (nombre, valor, fecha)
+SELECT 
+    'Usuario' || generate_series(1, 100000),
+    (random() * 1000)::INTEGER,
+    NOW() - (random() * INTERVAL '365 days')
+FROM generate_series(1, 100000);
+
+-- Consulta sin índice
+EXPLAIN ANALYZE
+SELECT * FROM test_table WHERE valor = 500;
+
+-- Crear índice
+CREATE INDEX idx_test_valor ON test_table(valor);
+
+-- Consulta con índice
+EXPLAIN ANALYZE
+SELECT * FROM test_table WHERE valor = 500;
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recursos Adicionales -->
+            <section id="recursos" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    Recursos Adicionales
+                </h2>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Lección Magistral: Creación de índices en Oracle</h4>
+                        <p>Clase magistral que explica y muestra cómo crear índices en Oracle y cómo deben ser gestionados</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Optimización de consultas en MySQL usando índices</h4>
+                        <p>Vídeo que amplía la información sobre la optimización de consultas en MySQL usando índices</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Cómo crear índices en SQL Server</h4>
+                        <p>Manual que explica cómo crear índices en SQL Server</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Introducción a la indexación</h4>
+                        <p>Artículo que muestra una introducción a la indexación en bases de datos</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Fundamentos para indexar datos</h4>
+                        <p><strong>Año:</strong> 2013 | <strong>Duración:</strong> 09:51 | Justificación sobre la importancia de crear índices y fundamentos en la indexación</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Índices y optimización</h4>
+                        <p><strong>Año:</strong> 2013 | <strong>Duración:</strong> 10:03 | Proceso de creación de índices y optimizaciones en la base de datos</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Actualización de índices</h4>
+                        <p>Documento sobre almacenamiento y recuperación de información, incluyendo técnicas de indexación y actualización de índices</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Mantenimiento de índices en SQL Server</h4>
+                        <p>Documento centrado en el mantenimiento de índices en SQL Server</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Oracle indexing</h4>
+                        <p>Información necesaria para DBA de Oracle en relación con los índices</p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Sistema Gestor de base de datos Oracle 19c</h4>
+                        <p>Uno de los sistemas de bases de datos más utilizados en el mundo real para crear y gestionar bases de datos</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html>
