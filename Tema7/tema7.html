@@ -6,6 +6,10 @@
     <title>Tema 7: Introducción al Procesamiento Transaccional - Bases de Datos Avanzadas</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -52,77 +56,652 @@
                     Conceptos Clave
                 </h2>
                 
+                <!-- Introducción -->
                 <div class="concept-card">
-                    <h3>Propiedades ACID</h3>
-                    <p>Conjunto de propiedades que garantizan la confiabilidad de las transacciones en sistemas de base de datos.</p>
+                    <h3>Introducción</h3>
+                    <p>Normalmente cuando un usuario de un sistema realiza una operación, a priori sencilla, esta internamente se compone de múltiples sub operaciones que se perciben como un todo. Con esto en mente, se llama <strong>transacción</strong> a una colección de operaciones que forman una unidad lógica de trabajo.</p>
+                    
                     <div class="concept-details">
-                        <strong>Componentes ACID:</strong>
-                        <ul>
-                            <li><strong>Atomicidad (A):</strong> Todas las operaciones se ejecutan o ninguna</li>
-                            <li><strong>Consistencia (C):</strong> La base de datos permanece en estado válido</li>
-                            <li><strong>Aislamiento (I):</strong> Las transacciones concurrentes no interfieren</li>
-                            <li><strong>Durabilidad (D):</strong> Los cambios persisten tras el commit</li>
-                        </ul>
-                        <strong>Implementación:</strong> Log de transacciones, bloqueos, versionado
+                        <p>Se dice que una transacción debe ejecutarse completamente o no ejecutarse. Como es lógico, al estar formada por diferentes sub operaciones, puede suceder un error en cualquiera de las etapas, lo que provoca que la transacción no finalice. En este caso, el sistema gestor de base de datos debe devolver a la base de datos al estado anterior en el que se encontraba antes de ejecutar la transacción.</p>
+                        
+                        <p>Una transacción se puede iniciar desde un programa o con una sentencia SQL. Para indicar a la base de datos que se trata de una transacción se delimitan las operaciones mediante las instrucciones <code>BEGIN TRANSACTION</code> y <code>END TRANSACTION</code>. La secuencia de operaciones que estén en su interior formará parte de la transacción.</p>
                     </div>
                 </div>
 
+                <!-- Propiedades ACID -->
                 <div class="concept-card">
-                    <h3>Niveles de Aislamiento</h3>
-                    <p>Diferentes grados de aislamiento que controlan qué cambios de otras transacciones son visibles.</p>
+                    <h3>Propiedades ACID de las Transacciones</h3>
+                    <p>Para que la base de datos mantenga su integridad al ejecutar transacciones, se deben cumplir las siguientes propiedades:</p>
+                    
                     <div class="concept-details">
-                        <strong>Niveles estándar:</strong>
-                        <ul>
-                            <li><strong>READ UNCOMMITTED:</strong> Lectura de datos no confirmados</li>
-                            <li><strong>READ COMMITTED:</strong> Solo datos confirmados (por defecto)</li>
-                            <li><strong>REPEATABLE READ:</strong> Lecturas consistentes durante la transacción</li>
-                            <li><strong>SERIALIZABLE:</strong> Ejecución como si fuera secuencial</li>
-                        </ul>
-                        <strong>Fenómenos:</strong> Dirty Read, Non-Repeatable Read, Phantom Read
+                        <!-- Diagrama General ACID -->
+                        <div class="diagram-container">
+                            <h4>Diagrama General de las Propiedades ACID</h4>
+                            <div class="mermaid">
+graph TB
+    subgraph ACID["Propiedades ACID"]
+        A[Atomicidad<br/>Atomicity]
+        C[Consistencia<br/>Consistency]
+        I[Aislamiento<br/>Isolation]
+        D[Durabilidad<br/>Durability]
+    end
+    
+    A -->|"Todo o Nada"| TX1[Transacción]
+    C -->|"Reglas de Integridad"| TX1
+    I -->|"Ejecución Independiente"| TX1
+    D -->|"Cambios Permanentes"| TX1
+    
+    TX1 -->|"Garantiza"| INTEGRIDAD[Integridad de la Base de Datos]
+    
+    style A fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style C fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style I fill:#45b7d1,stroke:#1864ab,color:#fff
+    style D fill:#f9ca24,stroke:#f59f00,color:#000
+    style TX1 fill:#667eea,stroke:#764ba2,color:#fff
+    style INTEGRIDAD fill:#51cf66,stroke:#2f9e44,color:#fff
+                            </div>
+                        </div>
+
+                        <div class="acid-properties">
+                            <div class="acid-item">
+                                <div class="acid-icon">A</div>
+                                <div class="acid-content">
+                                    <h4>Atomicidad (Atomicity)</h4>
+                                    <p>Todas las operaciones que forman parte de la transacción se tienen que ejecutar correctamente o en caso contrario no se ejecuta ninguna.</p>
+                                    
+                                    <!-- Diagrama de Atomicidad -->
+                                    <div class="diagram-container" style="margin-top: 15px;">
+                                        <div class="mermaid">
+graph LR
+    subgraph TX["Transacción"]
+        OP1[Operación 1]
+        OP2[Operación 2]
+        OP3[Operación 3]
+    end
+    
+    OP1 --> OP2
+    OP2 --> OP3
+    
+    TX -->|"Todas exitosas"| COMMIT[COMMIT<br/>✓ Todas se ejecutan]
+    TX -->|"Alguna falla"| ROLLBACK[ROLLBACK<br/>✗ Ninguna se ejecuta]
+    
+    style TX fill:#667eea,stroke:#764ba2,color:#fff
+    style COMMIT fill:#51cf66,stroke:#2f9e44,color:#fff
+    style ROLLBACK fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style OP1 fill:#e9ecef,stroke:#495057
+    style OP2 fill:#e9ecef,stroke:#495057
+    style OP3 fill:#e9ecef,stroke:#495057
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="acid-item">
+                                <div class="acid-icon">C</div>
+                                <div class="acid-content">
+                                    <h4>Consistencia (Consistency)</h4>
+                                    <p>Si una transacción se ejecuta de forma aislada, debe conservar la consistencia de la base de datos.</p>
+                                    
+                                    <!-- Diagrama de Consistencia -->
+                                    <div class="diagram-container" style="margin-top: 15px;">
+                                        <div class="mermaid">
+graph TB
+    ESTADO1["Estado Inicial<br/>Consistente"]
+    TX["Transacción"]
+    ESTADO2["Estado Final<br/>Consistente"]
+    
+    ESTADO1 -->|"Ejecuta"| TX
+    TX -->|"Mantiene"| REGLAS["Reglas de Integridad:<br/>• Claves foráneas<br/>• Restricciones<br/>• Triggers"]
+    REGLAS --> ESTADO2
+    
+    ESTADO1 -.->|"Si falla"| ESTADO1
+    
+    style ESTADO1 fill:#51cf66,stroke:#2f9e44,color:#fff
+    style ESTADO2 fill:#51cf66,stroke:#2f9e44,color:#fff
+    style TX fill:#667eea,stroke:#764ba2,color:#fff
+    style REGLAS fill:#ffd43b,stroke:#f59f00,color:#000
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="acid-item">
+                                <div class="acid-icon">I</div>
+                                <div class="acid-content">
+                                    <h4>Aislamiento (Isolation)</h4>
+                                    <p>En sistemas concurrentes los efectos de una transacción no deben afectar a la ejecución de otras.</p>
+                                    
+                                    <!-- Diagrama de Aislamiento -->
+                                    <div class="diagram-container" style="margin-top: 15px;">
+                                        <div class="mermaid">
+graph TB
+    subgraph CONCURRENTE["Ejecución Concurrente"]
+        TX1["Transacción 1<br/>Lee/Escribe A"]
+        TX2["Transacción 2<br/>Lee/Escribe B"]
+        TX3["Transacción 3<br/>Lee/Escribe A"]
+    end
+    
+    TX1 -.->|"Aislada"| TX2
+    TX1 -.->|"Aislada"| TX3
+    TX2 -.->|"Aislada"| TX3
+    
+    CONCURRENTE -->|"Control de"| BLOQUEO["Mecanismos de Aislamiento:<br/>• Bloqueos (Locks)<br/>• MVCC<br/>• Timestamps"]
+    
+    BLOQUEO --> RESULTADO["Resultado como si<br/>se ejecutaran secuencialmente"]
+    
+    style TX1 fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style TX2 fill:#45b7d1,stroke:#1864ab,color:#fff
+    style TX3 fill:#f9ca24,stroke:#f59f00,color:#000
+    style BLOQUEO fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style RESULTADO fill:#51cf66,stroke:#2f9e44,color:#fff
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="acid-item">
+                                <div class="acid-icon">D</div>
+                                <div class="acid-content">
+                                    <h4>Durabilidad (Durability)</h4>
+                                    <p>Cuando finaliza una transacción, los cambios en la base de datos son permanentes.</p>
+                                    
+                                    <!-- Diagrama de Durabilidad -->
+                                    <div class="diagram-container" style="margin-top: 15px;">
+                                        <div class="mermaid">
+graph TB
+    TX["Transacción"]
+    COMMIT["COMMIT"]
+    DISCO["Almacenamiento<br/>Persistente"]
+    
+    TX -->|"Finaliza"| COMMIT
+    COMMIT -->|"Escribe"| LOG["Log de Transacciones<br/>(Write-Ahead Log)"]
+    COMMIT -->|"Guarda"| DISCO
+    
+    DISCO -->|"Resiste"| FALLOS["Fallos del Sistema:<br/>• Apagón<br/>• Crash<br/>• Error de hardware"]
+    
+    FALLOS -.->|"Recuperación"| DISCO
+    
+    style TX fill:#667eea,stroke:#764ba2,color:#fff
+    style COMMIT fill:#51cf66,stroke:#2f9e44,color:#fff
+    style DISCO fill:#f9ca24,stroke:#f59f00,color:#000
+    style LOG fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style FALLOS fill:#868e96,stroke:#495057,color:#fff
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Diagrama de Flujo de Transacción con ACID -->
+                        <div class="diagram-container" style="margin-top: 30px;">
+                            <h4>Flujo Completo de una Transacción con Propiedades ACID</h4>
+                            <div class="mermaid">
+flowchart TD
+    INICIO["Inicio de Transacción"]
+    BEGIN["BEGIN TRANSACTION"]
+    
+    subgraph OPERACIONES["Operaciones de la Transacción"]
+        OP1["Operación 1"]
+        OP2["Operación 2"]
+        OP3["Operación 3"]
+    end
+    
+    VALIDAR["Validar Consistencia<br/>(C)"]
+    AISLAR["Aplicar Aislamiento<br/>(I)"]
+    
+    DECISION{"¿Todas las<br/>operaciones<br/>exitosas?"}
+    
+    COMMIT["COMMIT<br/>Atomicidad (A)"]
+    GUARDAR["Guardar en Disco<br/>Durabilidad (D)"]
+    EXITO["Transacción Exitosa"]
+    
+    ROLLBACK["ROLLBACK<br/>Atomicidad (A)"]
+    REVERTIR["Revertir Cambios"]
+    FALLO["Transacción Abortada"]
+    
+    INICIO --> BEGIN
+    BEGIN --> OPERACIONES
+    OPERACIONES --> VALIDAR
+    VALIDAR --> AISLAR
+    AISLAR --> DECISION
+    
+    DECISION -->|"Sí"| COMMIT
+    COMMIT --> GUARDAR
+    GUARDAR --> EXITO
+    
+    DECISION -->|"No"| ROLLBACK
+    ROLLBACK --> REVERTIR
+    REVERTIR --> FALLO
+    
+    style INICIO fill:#667eea,stroke:#764ba2,color:#fff
+    style BEGIN fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style VALIDAR fill:#ffd43b,stroke:#f59f00,color:#000
+    style AISLAR fill:#45b7d1,stroke:#1864ab,color:#fff
+    style COMMIT fill:#51cf66,stroke:#2f9e44,color:#fff
+    style GUARDAR fill:#f9ca24,stroke:#f59f00,color:#000
+    style EXITO fill:#51cf66,stroke:#2f9e44,color:#fff
+    style ROLLBACK fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style REVERTIR fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style FALLO fill:#ff6b6b,stroke:#c92a2a,color:#fff
+                            </div>
+                        </div>
+                        
+                        <!-- Caso Práctico: Transacción Bancaria -->
+                        <div class="case-study" style="margin-top: 40px; padding: 25px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #667eea;">
+                            <h4 style="color: #333; margin-bottom: 20px; font-size: 20px;">
+                                <i class="fas fa-university" style="margin-right: 10px; color: #667eea;"></i>
+                                Caso Práctico: Transferencia Bancaria con Propiedades ACID
+                            </h4>
+                            
+                            <div class="case-scenario" style="margin-bottom: 25px;">
+                                <h5 style="color: #495057; margin-bottom: 15px; font-size: 16px; font-weight: 600;">
+                                    <i class="fas fa-info-circle" style="margin-right: 8px; color: #667eea;"></i>
+                                    Escenario
+                                </h5>
+                                <p style="color: #555; line-height: 1.6; margin-bottom: 10px;">
+                                    Un cliente desea transferir <strong>$1,500.00</strong> desde su cuenta de ahorros (ID: 1001, saldo actual: $5,000.00) 
+                                    a la cuenta corriente de un beneficiario (ID: 2002, saldo actual: $2,000.00). El sistema bancario debe garantizar 
+                                    que esta operación se ejecute correctamente aplicando todas las propiedades ACID.
+                                </p>
+                            </div>
+                            
+                            <div class="case-steps" style="margin-bottom: 25px;">
+                                <h5 style="color: #495057; margin-bottom: 20px; font-size: 16px; font-weight: 600;">
+                                    <i class="fas fa-list-ol" style="margin-right: 8px; color: #667eea;"></i>
+                                    Ejecución Paso a Paso
+                                </h5>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #667eea;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">1</span>
+                                        <strong style="color: #333; font-size: 15px;">Inicio de la Transacción</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            El sistema ejecuta el comando <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace;">BEGIN TRANSACTION</code> 
+                                            para iniciar una nueva transacción. En este momento, el sistema:
+                                        </p>
+                                        <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li>Asigna un <strong>ID único</strong> a la transacción (ej: TX-2024-001234)</li>
+                                            <li>Registra el <strong>timestamp</strong> de inicio</li>
+                                            <li>Establece el <strong>nivel de aislamiento</strong> (por defecto: READ COMMITTED)</li>
+                                            <li>Prepara el <strong>log de transacciones</strong> para registrar todas las operaciones</li>
+                                        </ul>
+                                        <div style="margin-top: 10px; padding: 10px; background: #e3f2fd; border-radius: 4px; border-left: 3px solid #2196F3;">
+                                            <strong style="color: #1976D2;">Aplicación de ACID:</strong> 
+                                            <span style="color: #555;">Se inicia el <strong>aislamiento (I)</strong> estableciendo el contexto de ejecución independiente.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #4ecdc4;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #4ecdc4; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">2</span>
+                                        <strong style="color: #333; font-size: 15px;">Validación de Fondos (Operación 1)</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            El sistema ejecuta una consulta para verificar que la cuenta origen tiene fondos suficientes:
+                                        </p>
+                                        <pre style="background: #2d2d2d; color: #f8f8f2; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 13px; margin: 10px 0;"><code>SELECT saldo FROM cuentas WHERE cuenta_id = 1001 FOR UPDATE;</code></pre>
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            <strong>Resultado:</strong> Saldo actual = $5,000.00 (suficiente para transferir $1,500.00)
+                                        </p>
+                                        <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li>El <code>FOR UPDATE</code> aplica un <strong>bloqueo exclusivo</strong> en la fila</li>
+                                            <li>Ninguna otra transacción puede modificar esta cuenta hasta que se libere el bloqueo</li>
+                                            <li>Se registra la operación en el <strong>log de transacciones</strong></li>
+                                        </ul>
+                                        <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 4px; border-left: 3px solid #ffc107;">
+                                            <strong style="color: #856404;">Aplicación de ACID:</strong> 
+                                            <span style="color: #555;">Se aplica <strong>aislamiento (I)</strong> mediante bloqueo, y se valida <strong>consistencia (C)</strong> verificando que el saldo cumple con las reglas de negocio (saldo ≥ monto a transferir).</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #45b7d1;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #45b7d1; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">3</span>
+                                        <strong style="color: #333; font-size: 15px;">Débito en Cuenta Origen (Operación 2)</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            El sistema ejecuta la actualización para debitar $1,500.00 de la cuenta origen:
+                                        </p>
+                                        <pre style="background: #2d2d2d; color: #f8f8f2; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 13px; margin: 10px 0;"><code>UPDATE cuentas 
+SET saldo = saldo - 1500.00 
+WHERE cuenta_id = 1001;</code></pre>
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            <strong>Resultado:</strong> Nuevo saldo en cuenta 1001 = $3,500.00
+                                        </p>
+                                        <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li>La operación se ejecuta <strong>dentro de la transacción</strong> (aún no confirmada)</li>
+                                            <li>El cambio se registra en el <strong>log de transacciones</strong> (Write-Ahead Log)</li>
+                                            <li>Se mantiene el <strong>bloqueo exclusivo</strong> en la cuenta origen</li>
+                                            <li>Otras transacciones pueden leer el saldo anterior (aislamiento READ COMMITTED)</li>
+                                        </ul>
+                                        <div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px; border-left: 3px solid #4CAF50;">
+                                            <strong style="color: #2e7d32;">Aplicación de ACID:</strong> 
+                                            <span style="color: #555;">Se mantiene <strong>consistencia (C)</strong> verificando que el nuevo saldo sigue siendo válido (≥ 0), y <strong>aislamiento (I)</strong> asegura que otros procesos no vean cambios no confirmados.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #f9ca24;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #f9ca24; color: #333; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">4</span>
+                                        <strong style="color: #333; font-size: 15px;">Bloqueo de Cuenta Destino (Operación 3)</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            El sistema bloquea la cuenta destino para evitar modificaciones concurrentes:
+                                        </p>
+                                        <pre style="background: #2d2d2d; color: #f8f8f2; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 13px; margin: 10px 0;"><code>SELECT saldo FROM cuentas WHERE cuenta_id = 2002 FOR UPDATE;</code></pre>
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            <strong>Resultado:</strong> Saldo actual = $2,000.00 (cuenta válida y activa)
+                                        </p>
+                                        <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li>Se aplica un <strong>bloqueo exclusivo</strong> en la cuenta destino</li>
+                                            <li>Si otra transacción intenta modificar esta cuenta, debe esperar</li>
+                                            <li>Se verifica que la cuenta existe y está activa (regla de consistencia)</li>
+                                        </ul>
+                                        <div style="margin-top: 10px; padding: 10px; background: #e3f2fd; border-radius: 4px; border-left: 3px solid #2196F3;">
+                                            <strong style="color: #1976D2;">Aplicación de ACID:</strong> 
+                                            <span style="color: #555;">Se refuerza el <strong>aislamiento (I)</strong> bloqueando recursos compartidos, y se valida <strong>consistencia (C)</strong> verificando la existencia y estado de la cuenta.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #51cf66;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #51cf66; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">5</span>
+                                        <strong style="color: #333; font-size: 15px;">Crédito en Cuenta Destino (Operación 4)</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            El sistema ejecuta la actualización para acreditar $1,500.00 en la cuenta destino:
+                                        </p>
+                                        <pre style="background: #2d2d2d; color: #f8f8f2; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 13px; margin: 10px 0;"><code>UPDATE cuentas 
+SET saldo = saldo + 1500.00 
+WHERE cuenta_id = 2002;</code></pre>
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            <strong>Resultado:</strong> Nuevo saldo en cuenta 2002 = $3,500.00
+                                        </p>
+                                        <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li>La operación se ejecuta <strong>dentro de la transacción</strong></li>
+                                            <li>El cambio se registra en el <strong>log de transacciones</strong></li>
+                                            <li>Se mantienen los <strong>bloqueos exclusivos</strong> en ambas cuentas</li>
+                                        </ul>
+                                        <div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px; border-left: 3px solid #4CAF50;">
+                                            <strong style="color: #2e7d32;">Aplicación de ACID:</strong> 
+                                            <span style="color: #555;">Se mantiene <strong>consistencia (C)</strong> asegurando que la suma total de dinero se conserva (débito = crédito), y <strong>aislamiento (I)</strong> previene que otras transacciones vean cambios parciales.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #ff6b6b;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #ff6b6b; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">6</span>
+                                        <strong style="color: #333; font-size: 15px;">Registro de la Transacción (Operación 5)</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            El sistema registra la transferencia en la tabla de movimientos:
+                                        </p>
+                                        <pre style="background: #2d2d2d; color: #f8f8f2; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 13px; margin: 10px 0;"><code>INSERT INTO transacciones 
+(cuenta_origen, cuenta_destino, monto, tipo, fecha, estado)
+VALUES (1001, 2002, 1500.00, 'TRANSFERENCIA', NOW(), 'PENDIENTE');</code></pre>
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            <strong>Resultado:</strong> Se crea un registro con ID de transacción TX-2024-001234
+                                        </p>
+                                        <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li>Se crea un <strong>registro de auditoría</strong> de la operación</li>
+                                            <li>El estado inicial es 'PENDIENTE' hasta confirmar la transacción</li>
+                                            <li>Se registra en el <strong>log de transacciones</strong></li>
+                                        </ul>
+                                        <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 4px; border-left: 3px solid #ffc107;">
+                                            <strong style="color: #856404;">Aplicación de ACID:</strong> 
+                                            <span style="color: #555;">Se mantiene <strong>consistencia (C)</strong> creando un registro completo y coherente de la operación, y <strong>aislamiento (I)</strong> asegura que el registro no sea visible hasta confirmar.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #667eea;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">7</span>
+                                        <strong style="color: #333; font-size: 15px;">Validación Final de Consistencia</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            Antes de confirmar, el sistema realiza validaciones finales:
+                                        </p>
+                                        <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li><strong>Verificación de integridad:</strong> La suma de débitos debe igualar la suma de créditos</li>
+                                            <li><strong>Verificación de saldos:</strong> Ambos saldos deben ser ≥ 0</li>
+                                            <li><strong>Verificación de límites:</strong> El monto no excede límites de transferencia diaria</li>
+                                            <li><strong>Verificación de cuentas:</strong> Ambas cuentas deben estar activas</li>
+                                        </ul>
+                                        <p style="color: #555; line-height: 1.6; margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px;">
+                                            <strong>✓ Todas las validaciones pasan:</strong> La transacción está lista para confirmarse.
+                                        </p>
+                                        <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 4px; border-left: 3px solid #ffc107;">
+                                            <strong style="color: #856404;">Aplicación de ACID:</strong> 
+                                            <span style="color: #555;">Se valida exhaustivamente la <strong>consistencia (C)</strong> asegurando que todas las reglas de negocio y restricciones de integridad se cumplen antes de confirmar.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #51cf66;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #51cf66; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">8</span>
+                                        <strong style="color: #333; font-size: 15px;">COMMIT - Confirmación de la Transacción</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 8px;">
+                                            El sistema ejecuta el comando <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace;">COMMIT</code> para confirmar la transacción:
+                                        </p>
+                                        <ol style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                            <li><strong>Write-Ahead Logging (WAL):</strong> Se escribe primero en el log de transacciones en disco</li>
+                                            <li><strong>Flush del log:</strong> Se fuerza la escritura del log a disco (fsync) para garantizar durabilidad</li>
+                                            <li><strong>Actualización de datos:</strong> Se escriben los cambios en las páginas de datos en memoria</li>
+                                            <li><strong>Liberación de bloqueos:</strong> Se liberan todos los bloqueos exclusivos</li>
+                                            <li><strong>Actualización de estado:</strong> El registro de transacción cambia de 'PENDIENTE' a 'CONFIRMADA'</li>
+                                            <li><strong>Notificación:</strong> Se notifica al cliente que la transferencia fue exitosa</li>
+                                        </ol>
+                                        <p style="color: #555; line-height: 1.6; margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px;">
+                                            <strong>✓ Transacción confirmada exitosamente</strong>
+                                        </p>
+                                        <div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px; border-left: 3px solid #4CAF50;">
+                                            <strong style="color: #2e7d32;">Aplicación de ACID:</strong> 
+                                            <ul style="color: #555; line-height: 1.8; margin-left: 20px; margin-top: 8px;">
+                                                <li><strong>Atomicidad (A):</strong> Todas las 5 operaciones se ejecutan como una unidad indivisible. Si alguna hubiera fallado, todas se revertirían.</li>
+                                                <li><strong>Durabilidad (D):</strong> Los cambios se escriben permanentemente en disco mediante WAL. Incluso si el sistema falla después del COMMIT, los cambios persisten.</li>
+                                                <li><strong>Consistencia (C):</strong> La base de datos queda en un estado consistente: la suma total de dinero se conserva, los saldos son válidos, y todas las reglas de integridad se cumplen.</li>
+                                                <li><strong>Aislamiento (I):</strong> Los bloqueos se liberan, permitiendo que otras transacciones vean los cambios confirmados. Las transacciones concurrentes ahora pueden acceder a los datos actualizados.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="step" style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #868e96;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <span style="background: #868e96; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; flex-shrink: 0;">9</span>
+                                        <strong style="color: #333; font-size: 15px;">Estado Final de la Base de Datos</strong>
+                                    </div>
+                                    <div style="padding-left: 42px;">
+                                        <p style="color: #555; line-height: 1.6; margin-bottom: 10px;">
+                                            Después del COMMIT, el estado final de la base de datos es:
+                                        </p>
+                                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0; background: white; border-radius: 4px; overflow: hidden;">
+                                            <thead>
+                                                <tr style="background: #667eea; color: white;">
+                                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Cuenta</th>
+                                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Saldo Anterior</th>
+                                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Saldo Final</th>
+                                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Cambio</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">1001 (Origen)</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">$5,000.00</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">$3,500.00</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd; color: #f44336;">-$1,500.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">2002 (Destino)</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">$2,000.00</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">$3,500.00</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd; color: #4CAF50;">+$1,500.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p style="color: #555; line-height: 1.6; margin-top: 10px; padding: 10px; background: #e3f2fd; border-radius: 4px;">
+                                            <strong>Verificación de Integridad:</strong> La suma total de dinero en el sistema se mantiene constante ($7,000.00 antes y después de la transacción).
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Escenario Alternativo: Rollback -->
+                            <div class="case-alternative" style="margin-top: 30px; padding: 20px; background: #fff3cd; border-radius: 8px; border-left: 5px solid #ffc107;">
+                                <h5 style="color: #856404; margin-bottom: 15px; font-size: 16px; font-weight: 600;">
+                                    <i class="fas fa-exclamation-triangle" style="margin-right: 8px; color: #ffc107;"></i>
+                                    Escenario Alternativo: ¿Qué pasa si algo falla?
+                                </h5>
+                                <p style="color: #856404; line-height: 1.6; margin-bottom: 15px;">
+                                    Si en cualquier momento antes del COMMIT ocurre un error (por ejemplo, la cuenta destino no existe, 
+                                    fondos insuficientes, o un fallo del sistema), el sistema ejecuta automáticamente <code style="background: #fff; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace;">ROLLBACK</code>.
+                                </p>
+                                <div style="padding: 15px; background: white; border-radius: 6px; margin-top: 10px;">
+                                    <strong style="color: #856404; display: block; margin-bottom: 10px;">Proceso de ROLLBACK:</strong>
+                                    <ol style="color: #856404; line-height: 1.8; margin-left: 20px;">
+                                        <li>Se lee el <strong>log de transacciones</strong> para identificar todos los cambios realizados</li>
+                                        <li>Se <strong>revierte cada cambio</strong> en orden inverso (Undo Log)</li>
+                                        <li>Se <strong>restauran los valores originales</strong> de las cuentas</li>
+                                        <li>Se <strong>liberan todos los bloqueos</strong></li>
+                                        <li>Se <strong>marca la transacción como abortada</strong> en el log</li>
+                                        <li>Se <strong>notifica el error</strong> al cliente</li>
+                                    </ol>
+                                    <div style="margin-top: 15px; padding: 10px; background: #ffebee; border-radius: 4px; border-left: 3px solid #f44336;">
+                                        <strong style="color: #c62828;">Aplicación de Atomicidad (A):</strong> 
+                                        <span style="color: #555;">Si alguna operación falla, <strong>ninguna</strong> de las operaciones tiene efecto. La base de datos vuelve exactamente al estado anterior al BEGIN TRANSACTION, garantizando que no queden cambios parciales.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 20px;"><strong>Nota:</strong> Normalmente, estas propiedades reciben el nombre de <strong>propiedades ACID</strong> de sus siglas en inglés (atomicity, consistency, isolation y durability, respectivamente).</p>
                     </div>
                 </div>
 
+                <!-- Estados de una transacción -->
                 <div class="concept-card">
-                    <h3>Control de Concurrencia</h3>
-                    <p>Mecanismos para manejar múltiples transacciones simultáneas sin comprometer la integridad de los datos.</p>
+                    <h3>Estados de una Transacción</h3>
+                    <p>Como se ha indicado anteriormente, si no hay fallos, una transacción finaliza correctamente y sus cambios son permanentes. Sin embargo, puede que una transacción no finalice correctamente. A este tipo de transacciones se las llama <strong>abortadas</strong>.</p>
+                    
                     <div class="concept-details">
-                        <strong>Estrategias principales:</strong>
+                        <p>Para garantizar la propiedad de atomicidad, una transacción abortada no debe tener efectos sobre la base de datos. Esto implica que cualquier cambio que haya podido realizar la transacción debe ser deshecho. Normalmente se habla de que la transacción debe ser <strong>retrocedida</strong>.</p>
+                        
+                        <p>Cuando una transacción finaliza correctamente recibe el nombre de <strong>transacción comprometida</strong>. Para garantizar la propiedad de durabilidad, una transacción comprometida no puede ser retrocedida. La única forma de volver a un estado anterior es ejecutando una <strong>transacción compensadora</strong>.</p>
+                        
+                        <h4>Estados de una Transacción:</h4>
                         <ul>
-                            <li><strong>Bloqueos (Locking):</strong> Exclusión mutua de recursos</li>
-                            <li><strong>Versionado (MVCC):</strong> Múltiples versiones de datos</li>
-                            <li><strong>Timestamp Ordering:</strong> Ordenamiento por marcas de tiempo</li>
-                            <li><strong>Optimistic Concurrency:</strong> Validación al final</li>
+                            <li><strong>Activa:</strong> Es el estado inicial, permanece en este estado durante su ejecución.</li>
+                            <li><strong>Parcialmente comprometida:</strong> Pasa a este estado después de ejecutarse la última instrucción.</li>
+                            <li><strong>Fallida:</strong> Conmuta a este estado cuando se descubre que no puede continuar su flujo normal de ejecución.</li>
+                            <li><strong>Abortada:</strong> Después de retroceder la transacción y devolver la base de datos al estado previo al comienzo de su ejecución. En esta situación el sistema puede:
+                                <ul>
+                                    <li>Reiniciar la transacción.</li>
+                                    <li>Cancelar la transacción.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Comprometida:</strong> Completada correctamente.</li>
                         </ul>
-                        <strong>Tipos de bloqueos:</strong> Shared (S), Exclusive (X), Intent locks
+                        <p><strong>Nota:</strong> Una transacción terminada es aquella que está comprometida o abortada.</p>
                     </div>
                 </div>
 
+                <!-- Implementación de la atomicidad y durabilidad -->
                 <div class="concept-card">
-                    <h3>Deadlocks y Prevención</h3>
-                    <p>Situación donde dos o más transacciones esperan indefinidamente por recursos bloqueados por otras.</p>
+                    <h3>Implementación de la Atomicidad y Durabilidad</h3>
+                    <p>El gestor de recuperaciones del sistema gestor de base de datos es el responsable de hacer posible la atomicidad y durabilidad.</p>
+                    
                     <div class="concept-details">
-                        <strong>Condiciones necesarias:</strong>
-                        <ul>
-                            <li><strong>Exclusión mutua:</strong> Recursos no compartibles</li>
-                            <li><strong>Espera circular:</strong> T1 espera T2, T2 espera T1</li>
-                            <li><strong>No preemption:</strong> No se pueden liberar recursos forzadamente</li>
-                        </ul>
-                        <strong>Estrategias:</strong> Detección, prevención, evitación, recuperación
+                        <h4>Copia en la Sombra (Shadow Copy)</h4>
+                        <p>Un esquema utilizado para bases de datos pequeñas es implementar la atomicidad y durabilidad utilizando <strong>copias en la sombra</strong>. Esta técnica consiste en:</p>
+                        <ol>
+                            <li>Hacer una copia de la base de datos antes de comenzar la transacción (no hay concurrencia).</li>
+                            <li>Al realizar la copia se mantiene un puntero hacia la nueva copia y se trabaja con ella.</li>
+                            <li>Si la transacción es comprometida, se borra la copia original y se sigue con la nueva.</li>
+                            <li>En caso de ser abortada, se restaura al estado inicial borrando la nueva copia y cambiando el puntero a la copia original.</li>
+                        </ol>
+                        <p><strong>Limitación:</strong> Esta técnica no es eficiente para sistemas con concurrencia o bases de datos grandes.</p>
                     </div>
                 </div>
 
+                <!-- Secuencialidad -->
                 <div class="concept-card">
-                    <h3>Log de Transacciones</h3>
-                    <p>Registro de todas las operaciones de transacciones para permitir recuperación y mantener durabilidad.</p>
+                    <h3>Secuencialidad</h3>
+                    <p>Los sistemas de procesamiento de transacciones permiten normalmente la ejecución de varias transacciones concurrentemente. Permitir varias transacciones que actualizan concurrentemente los datos provoca complicaciones en la consistencia de estos.</p>
+                    
                     <div class="concept-details">
-                        <strong>Componentes del log:</strong>
+                        <p>Asegurar la consistencia a pesar de la ejecución concurrente de las transacciones requiere un trabajo extra; es mucho más sencillo exigir que las transacciones se ejecuten secuencialmente, es decir, una a una, comenzado cada una solo después de que la anterior se haya completado.</p>
+                        
+                        <p>Para garantizar que la ejecución concurrente de transacciones no afecte a su resultado, el sistema gestor de base de datos debe controlar su ejecución. Para ello, es el responsable de realizar una correcta <strong>planificación de ejecución</strong>. Dependiendo de la planificación elegida se garantiza la secuencialidad o no.</p>
+                        
+                        <h4>Secuencialidad en cuanto a Conflictos</h4>
+                        <p>Si tenemos una planificación en la cual hay dos instrucciones consecutivas pero actúan sobre diferentes elementos de datos, estas pueden intercambiarse sin afectar al resultado de la transacción. Sin embargo, si ambas instrucciones actúan sobre el mismo dato, se distinguen cuatro posibilidades:</p>
                         <ul>
-                            <li><strong>Log Records:</strong> Registros de operaciones</li>
-                            <li><strong>Checkpoints:</strong> Puntos de sincronización</li>
-                            <li><strong>WAL (Write-Ahead Logging):</strong> Escribir log antes que datos</li>
-                            <li><strong>Recovery:</strong> Redo y Undo operations</li>
+                            <li><strong>Lectura-Lectura:</strong> En este caso el orden no importa.</li>
+                            <li><strong>Lectura-Escritura:</strong> El resultado depende del orden de ejecución.</li>
+                            <li><strong>Escritura-Lectura:</strong> Es igual que el caso anterior.</li>
+                            <li><strong>Escritura-Escritura:</strong> El orden de escritura no afecta a las operaciones implicadas, pero sí lo hace sobre la siguiente lectura del dato escrito.</li>
                         </ul>
-                        <strong>Beneficios:</strong> Durabilidad, recuperación, replicación
+                        
+                        <p>Se dice que dos instrucciones están en <strong>conflicto</strong> cuando, perteneciendo a diferentes transacciones, al menos una de las dos realiza una operación de escritura.</p>
+                        
+                        <p>Para dar solución a los conflictos se plantea la generación de planificaciones alternativas que producen el mismo resultado, pero no tienen conflictos, en este caso hablamos de <strong>equivalencia en cuanto a conflictos</strong>. Una planificación es <strong>secuenciable en cuanto a conflictos</strong> si es equivalente en cuanto a conflictos.</p>
+                    </div>
+                </div>
+
+                <!-- Recuperabilidad -->
+                <div class="concept-card">
+                    <h3>Recuperabilidad</h3>
+                    <p>Previamente hemos visto cómo se asegura la consistencia de los datos dando por hecho que no hay fallos en las transacciones. En este apartado se estudia el efecto de los fallos en una transacción durante una ejecución concurrente.</p>
+                    
+                    <div class="concept-details">
+                        <p>Si una transacción falla, es necesario deshacer sus efectos para garantizar la atomicidad. En sistemas concurrentes es necesario abortar toda aquella transacción que dependa de datos que ha modificado la transacción que origina el fallo.</p>
+                        
+                        <p>Para permitir este comportamiento es necesario limitar el tipo de planificaciones utilizadas en el sistema gestor de bases de datos.</p>
+                        
+                        <h4>Planificación Recuperable</h4>
+                        <p>Una <strong>planificación recuperable</strong> es la que, dada un par de transacciones en la que la segunda lee datos de la primera, esta finaliza antes que la segunda.</p>
+                    </div>
+                </div>
+
+                <!-- Implementación del aislamiento -->
+                <div class="concept-card">
+                    <h3>Implementación del Aislamiento</h3>
+                    <p>Como ya vimos previamente, para asegurar el aislamiento, el sistema gestor de base de datos debe asegurar que cada transacción realice su trabajo independientemente de cualquier otra transacción que ocurra al mismo tiempo.</p>
+                    
+                    <div class="concept-details">
+                        <p>Para que el aislamiento se cumpla, el SGBD debe añadir políticas de bloqueo de datos o un sistema de gestión de la concurrencia.</p>
+                        
+                        <h4>Bloqueos (Locks)</h4>
+                        <p>Un <strong>bloqueo</strong> es un control colocado en la base de datos para reservar los datos, de modo que solo podrán ser actualizados en una sesión a la vez. Cuando se bloquean los datos, ninguna otra sesión de la base de datos puede actualizarlos hasta que se libera el bloqueo.</p>
+                        
+                        <h4>Niveles de Bloqueo</h4>
+                        <p>Entre los niveles de bloqueo más comunes encontramos:</p>
+                        <ul>
+                            <li><strong>Base de datos:</strong> Bloquea toda la base de datos</li>
+                            <li><strong>Archivo:</strong> Bloquea un archivo completo</li>
+                            <li><strong>Tabla:</strong> Bloquea una tabla completa</li>
+                            <li><strong>Bloque o página:</strong> Bloquea una página de datos</li>
+                            <li><strong>Fila:</strong> El nivel de bloqueo más común</li>
+                            <li><strong>Columna:</strong> Bloqueo a nivel de columna</li>
+                        </ul>
+                        <p><strong>Nota:</strong> Los bloqueos siempre se colocan cuando se actualizan o se eliminan datos.</p>
                     </div>
                 </div>
             </section>
@@ -138,34 +717,802 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Transferencia Bancaria con Aislamiento</h4>
-                        <p><strong>Escenario:</strong> Transferencia segura entre cuentas con control de concurrencia</p>
+                        <h4>Ejemplo 1: Transacción Básica con BEGIN y COMMIT</h4>
+                        <p><strong>Escenario:</strong> Transferencia bancaria simple con control de transacciones</p>
                         <div class="code-block">
--- Transacción de transferencia bancaria
-BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+<pre>-- Iniciar transacción
+BEGIN TRANSACTION;
 
--- Bloquear cuentas en orden específico para evitar deadlocks
-SELECT saldo FROM cuentas WHERE id = 1 FOR UPDATE;
-SELECT saldo FROM cuentas WHERE id = 2 FOR UPDATE;
+-- Operaciones de la transacción
+UPDATE cuentas SET saldo = saldo - 1000 WHERE id = 1;
+UPDATE cuentas SET saldo = saldo + 1000 WHERE id = 2;
 
--- Verificar fondos suficientes
+-- Confirmar transacción (commit)
+COMMIT;
+
+-- Si hubiera error, se ejecutaría:
+-- ROLLBACK;</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Todas las operaciones se ejecutan como una unidad atómica. Si alguna falla, se revierte todo.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Transacción con Control de Errores</h4>
+                        <p><strong>Escenario:</strong> Transferencia con validación de fondos</p>
+                        <div class="code-block">
+<pre>BEGIN TRANSACTION;
+
 DECLARE @saldo_origen DECIMAL(10,2);
-SELECT @saldo_origen = saldo FROM cuentas WHERE id = 1;
+DECLARE @monto_transferencia DECIMAL(10,2) = 1000.00;
 
-IF @saldo_origen >= 1000.00
+-- Verificar fondos
+SELECT @saldo_origen = saldo 
+FROM cuentas 
+WHERE id = 1;
+
+IF @saldo_origen >= @monto_transferencia
 BEGIN
     -- Realizar transferencia
-    UPDATE cuentas SET saldo = saldo - 1000.00 WHERE id = 1;
-    UPDATE cuentas SET saldo = saldo + 1000.00 WHERE id = 2;
+    UPDATE cuentas SET saldo = saldo - @monto_transferencia WHERE id = 1;
+    UPDATE cuentas SET saldo = saldo + @monto_transferencia WHERE id = 2;
     
     -- Registrar transacción
     INSERT INTO transacciones (cuenta_origen, cuenta_destino, monto, fecha)
-    VALUES (1, 2, 1000.00, GETDATE());
+    VALUES (1, 2, @monto_transferencia, GETDATE());
     
     COMMIT;
+    PRINT 'Transferencia exitosa';
 END
 ELSE
 BEGIN
     ROLLBACK;
-    RAISERROR('Fondos insuficientes', 16, 1);
+    PRINT 'Error: Fondos insuficientes';
+END;</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> La transacción valida condiciones antes de confirmar. Si no se cumplen, se revierte todo.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Niveles de Aislamiento</h4>
+                        <p><strong>Escenario:</strong> Configurar nivel de aislamiento para evitar lecturas sucias</p>
+                        <div class="code-block">
+<pre>-- Nivel de aislamiento: READ COMMITTED (por defecto)
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+BEGIN TRANSACTION;
+
+-- Lectura de datos (solo ve datos confirmados)
+SELECT * FROM productos WHERE stock > 0;
+
+-- Actualización
+UPDATE productos SET stock = stock - 1 WHERE id = 100;
+
+COMMIT;
+
+-- Nivel de aislamiento: SERIALIZABLE (máximo aislamiento)
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN TRANSACTION;
+
+SELECT * FROM productos WHERE categoria = 'Electrónica';
+-- Otras operaciones...
+
+COMMIT;</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Diferentes niveles de aislamiento controlan qué datos pueden ver las transacciones concurrentes.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 4: Bloqueos Explícitos</h4>
+                        <p><strong>Escenario:</strong> Usar bloqueos para controlar acceso concurrente</p>
+                        <div class="code-block">
+<pre>BEGIN TRANSACTION;
+
+-- Bloqueo exclusivo (FOR UPDATE)
+SELECT saldo FROM cuentas WHERE id = 1 FOR UPDATE;
+
+-- Bloqueo compartido (FOR SHARE)
+SELECT nombre FROM clientes WHERE id = 100 FOR SHARE;
+
+-- Realizar operaciones
+UPDATE cuentas SET saldo = saldo - 500 WHERE id = 1;
+
+COMMIT;
+-- Los bloqueos se liberan automáticamente al hacer COMMIT o ROLLBACK</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Los bloqueos explícitos garantizan que solo una transacción pueda modificar un dato a la vez.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 5: Transacciones Anidadas (Savepoints)</h4>
+                        <p><strong>Escenario:</strong> Puntos de guardado dentro de una transacción</p>
+                        <div class="code-block">
+<pre>BEGIN TRANSACTION;
+
+-- Operación 1
+UPDATE productos SET precio = precio * 1.1 WHERE categoria = 'A';
+SAVEPOINT punto1;
+
+-- Operación 2
+UPDATE productos SET precio = precio * 0.9 WHERE categoria = 'B';
+SAVEPOINT punto2;
+
+-- Si hay error en operación 3, volver a punto2
+BEGIN
+    UPDATE productos SET precio = precio * 2 WHERE categoria = 'C';
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK TO punto2;
 END;
+
+-- Confirmar todo
+COMMIT;</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Los savepoints permiten volver a un punto específico sin abortar toda la transacción.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 6: Detección de Deadlocks</h4>
+                        <p><strong>Escenario:</strong> Manejo de deadlocks en MySQL</p>
+                        <div class="code-block">
+<pre>-- Transacción 1
+BEGIN TRANSACTION;
+UPDATE cuentas SET saldo = saldo - 100 WHERE id = 1;
+-- Espera por recurso bloqueado por Transacción 2
+UPDATE cuentas SET saldo = saldo + 100 WHERE id = 2;
+COMMIT;
+
+-- Transacción 2 (ejecutándose concurrentemente)
+BEGIN TRANSACTION;
+UPDATE cuentas SET saldo = saldo - 200 WHERE id = 2;
+-- Espera por recurso bloqueado por Transacción 1
+UPDATE cuentas SET saldo = saldo + 200 WHERE id = 1;
+COMMIT;
+
+-- MySQL detecta el deadlock y aborta una transacción
+-- Error: Deadlock found when trying to get lock</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Los SGBD detectan deadlocks automáticamente y abortan una transacción para resolver el conflicto.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-card">
+                    <h3>Actividad 1: Test Interactivo de Conocimientos</h3>
+                    <p><strong>Duración:</strong> 15-20 minutos</p>
+                    <p><strong>Objetivo:</strong> Evaluar comprensión de conceptos fundamentales del procesamiento transaccional</p>
+                    
+                    <div class="activity-content" id="test-container">
+                        <div id="test-questions"></div>
+                        <div id="test-results" style="display: none;">
+                            <h3>Resultados del Test</h3>
+                            <div id="results-content"></div>
+                            <button id="restart-test" class="btn-primary" style="margin-top: 20px;">Reiniciar Test</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script>
+        // Test Interactivo de Procesamiento Transaccional
+        const testQuestions = [
+            {
+                question: "¿Qué significa que una transacción tenga la propiedad de Atomicidad?",
+                options: {
+                    A: "Que todas las operaciones se ejecutan completamente o ninguna",
+                    B: "Que los cambios son permanentes después del commit",
+                    C: "Que las transacciones concurrentes no interfieren entre sí",
+                    D: "Que la base de datos mantiene su consistencia"
+                },
+                correct: "A",
+                explanation: "La atomicidad garantiza que todas las operaciones de una transacción se ejecuten completamente o que ninguna se ejecute, manteniendo la integridad de los datos."
+            },
+            {
+                question: "¿Cuál es el estado de una transacción cuando se descubre que no puede continuar su ejecución normal?",
+                options: {
+                    A: "Activa",
+                    B: "Parcialmente comprometida",
+                    C: "Fallida",
+                    D: "Abortada"
+                },
+                correct: "C",
+                explanation: "Una transacción pasa al estado 'Fallida' cuando se descubre que no puede continuar su flujo normal de ejecución, antes de ser abortada."
+            },
+            {
+                question: "¿Qué técnica se utiliza para implementar atomicidad y durabilidad en bases de datos pequeñas sin concurrencia?",
+                options: {
+                    A: "Bloqueos compartidos",
+                    B: "Copias en la sombra (Shadow Copy)",
+                    C: "Versionado multiversión (MVCC)",
+                    D: "Timestamp ordering"
+                },
+                correct: "B",
+                explanation: "Las copias en la sombra son una técnica simple que crea una copia de la base de datos antes de la transacción, trabajando con ella y restaurando si es necesario."
+            },
+            {
+                question: "En una planificación, dos instrucciones están en conflicto cuando:",
+                options: {
+                    A: "Ambas pertenecen a la misma transacción",
+                    B: "Pertenecen a diferentes transacciones y al menos una realiza escritura",
+                    C: "Ambas realizan operaciones de lectura",
+                    D: "Actúan sobre diferentes elementos de datos"
+                },
+                correct: "B",
+                explanation: "Dos instrucciones están en conflicto cuando pertenecen a diferentes transacciones y al menos una de ellas realiza una operación de escritura sobre el mismo dato."
+            },
+            {
+                question: "¿Qué nivel de bloqueo es el más común en sistemas de bases de datos modernos?",
+                options: {
+                    A: "Nivel de base de datos",
+                    B: "Nivel de tabla",
+                    C: "Nivel de fila",
+                    D: "Nivel de columna"
+                },
+                correct: "C",
+                explanation: "El bloqueo a nivel de fila es el más común porque permite mayor concurrencia, bloqueando solo las filas específicas que se están modificando."
+            },
+            {
+                question: "Una planificación recuperable se caracteriza por:",
+                options: {
+                    A: "Permitir que cualquier transacción lea datos no confirmados",
+                    B: "Asegurar que si una transacción lee datos de otra, la primera finaliza antes que la segunda",
+                    C: "No permitir transacciones concurrentes",
+                    D: "Garantizar que no habrá deadlocks"
+                },
+                correct: "B",
+                explanation: "Una planificación recuperable garantiza que si una transacción T2 lee datos escritos por T1, entonces T1 debe finalizar (commit o abort) antes que T2."
+            },
+            {
+                question: "¿Cuál es la principal desventaja de usar copias en la sombra para implementar transacciones?",
+                options: {
+                    A: "No garantiza la atomicidad",
+                    B: "No es eficiente para sistemas con concurrencia o bases de datos grandes",
+                    C: "No permite la recuperación ante fallos",
+                    D: "Requiere demasiada memoria"
+                },
+                correct: "B",
+                explanation: "Las copias en la sombra no son eficientes para sistemas con concurrencia porque requieren copiar toda la base de datos, lo cual es costoso en bases grandes."
+            },
+            {
+                question: "En el contexto de conflictos entre transacciones, ¿qué tipo de conflicto NO afecta el resultado si se intercambia el orden?",
+                options: {
+                    A: "Lectura-Escritura",
+                    B: "Escritura-Lectura",
+                    C: "Lectura-Lectura",
+                    D: "Escritura-Escritura"
+                },
+                correct: "C",
+                explanation: "El conflicto Lectura-Lectura no afecta el resultado si se intercambia el orden, ya que ambas operaciones solo leen datos sin modificarlos."
+            },
+            {
+                question: "¿Qué propiedad ACID garantiza que los cambios de una transacción comprometida sean permanentes incluso ante fallos del sistema?",
+                options: {
+                    A: "Atomicidad",
+                    B: "Consistencia",
+                    C: "Aislamiento",
+                    D: "Durabilidad"
+                },
+                correct: "D",
+                explanation: "La durabilidad asegura que una vez que una transacción se compromete (commit), sus cambios son permanentes y persisten incluso si el sistema falla."
+            },
+            {
+                question: "Cuando una transacción está en estado 'Parcialmente comprometida', significa que:",
+                options: {
+                    A: "Ha comenzado su ejecución",
+                    B: "Se ha ejecutado la última instrucción pero aún no se ha confirmado",
+                    C: "Ha fallado y necesita ser abortada",
+                    D: "Está esperando por recursos bloqueados"
+                },
+                correct: "B",
+                explanation: "Una transacción pasa al estado 'Parcialmente comprometida' después de ejecutarse la última instrucción, pero antes de confirmarse definitivamente (commit)."
+            },
+            {
+                question: "¿Qué mecanismo utiliza el SGBD para asegurar el aislamiento entre transacciones concurrentes?",
+                options: {
+                    A: "Solo bloqueos de datos",
+                    B: "Solo sistemas de gestión de concurrencia",
+                    C: "Políticas de bloqueo de datos o sistemas de gestión de concurrencia",
+                    D: "Ninguno, el aislamiento es automático"
+                },
+                correct: "C",
+                explanation: "El SGBD puede usar políticas de bloqueo (locks) o sistemas de gestión de concurrencia (como MVCC) para asegurar el aislamiento entre transacciones."
+            },
+            {
+                question: "Una transacción compensadora se utiliza para:",
+                options: {
+                    A: "Revertir los efectos de una transacción comprometida",
+                    B: "Abortar una transacción fallida",
+                    C: "Confirmar una transacción parcialmente comprometida",
+                    D: "Iniciar una nueva transacción"
+                },
+                correct: "A",
+                explanation: "Una transacción compensadora es la única forma de revertir los efectos de una transacción que ya fue comprometida, ya que las transacciones comprometidas no pueden ser retrocedidas directamente."
+            }
+        ];
+
+        let userAnswers = {};
+        let currentQuestionIndex = 0;
+
+        function initTest() {
+            const container = document.getElementById('test-questions');
+            container.innerHTML = '';
+            userAnswers = {};
+            currentQuestionIndex = 0;
+            document.getElementById('test-results').style.display = 'none';
+            
+            testQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'test-question';
+                questionDiv.id = `question-${index}`;
+                questionDiv.innerHTML = `
+                    <div class="question-header">
+                        <h4>Pregunta ${index + 1} de ${testQuestions.length}</h4>
+                        <div class="question-text">${q.question}</div>
+                    </div>
+                    <div class="question-options">
+                        ${Object.entries(q.options).map(([key, value]) => `
+                            <label class="option-label">
+                                <input type="radio" name="question-${index}" value="${key}" onchange="selectAnswer(${index}, '${key}')">
+                                <span class="option-text"><strong>${key}.</strong> ${value}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${index}" class="feedback" style="display: none;"></div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            const submitButton = document.createElement('button');
+            submitButton.className = 'btn-primary';
+            submitButton.textContent = 'Enviar Respuestas';
+            submitButton.style.marginTop = '20px';
+            submitButton.onclick = submitTest;
+            container.appendChild(submitButton);
+        }
+
+        function selectAnswer(questionIndex, answer) {
+            userAnswers[questionIndex] = answer;
+            showFeedback(questionIndex, answer);
+        }
+
+        function showFeedback(questionIndex, selectedAnswer) {
+            const question = testQuestions[questionIndex];
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            const isCorrect = selectedAnswer === question.correct;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                <div class="feedback-icon">
+                    <i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                </div>
+                <div class="feedback-text">
+                    <strong>${isCorrect ? '¡Correcto!' : 'Incorrecto'}</strong>
+                    <p>${question.explanation}</p>
+                    ${!isCorrect ? `<p><strong>Respuesta correcta: ${question.correct}</strong></p>` : ''}
+                </div>
+            `;
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let incorrect = 0;
+            const results = [];
+
+            testQuestions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) {
+                    correct++;
+                } else {
+                    incorrect++;
+                }
+
+                results.push({
+                    question: q.question,
+                    userAnswer: userAnswer || 'No respondida',
+                    correctAnswer: q.correct,
+                    isCorrect: isCorrect,
+                    explanation: q.explanation
+                });
+            });
+
+            displayResults(correct, incorrect, results);
+        }
+
+        function displayResults(correct, incorrect, results) {
+            const total = testQuestions.length;
+            const percentage = Math.round((correct / total) * 100);
+            
+            document.getElementById('test-questions').style.display = 'none';
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.style.display = 'block';
+            
+            const resultsContent = document.getElementById('results-content');
+            resultsContent.innerHTML = `
+                <div class="results-summary">
+                    <div class="result-stat">
+                        <div class="stat-icon correct">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">${correct}</div>
+                            <div class="stat-label">Correctas</div>
+                        </div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-icon incorrect">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">${incorrect}</div>
+                            <div class="stat-label">Incorrectas</div>
+                        </div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-icon total">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">${percentage}%</div>
+                            <div class="stat-label">Calificación</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-details">
+                    <h4>Detalle de Respuestas:</h4>
+                    ${results.map((result, index) => `
+                        <div class="result-item ${result.isCorrect ? 'result-correct' : 'result-incorrect'}">
+                            <div class="result-question-number">Pregunta ${index + 1}</div>
+                            <div class="result-question-text">${result.question}</div>
+                            <div class="result-answer">
+                                <span class="answer-label">Tu respuesta:</span>
+                                <span class="answer-value ${result.isCorrect ? 'correct' : 'incorrect'}">
+                                    ${result.userAnswer || 'No respondida'}
+                                </span>
+                                ${!result.isCorrect ? `
+                                    <span class="answer-label">Respuesta correcta:</span>
+                                    <span class="answer-value correct">${result.correctAnswer}</span>
+                                ` : ''}
+                            </div>
+                            <div class="result-explanation">${result.explanation}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('restart-test').onclick = () => {
+                document.getElementById('test-questions').style.display = 'block';
+                resultsDiv.style.display = 'none';
+                initTest();
+            };
+        }
+
+        // Inicializar el test cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            initTest();
+        });
+    </script>
+    <style>
+        .test-question {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .test-question:hover {
+            border-color: #4CAF50;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+        }
+
+        .question-header {
+            margin-bottom: 15px;
+        }
+
+        .question-header h4 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .question-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            border-color: #4CAF50;
+            background: #f1f8f4;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .option-label input[type="radio"]:checked + .option-text {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .feedback-correct {
+            background: #e8f5e9;
+            border: 2px solid #4CAF50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .feedback-icon {
+            font-size: 24px;
+        }
+
+        .feedback-correct .feedback-icon {
+            color: #4CAF50;
+        }
+
+        .feedback-incorrect .feedback-icon {
+            color: #f44336;
+        }
+
+        .feedback-text {
+            flex: 1;
+        }
+
+        .feedback-text strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .feedback-text p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .results-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-stat {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.correct {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+
+        .stat-icon.incorrect {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .stat-icon.total {
+            background: #e3f2fd;
+            color: #2196F3;
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .results-details {
+            margin-top: 30px;
+        }
+
+        .results-details h4 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .result-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+
+        .result-correct {
+            background: #e8f5e9;
+            border-left-color: #4CAF50;
+        }
+
+        .result-incorrect {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+
+        .result-question-number {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-question-text {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .result-answer {
+            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .answer-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .answer-value {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .answer-value.correct {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .answer-value.incorrect {
+            background: #f44336;
+            color: white;
+        }
+
+        .result-explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            color: #555;
+            font-style: italic;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .results-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Estilos para diagramas Mermaid */
+        .diagram-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .diagram-container h4 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .diagram-container .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .diagram-container .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .diagram-container {
+                padding: 15px;
+            }
+            
+            .diagram-container .mermaid {
+                padding: 15px;
+            }
+        }
+    </style>
+</body>
+</html>

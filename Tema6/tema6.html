@@ -52,9 +52,9 @@
                     Conceptos Clave
                 </h2>
 
-                <!-- 6.1 ¿Cómo estudiar este tema? -->
+                <!-- ¿Cómo estudiar este tema? -->
                 <div class="concept-card">
-                    <h3>6.1 ¿Cómo estudiar este tema?</h3>
+                    <h3>¿Cómo estudiar este tema?</h3>
                     <p>En este tema analizaremos los aspectos fundamentales para conocer cómo se organizan los índices en una base de datos y saber el coste desde el punto de vista de almacenamiento y gestión que supone un índice.</p>
                     <div class="concept-details">
                         <p><strong>Objetivos de aprendizaje:</strong></p>
@@ -67,9 +67,9 @@
                     </div>
                 </div>
 
-                <!-- 6.2 Introducción -->
+                <!-- Introducción -->
                 <div class="concept-card">
-                    <h3>6.2 Introducción</h3>
+                    <h3>Introducción</h3>
                     <p>Desde el punto de vista del sistema, un <strong>índice de un archivo</strong> funciona igual que el índice de un libro: permite consultar un aspecto determinado e ir de manera directa a su ubicación.</p>
                     
                     <div class="concept-details">
@@ -119,9 +119,9 @@
                     </div>
                 </div>
 
-                <!-- 6.3 Índices Ordenados -->
+                <!-- Índices Ordenados -->
                 <div class="concept-card">
-                    <h3>6.3 Índices Ordenados</h3>
+                    <h3>Índices Ordenados</h3>
                     <p>Cada estructura de índice tiene una asociación con una <strong>clave de búsqueda determinada</strong>. Desde el punto de vista de un archivo, los registros almacenados pueden seguir un cierto orden. Además, un archivo puede contener varios índices de claves de búsqueda.</p>
                     
                     <div class="concept-details">
@@ -165,9 +165,9 @@ D → Bloque 1, Offset 50</pre>
                     </div>
                 </div>
 
-                <!-- 6.4 Índices Densos y Dispersos -->
+                <!-- Índices Densos y Dispersos -->
                 <div class="concept-card">
-                    <h3>6.4 Índices Densos y Dispersos</h3>
+                    <h3>Índices Densos y Dispersos</h3>
                     <p>Una entrada del índice está formada por un <strong>valor que sirve de clave de búsqueda</strong> y por <strong>punteros a uno o varios registros</strong>. El puntero contiene la información sobre el identificador de un bloque de disco y un desplazamiento dentro del bloque para el acceso directo a los datos.</p>
                     
                     <div class="concept-details">
@@ -259,9 +259,9 @@ ID    → Bloque
                     </div>
                 </div>
 
-                <!-- 6.5 Índices Multinivel -->
+                <!-- Índices Multinivel -->
                 <div class="concept-card">
-                    <h3>6.5 Índices Multinivel</h3>
+                    <h3>Índices Multinivel</h3>
                     <p>La creación de índices multinivel viene motivada para <strong>reducir aún más el espacio</strong> que pueden ocupar los índices. Aunque utilicemos índices dispersos, puede ocurrir que el espacio requerido sea demasiado grande.</p>
                     
                     <div class="concept-details">
@@ -337,9 +337,9 @@ ID    → Bloque
                     </div>
                 </div>
 
-                <!-- 6.6 Actualización del Índice -->
+                <!-- Actualización del Índice -->
                 <div class="concept-card">
-                    <h3>6.6 Actualización del Índice</h3>
+                    <h3>Actualización del Índice</h3>
                     <p>Independientemente del tipo de índice que estemos utilizando, estos deben <strong>actualizarse siempre que se inserte o borre un registro</strong>. Existen diferentes algoritmos para actualizar los índices.</p>
                     
                     <div class="concept-details">
@@ -412,9 +412,9 @@ ID    → Bloque
                     </div>
                 </div>
 
-                <!-- 6.7 Asociación Estática -->
+                <!-- Asociación Estática -->
                 <div class="concept-card">
-                    <h3>6.7 Asociación Estática</h3>
+                    <h3>Asociación Estática</h3>
                     <p>Uno de los problemas de utilizar archivos secuenciales es la necesidad de tener que crear una estructura adicional (índices) para saber dónde están los datos. Esta forma de funcionamiento implica la realización de mayor número de E/S independientemente del método de búsqueda que se utilice.</p>
                     
                     <div class="concept-details">
@@ -478,9 +478,9 @@ Cajón 4: [Registro H] → Desbordamiento → Cajón 4.1
                     </div>
                 </div>
 
-                <!-- 6.8 Cómo usar índices en bases de datos -->
+                <!-- Cómo usar índices en bases de datos -->
                 <div class="concept-card">
-                    <h3>6.8 Cómo usar índices en bases de datos</h3>
+                    <h3>Cómo usar índices en bases de datos</h3>
                     <p>El propósito de crear índices en una tabla de una base de datos es <strong>optimizar los tiempos de consulta</strong> encontrando más rápido la fila o filas deseadas. La parte negativa es que añaden complejidad a la inserción o modificación de datos.</p>
                     
                     <div class="concept-details">
@@ -580,9 +580,9 @@ WHERE author_id = 123;
                     </div>
                 </div>
 
-                <!-- 6.9 Estructura Interna de B-Tree (Complementario) -->
+                <!-- Estructura Interna de B-Tree (Complementario) -->
                 <div class="concept-card">
-                    <h3>6.9 Estructura Interna de B-Tree</h3>
+                    <h3>Estructura Interna de B-Tree</h3>
                     <p>Los <strong>B-Trees</strong> son la estructura de datos más comúnmente usada para índices en bases de datos relacionales debido a su eficiencia para operaciones de lectura y escritura.</p>
                     
                     <div class="concept-details">
@@ -638,9 +638,9 @@ Nodos hoja: Almacenan claves y punteros a datos
                     </div>
                 </div>
 
-                <!-- 6.10 Selectividad de Índices (Complementario) -->
+                <!-- Selectividad de Índices (Complementario) -->
                 <div class="concept-card">
-                    <h3>6.10 Selectividad de Índices</h3>
+                    <h3>Selectividad de Índices</h3>
                     <p>La <strong>selectividad</strong> de un índice determina qué tan efectivo es para reducir el conjunto de resultados de una consulta.</p>
                     
                     <div class="concept-details">
@@ -714,9 +714,9 @@ Selectividad = 1,000,000 / 1,000,000 = 1.0
                     </div>
                 </div>
 
-                <!-- 6.11 Covering Indexes (Complementario) -->
+                <!-- Covering Indexes (Complementario) -->
                 <div class="concept-card">
-                    <h3>6.11 Covering Indexes (Índices de Cobertura)</h3>
+                    <h3>Covering Indexes (Índices de Cobertura)</h3>
                     <p>Un <strong>covering index</strong> (índice de cobertura) contiene todas las columnas necesarias para una consulta, permitiendo que se ejecute sin acceder a la tabla principal.</p>
                     
                     <div class="concept-details">
@@ -776,9 +776,9 @@ WHERE categoria_id = 5;
                     </div>
                 </div>
 
-                <!-- 6.12 Query Execution Plans (Complementario) -->
+                <!-- Query Execution Plans (Complementario) -->
                 <div class="concept-card">
-                    <h3>6.12 Query Execution Plans</h3>
+                    <h3>Query Execution Plans</h3>
                     <p>El <strong>execution plan</strong> (plan de ejecución) muestra cómo el optimizador de la base de datos ejecutará una consulta, incluyendo qué índices usará.</p>
                     
                     <div class="concept-details">
@@ -873,9 +873,9 @@ EXPLAIN ANALYZE SELECT * FROM productos WHERE categoria_id = 5;
                     </div>
                 </div>
 
-                <!-- 6.13 Fragmentación de Índices (Complementario) -->
+                <!-- Fragmentación de Índices (Complementario) -->
                 <div class="concept-card">
-                    <h3>6.13 Fragmentación de Índices</h3>
+                    <h3>Fragmentación de Índices</h3>
                     <p>La <strong>fragmentación</strong> ocurre cuando las páginas de índice están desordenadas o tienen espacio no utilizado, reduciendo el rendimiento.</p>
                     
                     <div class="concept-details">
@@ -947,9 +947,9 @@ WITH (FILLFACTOR = 80);
                     </div>
                 </div>
 
-                <!-- 6.14 Cardinality Estimation (Complementario) -->
+                <!-- Cardinality Estimation (Complementario) -->
                 <div class="concept-card">
-                    <h3>6.14 Cardinality Estimation</h3>
+                    <h3>Cardinality Estimation</h3>
                     <p>La <strong>estimación de cardinalidad</strong> es el proceso por el cual el optimizador predice cuántas filas devolverá una consulta.</p>
                     
                     <div class="concept-details">
@@ -1017,9 +1017,9 @@ ANALYZE productos;
                     </div>
                 </div>
 
-                <!-- 6.15 Best Practices de Composite Indexes (Complementario) -->
+                <!-- Best Practices de Composite Indexes (Complementario) -->
                 <div class="concept-card">
-                    <h3>6.15 Best Practices de Composite Indexes</h3>
+                    <h3>Best Practices de Composite Indexes</h3>
                     <p>Los índices compuestos requieren consideraciones especiales sobre el orden y la inclusión de columnas para maximizar su efectividad.</p>
                     
                     <div class="concept-details">
