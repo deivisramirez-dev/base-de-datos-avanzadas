@@ -52,78 +52,235 @@
                     Conceptos Clave
                 </h2>
                 
+                <!-- Introducción a la Minería de Datos -->
                 <div class="concept-card">
-                    <h3>Proceso KDD (Knowledge Discovery in Databases)</h3>
-                    <p>Metodología sistemática para extraer conocimiento útil de grandes volúmenes de datos.</p>
+                    <h3>Introducción a la Minería de Datos</h3>
+                    <p>La minería de datos surge a partir de la creación de almacenes de datos, donde la gran cantidad de datos puede servir al sistema para obtener reglas y estructuras útiles. De ahí que esta técnica se utilice para realizar procesos estadísticos semiautomáticos para encontrar dichas reglas.</p>
+                    
                     <div class="concept-details">
-                        <strong>Fases del proceso KDD:</strong>
+                        <strong>Definición:</strong>
+                        <p>Se podría decir que la minería de datos intenta buscar el conocimiento utilizando los datos almacenados en grandes bases de datos. Normalmente del estudio estadístico de esos datos se obtiene un conjunto de reglas que permiten, por ejemplo, establecer patrones de comportamiento.</p>
+                        
+                        <p><strong>Características importantes:</strong></p>
                         <ul>
-                            <li><strong>Selección:</strong> Identificación y recolección de datos relevantes</li>
-                            <li><strong>Preprocesamiento:</strong> Limpieza y preparación de datos</li>
-                            <li><strong>Transformación:</strong> Conversión a formato adecuado</li>
-                            <li><strong>Minería:</strong> Aplicación de algoritmos de extracción</li>
-                            <li><strong>Interpretación:</strong> Evaluación y presentación de resultados</li>
+                            <li><strong>Basado en datos:</strong> Las reglas se basan en los datos que contiene la base de datos</li>
+                            <li><strong>No universales:</strong> No son reglas universales, sino específicas del conjunto de datos analizado</li>
+                            <li><strong>Semiautomático:</strong> Requiere intervención humana para interpretar y validar resultados</li>
+                            <li><strong>Proceso iterativo:</strong> Mejora con más datos y refinamiento de modelos</li>
                         </ul>
-                        <strong>Objetivos:</strong> Clasificación, clustering, asociación, predicción
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Relación con Data Warehouse:</strong>
+                        <p>La minería de datos es el siguiente paso después de tener un almacén de datos. Mientras que el data warehouse organiza y almacena los datos históricos, la minería de datos los analiza para descubrir patrones ocultos y conocimiento útil.</p>
+                        
+                        <div class="visual-diagram">
+                            <h4>Flujo: Datos → Conocimiento</h4>
+                            <div class="data-mining-flow">
+                                <div class="flow-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <h5>Data Warehouse</h5>
+                                    <p>Almacenamiento de datos históricos</p>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="flow-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <h5>Minería de Datos</h5>
+                                    <p>Extracción de patrones</p>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="flow-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <h5>Conocimiento</h5>
+                                    <p>Reglas y patrones útiles</p>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="flow-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <h5>Decisiones</h5>
+                                    <p>Aplicación en el negocio</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Funcionalidades de la Minería de Datos -->
                 <div class="concept-card">
-                    <h3>Algoritmos de Clasificación</h3>
-                    <p>Técnicas para asignar etiquetas a instancias basándose en características observadas.</p>
+                    <h3>Funcionalidades de la Minería de Datos</h3>
+                    <p>Como sabemos, un almacén de datos contiene un gran volumen de datos que pueden servir a una corporación para mejorar su plan de negocio. La minería de datos ofrece diferentes funcionalidades para extraer conocimiento útil.</p>
+                    
                     <div class="concept-details">
-                        <strong>Algoritmos principales:</strong>
+                        <h4>1. Predicción</h4>
+                        <p>La utilidad más inmediata de la minería de datos es la predicción, la cual puede tener diferentes características y motivaciones. La predicción se basa en atributos conocidos de los datos y se puede utilizar, por ejemplo, para decidir si conceder un crédito a una persona.</p>
+                        
+                        <p><strong>Tipos de predicción:</strong></p>
                         <ul>
-                            <li><strong>Árboles de Decisión:</strong> Reglas if-then jerárquicas</li>
-                            <li><strong>Naive Bayes:</strong> Probabilístico basado en teorema de Bayes</li>
-                            <li><strong>SVM:</strong> Máquinas de Vectores de Soporte</li>
-                            <li><strong>Random Forest:</strong> Ensemble de árboles de decisión</li>
+                            <li><strong>Predicción numérica:</strong> Predecir valores continuos (precio, temperatura, ventas)</li>
+                            <li><strong>Predicción categórica:</strong> Predecir categorías o clases</li>
+                            <li><strong>Predicción temporal:</strong> Predecir valores futuros basados en series temporales</li>
                         </ul>
-                        <strong>Métricas:</strong> Precisión, Recall, F1-Score, AUC-ROC
+
+                        <h4>2. Clasificación</h4>
+                        <p>Un tipo especial de predicción es la clasificación ya que, dados unos datos, trata de determinar a qué clase pertenece un elemento nuevo. La clasificación es fundamental en muchos problemas de negocio.</p>
+                        
+                        <p><strong>Ejemplos de aplicación:</strong></p>
+                        <ul>
+                            <li><strong>Aprobación de créditos:</strong> Clasificar clientes en "aprobado" o "rechazado"</li>
+                            <li><strong>Diagnóstico médico:</strong> Clasificar pacientes según enfermedad</li>
+                            <li><strong>Detección de spam:</strong> Clasificar emails como "spam" o "no spam"</li>
+                            <li><strong>Segmentación de clientes:</strong> Clasificar clientes en diferentes segmentos</li>
+                        </ul>
+
+                        <h4>3. Asociación</h4>
+                        <p>Otra utilidad de la minería de datos es la asociación, por ejemplo, buscar los productos de una tienda que se compran a la vez. Al determinar estas asociaciones se pueden generar recomendaciones de compra para otros clientes.</p>
+                        
+                        <p><strong>Reglas de asociación:</strong></p>
+                        <ul>
+                            <li><strong>Formato:</strong> Si A entonces B (con confianza X%)</li>
+                            <li><strong>Ejemplo:</strong> "Si compra pan, entonces compra leche (confianza: 75%)"</li>
+                            <li><strong>Aplicaciones:</strong> Sistemas de recomendación, análisis de carritos de compra, cross-selling</li>
+                        </ul>
+
+                        <h4>4. Agrupación (Clustering)</h4>
+                        <p>Las agrupaciones son un tipo especial de asociaciones. Las agrupaciones permiten hallar agrupaciones de puntos en los datos. Esto puede servir para detectar diferentes tipos de usuarios en aplicaciones online, como puede ser un comercio electrónico, o en otro ámbito distinto, detectar tipos de jugadores.</p>
+                        
+                        <p><strong>Características del clustering:</strong></p>
+                        <ul>
+                            <li><strong>No supervisado:</strong> No requiere datos etiquetados previamente</li>
+                            <li><strong>Descubrimiento:</strong> Encuentra grupos naturales en los datos</li>
+                            <li><strong>Aplicaciones:</strong> Segmentación de mercado, detección de anomalías, análisis de comportamiento</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Proceso de Minería de Datos:</strong>
+                        <p>De manera general, podemos identificar tres etapas en el proceso de minería de datos:</p>
+                        
+                        <div class="visual-diagram">
+                            <h4>Etapas del Proceso de Minería de Datos</h4>
+                            <div class="mining-process">
+                                <div class="process-step">
+                                    <div class="step-number">1</div>
+                                    <h5>Exploración Inicial</h5>
+                                    <p>Preparación de datos: limpieza, selección de subconjuntos y atributos relevantes</p>
+                                    <ul>
+                                        <li>Limpieza de datos</li>
+                                        <li>Selección de atributos</li>
+                                        <li>Muestreo (si es necesario)</li>
+                                    </ul>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="process-step">
+                                    <div class="step-number">2</div>
+                                    <h5>Construcción del Modelo</h5>
+                                    <p>Selección y entrenamiento de modelos, evaluación de rendimiento</p>
+                                    <ul>
+                                        <li>Selección de algoritmos</li>
+                                        <li>Entrenamiento con datos</li>
+                                        <li>Validación y ajuste</li>
+                                    </ul>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="process-step">
+                                    <div class="step-number">3</div>
+                                    <h5>Implementación</h5>
+                                    <p>Aplicación del modelo a nuevos datos para generar predicciones</p>
+                                    <ul>
+                                        <li>Despliegue del modelo</li>
+                                        <li>Generación de predicciones</li>
+                                        <li>Monitoreo y actualización</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p><strong>Detalles de cada etapa:</strong></p>
+                        <ul>
+                            <li><strong>Etapa de exploración:</strong> Se preparan los datos haciendo una limpieza de estos, seleccionando subconjuntos y, en caso de conjuntos muy grandes, seleccionando qué atributos son más interesantes.</li>
+                            <li><strong>Etapa de construcción:</strong> Se seleccionan varios modelos para elegir cuál es el que mejor se adapta al objetivo. Normalmente, en esta etapa se hacen ensayos con los diferentes modelos sobre subconjuntos de los datos y se toma la decisión en base al rendimiento ofrecido por cada uno.</li>
+                            <li><strong>Etapa de implementación:</strong> Implica utilizar el modelo seleccionado en la etapa anterior y aplicarlo a nuevos datos para generar predicciones o estimaciones del resultado esperado.</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- Otros Tipos de Minería -->
                 <div class="concept-card">
-                    <h3>Algoritmos de Clustering</h3>
-                    <p>Técnicas para agrupar datos similares sin conocimiento previo de las clases.</p>
+                    <h3>Otros Tipos de Minería</h3>
+                    <p>Hasta ahora nos hemos centrado en la detección de patrones para, o bien predecir, o bien agrupar y/o asociar hechos mediante la utilización de reglas obtenidas del análisis de un gran volumen de datos. Sin embargo, existen otros tipos de minería especializados.</p>
+                    
                     <div class="concept-details">
-                        <strong>Algoritmos principales:</strong>
+                        <h4>1. Minería de Texto (Text Mining)</h4>
+                        <p>Este caso consistiría en aplicar las técnicas de la minería de datos a documentos de texto. Su utilización puede servir, por ejemplo, para crear historiales de navegación, frecuencias de visitas, etc.</p>
+                        
+                        <p><strong>Aplicaciones:</strong></p>
                         <ul>
-                            <li><strong>K-Means:</strong> Agrupación en k clusters esféricos</li>
-                            <li><strong>Hierarchical:</strong> Clustering jerárquico aglomerativo</li>
-                            <li><strong>DBSCAN:</strong> Clustering basado en densidad</li>
-                            <li><strong>Gaussian Mixture:</strong> Modelos de mezcla gaussiana</li>
+                            <li><strong>Análisis de sentimientos:</strong> Determinar la opinión positiva o negativa en textos</li>
+                            <li><strong>Clasificación de documentos:</strong> Organizar documentos por categorías</li>
+                            <li><strong>Extracción de información:</strong> Identificar entidades y relaciones en textos</li>
+                            <li><strong>Análisis de redes sociales:</strong> Analizar tweets, posts, comentarios</li>
+                            <li><strong>Búsqueda y recuperación:</strong> Mejorar sistemas de búsqueda</li>
                         </ul>
-                        <strong>Métricas:</strong> Silhouette Score, Inertia, Davies-Bouldin Index
+
+                        <h4>2. Sistemas de Visualización de Datos</h4>
+                        <p>Una utilidad más directa en el usuario es la creación de sistemas de visualización de datos. Estos sistemas ayudan a los usuarios a visualizar grandes volúmenes de datos de manera sencilla mediante la utilización de representaciones gráficas.</p>
+                        
+                        <p><strong>Características:</strong></p>
+                        <ul>
+                            <li><strong>Representación gráfica:</strong> Desde el punto de vista del usuario, una gráfica puede contener mucha más información que un conjunto de datos dispuestos en forma textual</li>
+                            <li><strong>Apoyo a decisiones:</strong> Los sistemas de visualización no toman decisiones, sino que muestran los valores a los usuarios quienes sí podrán tomarlas</li>
+                            <li><strong>Importancia:</strong> La visualización es un aspecto muy importante dentro de la minería de datos</li>
+                        </ul>
+
+                        <p><strong>Tipos de visualizaciones:</strong></p>
+                        <ul>
+                            <li><strong>Gráficos de barras y líneas:</strong> Para comparaciones y tendencias</li>
+                            <li><strong>Mapas de calor:</strong> Para identificar patrones y correlaciones</li>
+                            <li><strong>Diagramas de dispersión:</strong> Para relaciones entre variables</li>
+                            <li><strong>Grafos y redes:</strong> Para relaciones complejas</li>
+                            <li><strong>Dashboards interactivos:</strong> Para análisis exploratorio</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- Algoritmos Principales -->
                 <div class="concept-card">
-                    <h3>Reglas de Asociación</h3>
-                    <p>Técnicas para descubrir patrones frecuentes y reglas de asociación en datos transaccionales.</p>
+                    <h3>Algoritmos Principales de Minería de Datos</h3>
+                    <p>Existen diversos algoritmos para cada tipo de tarea de minería de datos. A continuación se presentan los más importantes.</p>
+                    
                     <div class="concept-details">
-                        <strong>Algoritmos principales:</strong>
+                        <h4>Algoritmos de Clasificación</h4>
                         <ul>
-                            <li><strong>Apriori:</strong> Generación de itemsets frecuentes</li>
-                            <li><strong>FP-Growth:</strong> Frequent Pattern Growth</li>
-                            <li><strong>Eclat:</strong> Equivalence Class Transformation</li>
+                            <li><strong>Árboles de Decisión:</strong> Reglas if-then jerárquicas, fácil interpretación</li>
+                            <li><strong>Naive Bayes:</strong> Probabilístico basado en teorema de Bayes, rápido y eficiente</li>
+                            <li><strong>K-Nearest Neighbors (KNN):</strong> Basado en instancias similares</li>
+                            <li><strong>Support Vector Machines (SVM):</strong> Encuentra el mejor hiperplano de separación</li>
+                            <li><strong>Random Forest:</strong> Ensemble de múltiples árboles de decisión</li>
+                            <li><strong>Redes Neuronales:</strong> Modelos complejos inspirados en el cerebro</li>
                         </ul>
-                        <strong>Métricas:</strong> Support, Confidence, Lift, Conviction
-                    </div>
-                </div>
 
-                <div class="concept-card">
-                    <h3>Análisis de Series Temporales</h3>
-                    <p>Técnicas para analizar y predecir patrones en datos que varían en el tiempo.</p>
-                    <div class="concept-details">
-                        <strong>Componentes:</strong>
+                        <h4>Algoritmos de Clustering</h4>
                         <ul>
-                            <li><strong>Tendencia:</strong> Dirección general a largo plazo</li>
-                            <li><strong>Estacionalidad:</strong> Patrones que se repiten cíclicamente</li>
-                            <li><strong>Ciclos:</strong> Fluctuaciones no regulares</li>
-                            <li><strong>Ruido:</strong> Variación aleatoria</li>
+                            <li><strong>K-Means:</strong> Agrupación en k clusters esféricos, requiere número de clusters</li>
+                            <li><strong>Hierarchical Clustering:</strong> Clustering jerárquico aglomerativo o divisivo</li>
+                            <li><strong>DBSCAN:</strong> Clustering basado en densidad, encuentra clusters de formas arbitrarias</li>
+                            <li><strong>Gaussian Mixture Models:</strong> Modelos de mezcla gaussiana probabilísticos</li>
                         </ul>
-                        <strong>Modelos:</strong> ARIMA, SARIMA, LSTM, Prophet
+
+                        <h4>Algoritmos de Asociación</h4>
+                        <ul>
+                            <li><strong>Apriori:</strong> Generación de itemsets frecuentes, clásico pero lento</li>
+                            <li><strong>FP-Growth:</strong> Frequent Pattern Growth, más eficiente que Apriori</li>
+                            <li><strong>Eclat:</strong> Equivalence Class Transformation, eficiente para datasets grandes</li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -139,18 +296,20 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Clasificación de Clientes con Python</h4>
-                        <p><strong>Escenario:</strong> Segmentación de clientes para marketing dirigido</p>
+                        <h4>Ejemplo 1: Clasificación de Clientes con Python</h4>
+                        <p><strong>Escenario:</strong> Segmentación de clientes para marketing dirigido usando Random Forest</p>
                         <div class="code-block">
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Cargar datos de clientes
-def load_customer_data():
+# Cargar datos de clientes desde base de datos
+def load_customer_data(connection):
     query = """
     SELECT 
         edad,
@@ -168,47 +327,532 @@ def load_customer_data():
 # Preprocesamiento de datos
 def preprocess_data(df):
     # Codificar variables categóricas
-    df_encoded = pd.get_dummies(df, columns=['categoria_preferida'])
+    le = LabelEncoder()
+    df['categoria_preferida_encoded'] = le.fit_transform(df['categoria_preferida'])
     
     # Separar características y objetivo
-    X = df_encoded.drop('segmento_cliente', axis=1)
-    y = df_encoded['segmento_cliente']
+    feature_columns = ['edad', 'ingresos_anuales', 'gasto_mensual', 
+                      'frecuencia_compras', 'ultima_compra_dias', 
+                      'categoria_preferida_encoded']
+    X = df[feature_columns]
+    y = df['segmento_cliente']
     
     # Estandarizar características
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
-    return X_scaled, y, scaler
+    return X_scaled, y, scaler, le
 
 # Entrenar modelo de clasificación
 def train_classification_model(X, y):
-    # Dividir datos
+    # Dividir datos en entrenamiento y prueba
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=42, stratify=y
     )
     
     # Entrenar Random Forest
     model = RandomForestClassifier(
         n_estimators=100,
         max_depth=10,
-        random_state=42
+        min_samples_split=5,
+        min_samples_leaf=2,
+        random_state=42,
+        n_jobs=-1
     )
     model.fit(X_train, y_train)
     
     # Evaluar modelo
     y_pred = model.predict(X_test)
-    print("Classification Report:")
-    print(classification_report(y_test, y_pred))
+    accuracy = accuracy_score(y_test, y_pred)
     
-    return model
+    print("=" * 50)
+    print("RESULTADOS DEL MODELO DE CLASIFICACIÓN")
+    print("=" * 50)
+    print(f"\nPrecisión del modelo: {accuracy:.4f}")
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+    
+    # Importancia de características
+    feature_importance = pd.DataFrame({
+        'feature': ['edad', 'ingresos_anuales', 'gasto_mensual', 
+                   'frecuencia_compras', 'ultima_compra_dias', 
+                   'categoria_preferida'],
+        'importance': model.feature_importances_
+    }).sort_values('importance', ascending=False)
+    
+    print("\nImportancia de Características:")
+    print(feature_importance)
+    
+    return model, accuracy
 
 # Aplicar modelo a nuevos clientes
-def predict_customer_segment(model, scaler, new_customer_data):
+def predict_customer_segment(model, scaler, le, new_customer_data):
+    """
+    Predecir segmento de cliente para nuevos datos
+    
+    Args:
+        model: Modelo entrenado
+        scaler: Scaler usado para normalización
+        le: LabelEncoder para categorías
+        new_customer_data: DataFrame con datos del nuevo cliente
+    """
     # Preprocesar nuevos datos
-    new_data_scaled = scaler.transform(new_customer_data)
+    new_data = new_customer_data.copy()
+    new_data['categoria_preferida_encoded'] = le.transform(new_data['categoria_preferida'])
+    
+    feature_columns = ['edad', 'ingresos_anuales', 'gasto_mensual', 
+                      'frecuencia_compras', 'ultima_compra_dias', 
+                      'categoria_preferida_encoded']
+    X_new = new_data[feature_columns]
+    X_new_scaled = scaler.transform(X_new)
     
     # Predecir segmento
-    prediction = model.predict(new_data_scaled)
-    probabilities = model.predict_proba(new_data_scaled)
+    prediction = model.predict(X_new_scaled)
+    probabilities = model.predict_proba(X_new_scaled)
     
     return prediction, probabilities
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    # Cargar datos
+    # df = load_customer_data(connection)
+    
+    # Preprocesar
+    # X, y, scaler, le = preprocess_data(df)
+    
+    # Entrenar modelo
+    # model, accuracy = train_classification_model(X, y)
+    
+    # Predecir para nuevo cliente
+    # nuevo_cliente = pd.DataFrame({
+    #     'edad': [35],
+    #     'ingresos_anuales': [50000],
+    #     'gasto_mensual': [800],
+    #     'frecuencia_compras': [12],
+    #     'ultima_compra_dias': [5],
+    #     'categoria_preferida': ['Electrónica']
+    # })
+    # segmento, probabilidades = predict_customer_segment(model, scaler, le, nuevo_cliente)
+    # print(f"\nSegmento predicho: {segmento[0]}")
+    # print(f"Probabilidades: {probabilidades[0]}")
+    pass
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Clustering de Productos con K-Means</h4>
+                        <p><strong>Escenario:</strong> Agrupar productos similares para estrategias de marketing</p>
+                        <div class="code-block">
+import pandas as pd
+import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+
+# Cargar datos de productos
+def load_product_data(connection):
+    query = """
+    SELECT 
+        producto_id,
+        precio,
+        unidades_vendidas,
+        margen_ganancia,
+        rating_promedio,
+        numero_reviews,
+        dias_desde_lanzamiento
+    FROM productos
+    WHERE unidades_vendidas > 0
+    """
+    return pd.read_sql(query, connection)
+
+# Preprocesamiento para clustering
+def prepare_clustering_data(df):
+    # Seleccionar características numéricas
+    features = ['precio', 'unidades_vendidas', 'margen_ganancia', 
+               'rating_promedio', 'numero_reviews', 'dias_desde_lanzamiento']
+    X = df[features]
+    
+    # Estandarizar datos
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    
+    return X_scaled, scaler, features
+
+# Determinar número óptimo de clusters
+def find_optimal_clusters(X, max_k=10):
+    """
+    Encuentra el número óptimo de clusters usando método del codo
+    y silhouette score
+    """
+    inertias = []
+    silhouette_scores = []
+    K_range = range(2, max_k + 1)
+    
+    for k in K_range:
+        kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+        kmeans.fit(X)
+        inertias.append(kmeans.inertia_)
+        silhouette_scores.append(silhouette_score(X, kmeans.labels_))
+    
+    # Encontrar k óptimo (máximo silhouette score)
+    optimal_k = K_range[np.argmax(silhouette_scores)]
+    
+    return optimal_k, inertias, silhouette_scores, K_range
+
+# Realizar clustering
+def perform_clustering(X, n_clusters):
+    """
+    Realiza clustering K-Means con n_clusters
+    """
+    kmeans = KMeans(
+        n_clusters=n_clusters,
+        random_state=42,
+        n_init=10,
+        max_iter=300
+    )
+    clusters = kmeans.fit_predict(X)
+    
+    return kmeans, clusters
+
+# Analizar clusters
+def analyze_clusters(df, clusters, features):
+    """
+    Analiza las características de cada cluster
+    """
+    df_clustered = df.copy()
+    df_clustered['cluster'] = clusters
+    
+    # Estadísticas por cluster
+    cluster_stats = df_clustered.groupby('cluster')[features].agg(['mean', 'std', 'count'])
+    
+    print("=" * 60)
+    print("ANÁLISIS DE CLUSTERS")
+    print("=" * 60)
+    print("\nEstadísticas por Cluster:")
+    print(cluster_stats)
+    
+    # Características principales de cada cluster
+    print("\n" + "=" * 60)
+    print("CARACTERIZACIÓN DE CLUSTERS")
+    print("=" * 60)
+    
+    for cluster_id in sorted(df_clustered['cluster'].unique()):
+        cluster_data = df_clustered[df_clustered['cluster'] == cluster_id]
+        print(f"\nCluster {cluster_id} ({len(cluster_data)} productos):")
+        print(f"  Precio promedio: ${cluster_data['precio'].mean():.2f}")
+        print(f"  Unidades vendidas promedio: {cluster_data['unidades_vendidas'].mean():.0f}")
+        print(f"  Margen promedio: {cluster_data['margen_ganancia'].mean():.2f}%")
+        print(f"  Rating promedio: {cluster_data['rating_promedio'].mean():.2f}")
+    
+    return df_clustered
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    # Cargar datos
+    # df = load_product_data(connection)
+    
+    # Preparar datos
+    # X_scaled, scaler, features = prepare_clustering_data(df)
+    
+    # Encontrar número óptimo de clusters
+    # optimal_k, inertias, scores, K_range = find_optimal_clusters(X_scaled)
+    # print(f"\nNúmero óptimo de clusters: {optimal_k}")
+    
+    # Realizar clustering
+    # kmeans, clusters = perform_clustering(X_scaled, optimal_k)
+    
+    # Analizar resultados
+    # df_clustered = analyze_clusters(df, clusters, features)
+    
+    # Visualización (opcional)
+    # plt.figure(figsize=(12, 5))
+    # plt.subplot(1, 2, 1)
+    # plt.plot(K_range, inertias, 'bo-')
+    # plt.xlabel('Número de Clusters (k)')
+    # plt.ylabel('Inercia')
+    # plt.title('Método del Codo')
+    # plt.grid(True)
+    
+    # plt.subplot(1, 2, 2)
+    # plt.plot(K_range, scores, 'ro-')
+    # plt.xlabel('Número de Clusters (k)')
+    # plt.ylabel('Silhouette Score')
+    # plt.title('Silhouette Score por k')
+    # plt.grid(True)
+    # plt.tight_layout()
+    # plt.show()
+    pass
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Reglas de Asociación con Apriori</h4>
+                        <p><strong>Escenario:</strong> Descubrir productos que se compran juntos para recomendaciones</p>
+                        <div class="code-block">
+import pandas as pd
+import numpy as np
+from mlxtend.frequent_patterns import apriori, association_rules
+from mlxtend.preprocessing import TransactionEncoder
+import matplotlib.pyplot as plt
+
+# Cargar datos de transacciones
+def load_transaction_data(connection):
+    """
+    Carga datos de transacciones desde la base de datos
+    Retorna DataFrame con pedido_id y producto_id
+    """
+    query = """
+    SELECT 
+        pedido_id,
+        producto_id,
+        p.nombre as producto_nombre
+    FROM pedido_items pi
+    JOIN productos p ON pi.producto_id = p.producto_id
+    ORDER BY pedido_id, producto_id
+    """
+    return pd.read_sql(query, connection)
+
+# Preparar datos para Apriori
+def prepare_transaction_data(df):
+    """
+    Convierte datos de transacciones al formato necesario para Apriori
+    """
+    # Agrupar productos por pedido
+    transactions = df.groupby('pedido_id')['producto_nombre'].apply(list).tolist()
+    
+    # Codificar transacciones
+    te = TransactionEncoder()
+    te_ary = te.fit(transactions).transform(transactions)
+    df_encoded = pd.DataFrame(te_ary, columns=te.columns_)
+    
+    return df_encoded, transactions
+
+# Encontrar itemsets frecuentes
+def find_frequent_itemsets(df_encoded, min_support=0.01):
+    """
+    Encuentra itemsets frecuentes usando algoritmo Apriori
+    """
+    frequent_itemsets = apriori(
+        df_encoded, 
+        min_support=min_support, 
+        use_colnames=True,
+        max_len=3  # Máximo 3 productos por itemset
+    )
+    
+    return frequent_itemsets
+
+# Generar reglas de asociación
+def generate_association_rules(frequent_itemsets, metric="confidence", min_threshold=0.5):
+    """
+    Genera reglas de asociación a partir de itemsets frecuentes
+    """
+    rules = association_rules(
+        frequent_itemsets, 
+        metric=metric, 
+        min_threshold=min_threshold
+    )
+    
+    # Ordenar por lift (más relevantes primero)
+    rules = rules.sort_values('lift', ascending=False)
+    
+    return rules
+
+# Analizar reglas de asociación
+def analyze_association_rules(rules, top_n=10):
+    """
+    Analiza y muestra las mejores reglas de asociación
+    """
+    print("=" * 80)
+    print("REGLAS DE ASOCIACIÓN ENCONTRADAS")
+    print("=" * 80)
+    print(f"\nTotal de reglas encontradas: {len(rules)}")
+    print(f"\nTop {top_n} reglas por Lift:")
+    print("-" * 80)
+    
+    top_rules = rules.head(top_n)
+    
+    for idx, rule in top_rules.iterrows():
+        antecedents = ', '.join(list(rule['antecedents']))
+        consequents = ', '.join(list(rule['consequents']))
+        
+        print(f"\nRegla {idx + 1}:")
+        print(f"  Si compra: {antecedents}")
+        print(f"  Entonces compra: {consequents}")
+        print(f"  Soporte: {rule['support']:.4f}")
+        print(f"  Confianza: {rule['confidence']:.4f}")
+        print(f"  Lift: {rule['lift']:.4f}")
+        print(f"  Conviction: {rule['conviction']:.4f}")
+    
+    return top_rules
+
+# Visualizar reglas
+def visualize_rules(rules, top_n=10):
+    """
+    Visualiza las mejores reglas de asociación
+    """
+    top_rules = rules.head(top_n)
+    
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+    
+    # Gráfico 1: Support vs Confidence
+    axes[0, 0].scatter(top_rules['support'], top_rules['confidence'], 
+                      s=top_rules['lift']*100, alpha=0.6)
+    axes[0, 0].set_xlabel('Support')
+    axes[0, 0].set_ylabel('Confidence')
+    axes[0, 0].set_title('Support vs Confidence (tamaño = Lift)')
+    axes[0, 0].grid(True)
+    
+    # Gráfico 2: Lift por regla
+    axes[0, 1].barh(range(len(top_rules)), top_rules['lift'])
+    axes[0, 1].set_xlabel('Lift')
+    axes[0, 1].set_ylabel('Regla')
+    axes[0, 1].set_title('Lift de las Top Reglas')
+    axes[0, 1].set_yticks(range(len(top_rules)))
+    axes[0, 1].set_yticklabels([f"Regla {i+1}" for i in range(len(top_rules))])
+    
+    # Gráfico 3: Distribución de métricas
+    axes[1, 0].hist(rules['confidence'], bins=20, alpha=0.7, label='Confidence')
+    axes[1, 0].hist(rules['lift'], bins=20, alpha=0.7, label='Lift')
+    axes[1, 0].set_xlabel('Valor')
+    axes[1, 0].set_ylabel('Frecuencia')
+    axes[1, 0].set_title('Distribución de Confidence y Lift')
+    axes[1, 0].legend()
+    axes[1, 0].grid(True)
+    
+    # Gráfico 4: Top reglas por lift
+    top_10 = top_rules.head(10)
+    axes[1, 1].barh(range(len(top_10)), top_10['lift'])
+    axes[1, 1].set_xlabel('Lift')
+    axes[1, 1].set_title('Top 10 Reglas por Lift')
+    axes[1, 1].set_yticks(range(len(top_10)))
+    axes[1, 1].set_yticklabels([f"R{i+1}" for i in range(len(top_10))])
+    
+    plt.tight_layout()
+    plt.show()
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    # Cargar datos
+    # df = load_transaction_data(connection)
+    
+    # Preparar datos
+    # df_encoded, transactions = prepare_transaction_data(df)
+    
+    # Encontrar itemsets frecuentes
+    # frequent_itemsets = find_frequent_itemsets(df_encoded, min_support=0.01)
+    # print(f"\nItemsets frecuentes encontrados: {len(frequent_itemsets)}")
+    
+    # Generar reglas
+    # rules = generate_association_rules(frequent_itemsets, min_threshold=0.5)
+    
+    # Analizar reglas
+    # top_rules = analyze_association_rules(rules, top_n=10)
+    
+    # Visualizar
+    # visualize_rules(rules)
+    pass
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <h3>Actividad 1: Sistema Predictivo de Aprobación de Créditos</h3>
+                        <p><strong>Duración:</strong> 90 minutos</p>
+                        <p><strong>Objetivo:</strong> Construir un modelo de clasificación para predecir aprobación de créditos</p>
+                        <div class="activity-details">
+                            <h4>Tareas:</h4>
+                            <ol>
+                                <li>Preparar y limpiar datos de solicitudes de crédito</li>
+                                <li>Explorar los datos (EDA - Exploratory Data Analysis)</li>
+                                <li>Entrenar múltiples modelos de clasificación (Árboles de Decisión, Random Forest, SVM)</li>
+                                <li>Evaluar y comparar el rendimiento de cada modelo</li>
+                                <li>Seleccionar el mejor modelo y optimizar hiperparámetros</li>
+                                <li>Implementar el modelo para nuevas solicitudes</li>
+                            </ol>
+                            <h4>Entregables:</h4>
+                            <ul>
+                                <li>Código Python completo con comentarios</li>
+                                <li>Reporte de análisis exploratorio</li>
+                                <li>Comparación de modelos con métricas</li>
+                                <li>Modelo final entrenado y documentado</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="activity-card">
+                        <h3>Actividad 2: Clustering de Clientes para Segmentación</h3>
+                        <p><strong>Duración:</strong> 60 minutos</p>
+                        <p><strong>Objetivo:</strong> Agrupar clientes similares para estrategias de marketing personalizado</p>
+                        <div class="activity-details">
+                            <h4>Tareas:</h4>
+                            <ol>
+                                <li>Cargar datos de comportamiento de clientes</li>
+                                <li>Preprocesar y normalizar datos</li>
+                                <li>Determinar número óptimo de clusters (método del codo, silhouette)</li>
+                                <li>Aplicar algoritmo K-Means</li>
+                                <li>Analizar características de cada cluster</li>
+                                <li>Visualizar clusters en 2D/3D</li>
+                                <li>Proponer estrategias de marketing para cada segmento</li>
+                            </ol>
+                            <h4>Entregables:</h4>
+                            <ul>
+                                <li>Script de clustering completo</li>
+                                <li>Visualizaciones de clusters</li>
+                                <li>Análisis de características por cluster</li>
+                                <li>Recomendaciones de marketing por segmento</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="activity-card">
+                        <h3>Actividad 3: Análisis de Reglas de Asociación</h3>
+                        <p><strong>Duración:</strong> 45 minutos</p>
+                        <p><strong>Objetivo:</strong> Descubrir patrones de compra para sistema de recomendaciones</p>
+                        <div class="activity-details">
+                            <h4>Tareas:</h4>
+                            <ol>
+                                <li>Preparar datos de transacciones de compras</li>
+                                <li>Encontrar itemsets frecuentes usando Apriori</li>
+                                <li>Generar reglas de asociación</li>
+                                <li>Filtrar reglas por soporte, confianza y lift</li>
+                                <li>Analizar las mejores reglas encontradas</li>
+                                <li>Proponer estrategias de cross-selling basadas en reglas</li>
+                            </ol>
+                            <h4>Entregables:</h4>
+                            <ul>
+                                <li>Código de análisis de asociación</li>
+                                <li>Lista de reglas encontradas ordenadas por relevancia</li>
+                                <li>Visualizaciones de reglas</li>
+                                <li>Recomendaciones de productos para cross-selling</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Bases de Datos Avanzadas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

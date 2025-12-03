@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tema 10: Bases de Datos Relacionales - Bases de Datos Avanzadas</title>
+    <title>Tema 10: Bases de Datos No Relacionales - Bases de Datos Avanzadas</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -35,8 +35,8 @@
             <a href="../index.html" class="back-button">
                 <i class="fas fa-arrow-left"></i> Volver al Inicio
             </a>
-            <h1>Tema 10: Bases de Datos Relacionales</h1>
-            <p>Modelo relacional, normalización y diseño de bases de datos relacionales</p>
+            <h1>Tema 10: Bases de Datos No Relacionales</h1>
+            <p>Introducción a las bases de datos NoSQL y sus principales tipos</p>
         </div>
     </section>
 
@@ -52,173 +52,473 @@
                     Conceptos Clave
                 </h2>
                 
+                <!-- Introducción -->
                 <div class="concept-card">
-                    <h3>Modelo Relacional</h3>
-                    <p>Modelo de datos basado en la teoría de conjuntos y el álgebra relacional para organizar información en tablas.</p>
+                    <h3>Introducción a las Bases de Datos NoSQL</h3>
+                    <p>Las bases de datos NoSQL ocupan en la actualidad una parcela importante en el desarrollo de aplicaciones, principalmente aquellas relacionadas con el Big Data.</p>
+                    
                     <div class="concept-details">
-                        <strong>Componentes fundamentales:</strong>
-                        <ul>
-                            <li><strong>Relaciones (Tablas):</strong> Conjuntos de tuplas con el mismo esquema</li>
-                            <li><strong>Atributos (Columnas):</strong> Propiedades de las entidades</li>
-                            <li><strong>Tuplas (Filas):</strong> Instancias de las entidades</li>
-                            <li><strong>Dominios:</strong> Conjuntos de valores válidos para atributos</li>
-                        </ul>
-                        <strong>Ventajas:</strong> Simplicidad, consistencia, herramientas maduras
+                        <strong>¿Qué son las Bases de Datos NoSQL?</strong>
+                        <p>Las bases de datos NoSQL están optimizadas para aplicaciones que requieren grandes volúmenes de datos, baja latencia y modelos de datos flexibles, lo que se logra mediante la flexibilización de algunas de las restricciones de consistencia de datos o por la existencia de un esquema fijo para el modelo de datos.</p>
+
+                        <strong>Características Principales:</strong>
+                        <p>Este tipo de bases de datos se caracterizan porque no utilizan el esquema tabular de filas y columnas. Utilizan un modelo de almacenamiento optimizado para el tipo de datos que van a almacenar. En este sentido encontramos datos que se pueden almacenar como pares clave-valor simple, como documentos JSON o como un grafo que consta de aristas y vértices.</p>
+
+                        <div class="advantages-grid">
+                            <div class="advantage-item">
+                                <i class="fas fa-sliders-h"></i>
+                                <h4>Flexibilidad</h4>
+                                <p>Generalmente ofrecen esquemas flexibles que facilitan un desarrollo iterativo</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                <h4>Escalabilidad</h4>
+                                <p>Están diseñadas para escalar usando clústeres distribuidos</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <h4>Alto Rendimiento</h4>
+                                <p>Cada tipo está optimizada para trabajar con el tipo de datos que almacena</p>
+                            </div>
+                            <div class="advantage-item">
+                                <i class="fas fa-cogs"></i>
+                                <h4>Altamente Funcional</h4>
+                                <p>Proporcionan APIs y tipos de datos diseñados específicamente para cada uso</p>
+                            </div>
+                        </div>
+
+                        <strong>Comparación con Bases de Datos Relacionales:</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>Bases de Datos Relacionales</th>
+                                        <th>Bases de Datos NoSQL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Modelo de Datos</strong></td>
+                                        <td>Tablas con filas y columnas</td>
+                                        <td>Documentos, Grafos, Clave-Valor, Columnas</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Esquema</strong></td>
+                                        <td>Fijo y rígido</td>
+                                        <td>Flexible y dinámico</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Escalabilidad</strong></td>
+                                        <td>Principalmente vertical</td>
+                                        <td>Principalmente horizontal</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Consistencia</strong></td>
+                                        <td>ACID fuerte</td>
+                                        <td>Eventual o flexible</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Consultas</strong></td>
+                                        <td>SQL estándar</td>
+                                        <td>APIs específicas</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Uso Ideal</strong></td>
+                                        <td>Datos estructurados y transaccionales</td>
+                                        <td>Big Data, contenido no estructurado</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Bases de Datos Orientadas a Documentos -->
                 <div class="concept-card">
-                    <h3>Normalización</h3>
-                    <p>Proceso de organización de datos para eliminar redundancia y dependencias anómalas.</p>
+                    <h3>Bases de Datos Orientadas a Documentos</h3>
+                    <p>El concepto central de una base de datos orientada a documentos es el documento. Cada implementación de base de datos utilizará tipos de documentos distintos, pero todas ellas coinciden en encapsular y codificar datos o información siguiendo algún formato estándar.</p>
+                    
                     <div class="concept-details">
-                        <strong>Formas normales:</strong>
+                        <strong>Formatos de Documentos:</strong>
+                        <p>Algunas de las codificaciones más utilizadas son:</p>
                         <ul>
-                            <li><strong>1NF:</strong> Eliminación de grupos repetitivos</li>
-                            <li><strong>2NF:</strong> Eliminación de dependencias parciales</li>
-                            <li><strong>3NF:</strong> Eliminación de dependencias transitivas</li>
-                            <li><strong>BCNF:</strong> Forma normal de Boyce-Codd</li>
+                            <li><strong>JSON (JavaScript Object Notation):</strong> Formato ligero de intercambio de datos</li>
+                            <li><strong>BSON (Binary JSON):</strong> Representación binaria de JSON</li>
+                            <li><strong>XML (eXtensible Markup Language):</strong> Lenguaje de marcado extensible</li>
+                            <li><strong>YAML (YAML Ain't Markup Language):</strong> Formato de serialización de datos</li>
                         </ul>
-                        <strong>Beneficios:</strong> Reducción de redundancia, integridad, flexibilidad
+
+                        <strong>Flexibilidad del Esquema:</strong>
+                        <p>Al igual que en los sistemas de bases de datos relacionales los documentos actúan como registros (o filas), sin embargo, la flexibilidad hace que dos registros no sean iguales. Esto hace que podamos encontrarnos con registros cuyos conjuntos de campos son distintos.</p>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Ejemplo: Documentos con Estructura Diferente</h4>
+                                <div class="code-block">
+// Documento 1: Información básica
+{
+  "empleadoId": "CA1",
+  "nombre": "Carlos García",
+  "salario": 45000
+}
+
+// Documento 2: Información extendida
+{
+  "empleadoId": "MG1",
+  "nombre": "María González",
+  "salario": 50000,
+  "proyectos": [
+    "gestión-riesgos",
+    "detección-fraude"
+  ],
+  "departamento": {
+    "nombre": "IT",
+    "ubicacion": "Madrid"
+  }
+}
+                                </div>
+                                <p>Ambos serían documentos válidos. El primer documento solo tiene información básica de un empleado, en cambio el segundo documento tiene más información, añadiendo así más datos sobre el empleado.</p>
+                            </div>
+                        </div>
+
+                        <strong>Ventajas de las Bases de Datos Documentales:</strong>
+                        <ul>
+                            <li><strong>Flexibilidad ilimitada:</strong> Permite evolucionar el esquema del documento en el tiempo</li>
+                            <li><strong>Modelo natural:</strong> Los documentos se mapean directamente a objetos en lenguajes de programación</li>
+                            <li><strong>Consultas anidadas:</strong> Permite consultar dentro de estructuras anidadas</li>
+                            <li><strong>Desarrollo ágil:</strong> Facilita el desarrollo iterativo sin migraciones de esquema</li>
+                        </ul>
+
+                        <strong>Casos de Uso:</strong>
+                        <p>Este tipo de base de datos es adecuado para:</p>
+                        <ul>
+                            <li><strong>Gestión de catálogos:</strong> Productos con atributos variables</li>
+                            <li><strong>Perfiles de usuario:</strong> Información personalizada por usuario</li>
+                            <li><strong>Sistemas de gestión de contenido:</strong> Donde cada documento es único y evoluciona con el tiempo</li>
+                            <li><strong>Aplicaciones web modernas:</strong> APIs REST que trabajan con JSON</li>
+                        </ul>
+
+                        <strong>Bases de Datos Documentales Principales:</strong>
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>MongoDB</h4>
+                                <p>Base de datos NoSQL orientada a documentos creada por la compañía 10gen en el año 2007. Se caracteriza por que almacena los datos en documentos de tipo JSON con un esquema dinámico denominado BSON.</p>
+                                <div class="code-block">
+// Ejemplo de consulta en MongoDB
+db.empleados.find({
+  "salario": { $gt: 50000 },
+  "departamento.nombre": "IT"
+})
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Couchbase</h4>
+                                <p>Base de datos documental optimizada para aplicaciones interactivas. Combina la flexibilidad de JSON con la potencia de SQL para consultas.</p>
+                                <div class="code-block">
+// Ejemplo de consulta en Couchbase (N1QL)
+SELECT nombre, salario
+FROM empleados
+WHERE salario > 50000
+  AND departamento.nombre = "IT";
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Bases de Datos Orientadas a Grafos -->
                 <div class="concept-card">
-                    <h3>Integridad Referencial</h3>
-                    <p>Mecanismo para mantener la consistencia de las relaciones entre tablas mediante claves foráneas.</p>
+                    <h3>Bases de Datos Orientadas a Grafos</h3>
+                    <p>En las bases de datos orientadas a grafos se administran dos tipos de información: el nodo y la arista. Los nodos representan las entidades y las aristas representan las relaciones que las unen.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de integridad:</strong>
+                        <strong>Componentes de un Grafo:</strong>
                         <ul>
-                            <li><strong>Integridad de Entidad:</strong> Claves primarias únicas y no nulas</li>
-                            <li><strong>Integridad Referencial:</strong> Claves foráneas válidas</li>
-                            <li><strong>Integridad de Dominio:</strong> Valores dentro de dominios válidos</li>
-                            <li><strong>Integridad de Usuario:</strong> Reglas de negocio específicas</li>
+                            <li><strong>Nodos (Vértices):</strong> Representan las entidades (personas, lugares, cosas)</li>
+                            <li><strong>Aristas (Edges):</strong> Representan las relaciones que unen los nodos</li>
+                            <li><strong>Dirección:</strong> Las aristas pueden tener dirección que indicará la naturaleza de la relación</li>
+                            <li><strong>Propiedades:</strong> Tanto nodos como aristas pueden tener propiedades (atributos)</li>
                         </ul>
-                        <strong>Mecanismos:</strong> Constraints, triggers, stored procedures
+
+                        <strong>Características de las Aristas:</strong>
+                        <p>Las aristas siempre deben tener:</p>
+                        <ul>
+                            <li>Un nodo de inicio</li>
+                            <li>Un nodo de final</li>
+                            <li>Un tipo (que define la naturaleza de la relación)</li>
+                            <li>Una dirección (opcional, puede ser bidireccional)</li>
+                        </ul>
+                        <p>No existe un límite para la cantidad ni el tipo de relaciones que un nodo puede tener.</p>
+
+                        <strong>Potencial de las Bases de Datos de Grafos:</strong>
+                        <p>El potencial de las bases de datos de grafos radica en las relaciones, debido a que gracias a ellas se puede navegar por los nodos de la base de datos de manera rápida, ya que las relaciones entre los nodos no se calculan en los tiempos de consulta, sino que se mantienen en la base de datos.</p>
+
+                        <strong>Casos de Uso:</strong>
+                        <p>Este tipo de bases de datos son muy utilizadas en:</p>
+                        <ul>
+                            <li><strong>Redes sociales:</strong> Para modelar relaciones entre usuarios</li>
+                            <li><strong>Sistemas de recomendación:</strong> Para encontrar productos o contenido relacionado</li>
+                            <li><strong>Detección de fraude:</strong> Para identificar patrones y conexiones sospechosas</li>
+                            <li><strong>Análisis de redes:</strong> Para estudiar conexiones y patrones complejos</li>
+                            <li><strong>Gestión del conocimiento:</strong> Para representar conocimiento interconectado</li>
+                        </ul>
+
+                        <div class="visual-diagram">
+                            <h4>Ejemplo: Grafo para Red Social</h4>
+                            <div class="example-grid">
+                                <div class="example-card">
+                                    <h4>Estructura del Grafo</h4>
+                                    <p><strong>Nodos:</strong></p>
+                                    <ul>
+                                        <li>Persona (Juan, María, Pedro)</li>
+                                        <li>Restaurante (El Buen Sabor, La Pizzería)</li>
+                                        <li>Ciudad (Madrid, Barcelona)</li>
+                                    </ul>
+                                    <p><strong>Relaciones:</strong></p>
+                                    <ul>
+                                        <li>amigos (Persona → Persona)</li>
+                                        <li>likes (Persona → Restaurante)</li>
+                                        <li>viveEn (Persona → Ciudad)</li>
+                                        <li>localizadoEn (Restaurante → Ciudad)</li>
+                                    </ul>
+                                </div>
+                                <div class="example-card">
+                                    <h4>Consultas Típicas</h4>
+                                    <div class="code-block">
+// Encontrar todos los restaurantes en Madrid
+MATCH (r:Restaurante)-[:localizadoEn]->(c:Ciudad {nombre: "Madrid"})
+RETURN r;
+
+// Encontrar amigos de amigos
+MATCH (p1:Persona)-[:amigos]->(p2:Persona)-[:amigos]->(p3:Persona)
+WHERE p1.nombre = "Juan"
+RETURN p3;
+
+// Restaurantes que les gustan a mis amigos
+MATCH (p1:Persona {nombre: "Juan"})-[:amigos]->(p2:Persona)-[:likes]->(r:Restaurante)
+RETURN DISTINCT r;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Propiedades y Etiquetas:</strong>
+                        <p>A los nodos se les pueden añadir etiquetas (propiedades), como nombre o dirección, que añadan más información sobre la entidad. De la misma manera se pueden añadir etiquetas a las relaciones, que aportarán más información sobre la relación, por ejemplo, valoración a la relación likes que indique el grado de satisfacción de una Persona con un Restaurante.</p>
+
+                        <div class="code-block">
+// Ejemplo: Nodo con propiedades
+{
+  "id": "persona_1",
+  "tipo": "Persona",
+  "propiedades": {
+    "nombre": "Juan Pérez",
+    "edad": 30,
+    "email": "juan@email.com"
+  }
+}
+
+// Ejemplo: Arista con propiedades
+{
+  "tipo": "likes",
+  "desde": "persona_1",
+  "hacia": "restaurante_1",
+  "propiedades": {
+    "valoracion": 5,
+    "fecha": "2024-01-15",
+    "comentario": "Excelente comida"
+  }
+}
+                        </div>
+
+                        <strong>Bases de Datos de Grafos Principales:</strong>
+                        <ul>
+                            <li><strong>Neo4j:</strong> La más utilizada, con lenguaje de consulta Cypher</li>
+                            <li><strong>OrientDB:</strong> Base de datos multi-modelo que soporta grafos</li>
+                            <li><strong>Infinite Graph:</strong> Base de datos de grafos distribuida</li>
+                            <li><strong>AllegroGraph:</strong> Base de datos de grafos RDF</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- Bases de Datos Clave-Valor -->
                 <div class="concept-card">
-                    <h3>Álgebra Relacional</h3>
-                    <p>Conjunto de operaciones para manipular relaciones y obtener nuevos conjuntos de datos.</p>
+                    <h3>Bases de Datos Clave-Valor</h3>
+                    <p>Una base de datos clave-valor se asemeja a una tabla hash grande. Cada valor de datos está asociado con una clave única y se usará esta clave para almacenar los datos mediante el uso de una función hash apropiada.</p>
+                    
                     <div class="concept-details">
-                        <strong>Operaciones básicas:</strong>
+                        <strong>Modelo de Datos:</strong>
+                        <p>Al igual que las bases de datos orientadas a documentos, las bases de datos clave-valor no necesitan que el esquema esté definido previamente. El modelo es extremadamente simple:</p>
                         <ul>
-                            <li><strong>Selección (σ):</strong> Filtrar filas según condiciones</li>
-                            <li><strong>Proyección (π):</strong> Seleccionar columnas específicas</li>
-                            <li><strong>Unión (∪):</strong> Combinar relaciones compatibles</li>
-                            <li><strong>Diferencia (-):</strong> Filas en una relación pero no en otra</li>
+                            <li><strong>Clave:</strong> Identificador único (string, número, etc.)</li>
+                            <li><strong>Valor:</strong> Datos asociados (puede ser cualquier tipo: string, número, objeto, etc.)</li>
                         </ul>
-                        <strong>Operaciones derivadas:</strong> Intersección, producto cartesiano, join
-                    </div>
-                </div>
 
-                <div class="concept-card">
-                    <h3>SQL Avanzado</h3>
-                    <p>Lenguaje estándar para consultar y manipular bases de datos relacionales con características avanzadas.</p>
-                    <div class="concept-details">
-                        <strong>Características avanzadas:</strong>
+                        <div class="visual-diagram">
+                            <h4>Ejemplo de Almacenamiento Clave-Valor</h4>
+                            <div class="example-grid">
+                                <div class="example-card">
+                                    <h4>Estructura Simple</h4>
+                                    <div class="code-block">
+// Ejemplo de pares clave-valor
+"usuario:123" → {
+  "nombre": "Juan Pérez",
+  "email": "juan@email.com",
+  "edad": 30
+}
+
+"producto:456" → {
+  "nombre": "Laptop",
+  "precio": 999.99,
+  "stock": 50
+}
+
+"sesion:abc123" → {
+  "usuario_id": 123,
+  "login_time": "2024-01-15T10:30:00Z",
+  "expires": "2024-01-15T11:30:00Z"
+}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Características:</strong>
                         <ul>
-                            <li><strong>Subconsultas:</strong> Consultas anidadas para lógica compleja</li>
-                            <li><strong>Window Functions:</strong> Funciones analíticas sobre particiones</li>
-                            <li><strong>CTEs:</strong> Common Table Expressions para consultas recursivas</li>
-                            <li><strong>Pivoting:</strong> Transformación de filas a columnas</li>
+                            <li><strong>Modelo más sencillo:</strong> El modelo de datos más simple de todos los tipos NoSQL</li>
+                            <li><strong>Alto rendimiento:</strong> Muy optimizado para búsquedas simples mediante el valor de la clave</li>
+                            <li><strong>Escalabilidad:</strong> Escalan fácilmente de forma horizontal</li>
+                            <li><strong>Sin esquema:</strong> No requiere definición previa de estructura</li>
                         </ul>
-                        <strong>Estándares:</strong> SQL-92, SQL:1999, SQL:2003, SQL:2016
+
+                        <strong>Limitaciones:</strong>
+                        <p>Los sistemas de bases de datos clave-valor están muy optimizados para aplicaciones que realizan búsquedas simples mediante el valor de la clave, sin embargo, son menos adecuados para aquellas aplicaciones que necesitan consultar datos en diferentes tablas de claves-valores o realizar operaciones complejas como JOINs.</p>
+
+                        <strong>Casos de Uso:</strong>
+                        <p>Este tipo de base de datos es adecuada para:</p>
+                        <ul>
+                            <li><strong>Mantenimiento de sesión:</strong> Almacenar sesiones de usuarios en aplicaciones web</li>
+                            <li><strong>Carro de compra:</strong> Almacenar el carro de la compra de un e-commerce</li>
+                            <li><strong>Cache:</strong> Sistema de caché de alto rendimiento</li>
+                            <li><strong>Configuración:</strong> Almacenar configuraciones de aplicaciones</li>
+                            <li><strong>Contadores:</strong> Contadores y métricas en tiempo real</li>
+                            <li><strong>Colas de mensajes:</strong> Sistemas de mensajería simple</li>
+                        </ul>
+
+                        <strong>Bases de Datos Clave-Valor Principales:</strong>
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Apache Cassandra</h4>
+                                <p>Modelo de base de datos NoSQL basado en el almacenamiento clave-valor y de código abierto escrita en Java. Cassandra opera de manera distribuida consiguiendo así escalabilidad lineal y alta disponibilidad.</p>
+                                <p><strong>Usuarios conocidos:</strong> Twitter, Wikimedia, Apple, Netflix</p>
+                                <div class="code-block">
+// Ejemplo de uso en Cassandra
+INSERT INTO usuarios (id, nombre, email)
+VALUES (123, 'Juan Pérez', 'juan@email.com');
+
+SELECT * FROM usuarios WHERE id = 123;
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Redis</h4>
+                                <p>Base de datos en memoria de tipo clave-valor, conocida por su alto rendimiento. Soporta múltiples estructuras de datos: strings, hashes, listas, conjuntos, etc.</p>
+                                <div class="code-block">
+// Ejemplo de uso en Redis
+SET usuario:123 "Juan Pérez"
+GET usuario:123
+
+HSET usuario:123:detalles nombre "Juan" email "juan@email.com"
+HGETALL usuario:123:detalles
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Amazon DynamoDB</h4>
+                                <p>Base de datos NoSQL gestionada de AWS que ofrece rendimiento de milisegundos de un solo dígito a cualquier escala. Soporta tanto documentos como clave-valor.</p>
+                                <div class="code-block">
+// Ejemplo de uso en DynamoDB
+{
+  "TableName": "usuarios",
+  "Item": {
+    "id": {"N": "123"},
+    "nombre": {"S": "Juan Pérez"},
+    "email": {"S": "juan@email.com"}
+  }
+}
+                                </div>
+                            </div>
+                        </div>
+
+                        <p><strong>Otras bases de datos clave-valor conocidas:</strong> Riak, Voldemort, Amazon Dynamo</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Ejemplos Prácticos -->
-            <section id="ejemplos" class="section">
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
                 <h2>
                     <div class="section-icon">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-tasks"></i>
                     </div>
-                    Ejemplos Prácticos
+                    Actividades de Refuerzo
                 </h2>
 
-                <div class="example-grid">
-                    <div class="example-card">
-                        <h4>Diseño de Base de Datos Relacional</h4>
-                        <p><strong>Escenario:</strong> Sistema de gestión universitaria normalizado</p>
-                        <div class="code-block">
--- Crear esquema de base de datos universitaria
-CREATE SCHEMA universidad;
+                <div class="activity-item">
+                    <h4>Actividad 1: Trabajar con MongoDB</h4>
+                    <p><strong>Duración:</strong> 30 minutos</p>
+                    <p><strong>Objetivo:</strong> Familiarizarse con bases de datos orientadas a documentos.</p>
+                    <p><strong>Tareas:</strong></p>
+                    <ol>
+                        <li>Instala MongoDB o usa MongoDB Atlas (gratuito)</li>
+                        <li>Crea una base de datos para un sistema de blog</li>
+                        <li>Inserta documentos con estructura flexible (algunos con comentarios, otros sin)</li>
+                        <li>Realiza consultas básicas y agregaciones</li>
+                        <li>Compara con cómo harías lo mismo en una base de datos relacional</li>
+                    </ol>
+                    <span class="activity-duration">
+                        <i class="fas fa-clock"></i> 30 min
+                    </span>
+                </div>
 
--- Tabla de estudiantes
-CREATE TABLE estudiantes (
-    id SERIAL PRIMARY KEY,
-    numero_matricula VARCHAR(20) UNIQUE NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    fecha_nacimiento DATE,
-    telefono VARCHAR(20),
-    direccion TEXT,
-    fecha_ingreso DATE DEFAULT CURRENT_DATE
-);
+                <div class="activity-item">
+                    <h4>Actividad 2: Modelar una Red Social con Neo4j</h4>
+                    <p><strong>Duración:</strong> 40 minutos</p>
+                    <p><strong>Objetivo:</strong> Entender las bases de datos orientadas a grafos.</p>
+                    <p><strong>Tareas:</strong></p>
+                    <ol>
+                        <li>Instala Neo4j Desktop o usa Neo4j Aura (gratuito)</li>
+                        <li>Crea nodos para usuarios, posts y comentarios</li>
+                        <li>Establece relaciones: sigue, le_gusta, comenta</li>
+                        <li>Realiza consultas para encontrar amigos de amigos</li>
+                        <li>Encuentra usuarios que les gustan los mismos posts</li>
+                    </ol>
+                    <span class="activity-duration">
+                        <i class="fas fa-clock"></i> 40 min
+                    </span>
+                </div>
 
--- Tabla de carreras
-CREATE TABLE carreras (
-    id SERIAL PRIMARY KEY,
-    codigo VARCHAR(10) UNIQUE NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    duracion_anos INTEGER CHECK (duracion_anos > 0),
-    creditos_totales INTEGER CHECK (creditos_totales > 0),
-    activa BOOLEAN DEFAULT true
-);
+                <div class="activity-item">
+                    <h4>Actividad 3: Sistema de Cache con Redis</h4>
+                    <p><strong>Duración:</strong> 25 minutos</p>
+                    <p><strong>Objetivo:</strong> Aprender a usar bases de datos clave-valor.</p>
+                    <p><strong>Tareas:</strong></p>
+                    <ol>
+                        <li>Instala Redis o usa Redis Cloud (gratuito)</li>
+                        <li>Crea un sistema de cache para datos de usuarios</li>
+                        <li>Implementa un carro de compra usando estructuras de datos de Redis</li>
+                        <li>Usa expiración automática para sesiones</li>
+                        <li>Crea un ranking usando conjuntos ordenados</li>
+                    </ol>
+                    <span class="activity-duration">
+                        <i class="fas fa-clock"></i> 25 min
+                    </span>
+                </div>
+            </section>
+        </div>
+    </main>
 
--- Tabla de materias
-CREATE TABLE materias (
-    id SERIAL PRIMARY KEY,
-    codigo VARCHAR(10) UNIQUE NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    creditos INTEGER CHECK (creditos > 0),
-    carrera_id INTEGER REFERENCES carreras(id),
-    prerequisitos TEXT,
-    activa BOOLEAN DEFAULT true
-);
-
--- Tabla de profesores
-CREATE TABLE profesores (
-    id SERIAL PRIMARY KEY,
-    numero_empleado VARCHAR(20) UNIQUE NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    telefono VARCHAR(20),
-    departamento VARCHAR(100),
-    fecha_contratacion DATE,
-    activo BOOLEAN DEFAULT true
-);
-
--- Tabla de inscripciones
-CREATE TABLE inscripciones (
-    id SERIAL PRIMARY KEY,
-    estudiante_id INTEGER REFERENCES estudiantes(id),
-    materia_id INTEGER REFERENCES materias(id),
-    semestre VARCHAR(20) NOT NULL,
-    año INTEGER NOT NULL,
-    fecha_inscripcion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado VARCHAR(20) DEFAULT 'activa' CHECK (estado IN ('activa', 'cancelada', 'completada')),
-    UNIQUE(estudiante_id, materia_id, semestre, año)
-);
-
--- Tabla de calificaciones
-CREATE TABLE calificaciones (
-    id SERIAL PRIMARY KEY,
-    inscripcion_id INTEGER REFERENCES inscripciones(id),
-    profesor_id INTEGER REFERENCES profesores(id),
-    calificacion DECIMAL(3,1) CHECK (calificacion >= 0 AND calificacion <= 10),
-    fecha_calificacion DATE,
-    observaciones TEXT,
-    UNIQUE(inscripcion_id, profesor_id)
-);
-
--- Índices para optimizar consultas
-CREATE INDEX idx_estudiantes_email ON estudiantes(email);
-CREATE INDEX idx_inscripciones_estudiante ON inscripciones(estudiante_id);
-CREATE INDEX idx_inscripciones_materia ON inscripciones(materia_id);
-CREATE INDEX idx_calificaciones_inscripcion ON calificaciones(inscripcion_id);
+    <script src="../script.js"></script>
+</body>
+</html>

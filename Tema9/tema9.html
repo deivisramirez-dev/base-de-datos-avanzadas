@@ -52,161 +52,499 @@
                     Conceptos Clave
                 </h2>
                 
+                <!-- Coste de una Consulta -->
                 <div class="concept-card">
-                    <h3>Optimizador de Consultas</h3>
-                    <p>Componente del SGBD que determina la mejor forma de ejecutar una consulta basándose en estadísticas y reglas.</p>
+                    <h3>Coste de una Consulta</h3>
+                    <p>Cuando se realiza una consulta en un sistema gestor de bases de datos es necesario realizar una serie de pasos para obtener una consulta válida. Se pueden distinguir tres pasos principales:</p>
+                    
                     <div class="concept-details">
-                        <strong>Fases del optimizador:</strong>
-                        <ul>
-                            <li><strong>Parsing:</strong> Análisis sintáctico de la consulta</li>
-                            <li><strong>Binding:</strong> Resolución de nombres y tipos</li>
-                            <li><strong>Optimization:</strong> Generación de planes de ejecución</li>
-                            <li><strong>Execution:</strong> Ejecución del plan seleccionado</li>
-                        </ul>
-                        <strong>Estrategias:</strong> Rule-based, cost-based, hybrid
+                        <strong>Proceso de Ejecución de Consultas:</strong>
+                        <ol>
+                            <li><strong>Análisis y traducción:</strong> El SGBD traduce la consulta SQL a un lenguaje interno basado en álgebra relacional extendido. Los pasos de traducción son similares a los de un compilador: análisis léxico, sintáctico y semántico.</li>
+                            <li><strong>Optimización:</strong> El optimizador genera múltiples planes de ejecución equivalentes y selecciona el más eficiente basándose en estadísticas y costes estimados.</li>
+                            <li><strong>Evaluación:</strong> El motor de ejecución lee el plan de evaluación seleccionado y lo ejecuta, devolviendo el resultado al usuario.</li>
+                        </ol>
+
+                        <strong>Traducción de Consultas SQL:</strong>
+                        <p>Normalmente, se utiliza un lenguaje de manipulación de datos (LMD) como SQL para que el usuario pueda trabajar con la base de datos. Estos lenguajes son adecuados para la comprensión humana pero no son válidos para el sistema.</p>
+                        <p>Por ello, lo primero es realizar una traducción interna a un tipo de lenguaje basado en álgebra relacional extendido. Los pasos de traducción son los mismos que realiza un compilador en su etapa de análisis: léxico, sintáctico y semántico.</p>
+
+                        <strong>Planes de Ejecución:</strong>
+                        <p>A partir de una consulta, se pueden distinguir varios métodos para dar una respuesta. Puesto que en SQL se puede escribir una consulta de diferentes formas, la traducción al álgebra intermedio también se puede realizar de diferentes maneras. Al obtener la expresión en álgebra relacional también hay que resolver el cálculo de operaciones que forman la consulta.</p>
+                        <p>El resultado es una <strong>primitiva de evaluación</strong> que consiste en una expresión de álgebra relacional extendida con valores anotados que indican cómo resolver una operación. Una secuencia de estas primitivas que resuelven una consulta entera forma un <strong>plan de ejecución</strong> o de evaluación de la consulta. El motor de ejecución lee un plan de evaluación y lo ejecuta devolviendo un resultado.</p>
+
+                        <strong>Estimación del Coste:</strong>
+                        <p>Dependiendo de la forma de escribir una consulta, los planes de ejecución resultantes pueden ser diferentes pudiendo también variar su coste de ejecución. Para poder optimizar una consulta, el optimizador tiene que conocer el coste de cada operación.</p>
+                        <p>A pesar de que el coste real dependerá de factores como la arquitectura utilizada y el hardware que compone la máquina, se pueden obtener costes aproximados. Para obtener un valor de referencia se suele utilizar el <strong>coste de acceso a disco</strong> como estimación del coste del plan de evaluación de una consulta.</p>
+                        <p>Para hablar del coste real, utilizaremos el término de <strong>número transferencias de bloques de disco</strong>. Con ello, nos centraremos únicamente en el número de bloques que son movidos, simplificando otros aspectos como el número de operaciones de búsquedas, el número de bloques leídos y los escritos.</p>
+
+                        <div class="visual-diagram">
+                            <h4>Proceso de Ejecución de Consultas</h4>
+                            <div class="example-grid">
+                                <div class="example-card">
+                                    <h4>1. Análisis y Traducción</h4>
+                                    <div class="code-block">
+-- Consulta SQL del usuario
+SELECT nombre, salario
+FROM empleados
+WHERE departamento = 'IT'
+  AND salario > 50000;
+                                    </div>
+                                    <p>↓ Traducción a álgebra relacional</p>
+                                    <div class="code-block">
+π nombre, salario (
+  σ departamento='IT' AND salario>50000 (empleados)
+)
+                                    </div>
+                                </div>
+                                <div class="example-card">
+                                    <h4>2. Optimización</h4>
+                                    <p>El optimizador genera múltiples planes equivalentes:</p>
+                                    <ul>
+                                        <li>Plan A: Table Scan + Filtro</li>
+                                        <li>Plan B: Index Scan en departamento</li>
+                                        <li>Plan C: Index Scan en salario</li>
+                                    </ul>
+                                    <p>Selecciona el plan con menor coste estimado</p>
+                                </div>
+                                <div class="example-card">
+                                    <h4>3. Evaluación</h4>
+                                    <p>El motor ejecuta el plan seleccionado:</p>
+                                    <ul>
+                                        <li>Acceso a índices</li>
+                                        <li>Lectura de bloques de disco</li>
+                                        <li>Filtrado de registros</li>
+                                        <li>Proyección de columnas</li>
+                                        <li>Retorno de resultados</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Operación de Selección -->
                 <div class="concept-card">
-                    <h3>Planes de Ejecución</h3>
-                    <p>Representación de cómo el motor de base de datos ejecutará una consulta, incluyendo el orden de operaciones.</p>
+                    <h3>Operación de Selección</h3>
+                    <p>Las operaciones de consulta son unas de las más utilizadas por los usuarios cuando se trabaja con bases de datos. Por ello, es necesario que estas operaciones se realicen de la forma más eficiente posible.</p>
+                    
                     <div class="concept-details">
-                        <strong>Componentes principales:</strong>
+                        <strong>Explorador de Archivo:</strong>
+                        <p>Para procesar una consulta, el sistema gestor de base de datos debe acceder a los datos, tarea que realiza el <strong>explorador de archivo</strong>. Se trata de algoritmos de búsqueda que encuentran y recuperan los registros necesarios.</p>
+
+                        <strong>Algoritmos de Búsqueda:</strong>
+                        <p>El tiempo de búsqueda influye en el coste de una consulta. Podemos distinguir diferentes algoritmos de búsqueda:</p>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Búsqueda Lineal</h4>
+                                <p>Se consulta cada bloque del archivo y se comprueba cada registro para ver si cumplen la condición de la operación realizada.</p>
+                                <ul>
+                                    <li><strong>Ventaja:</strong> Se puede aplicar a todo tipo de archivos</li>
+                                    <li><strong>Desventaja:</strong> Es más lento que otros algoritmos</li>
+                                    <li><strong>Coste:</strong> O(N) donde N es el número de bloques</li>
+                                </ul>
+                                <div class="code-block">
+-- Ejemplo: Búsqueda lineal en tabla sin índice
+SELECT * FROM empleados 
+WHERE nombre = 'Juan Pérez';
+-- Coste: Debe leer todos los bloques
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Búsqueda Binaria</h4>
+                                <p>Este algoritmo se puede utilizar si el archivo está ordenado de manera binaria y además la condición para la búsqueda es la igualdad.</p>
+                                <ul>
+                                    <li><strong>Requisito:</strong> Archivo ordenado por la clave de búsqueda</li>
+                                    <li><strong>Condición:</strong> Búsqueda por igualdad</li>
+                                    <li><strong>Coste:</strong> O(log₂ N) donde N es el número de registros</li>
+                                </ul>
+                                <div class="code-block">
+-- Ejemplo: Búsqueda binaria en tabla ordenada
+SELECT * FROM empleados 
+WHERE id = 12345;
+-- Coste: log₂(N) accesos a disco
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Índices y Exploraciones del Índice:</strong>
+                        <p>Los algoritmos generales de búsqueda no contemplan la existencia de índices. Estas estructuras nos permiten localizar registros con menor coste a través de caminos de acceso. A grandes rasgos se pueden diferenciar dos tipos de índices:</p>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Índice Primario</h4>
+                                <p>Crea un archivo de índice cuyo orden coincide con el orden físico de los registros.</p>
+                                <ul>
+                                    <li>Un índice por tabla (generalmente)</li>
+                                    <li>Corresponde a la clave primaria</li>
+                                    <li>Acceso muy rápido a registros</li>
+                                </ul>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Índice Secundario</h4>
+                                <p>Índice sobre atributos que no son clave primaria.</p>
+                                <ul>
+                                    <li>Múltiples índices secundarios por tabla</li>
+                                    <li>Puede apuntar a múltiples registros</li>
+                                    <li>Útil para búsquedas por atributos no clave</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <strong>Algoritmos de Exploración del Índice:</strong>
+                        <p>Los algoritmos que utilizan un índice para realizar la búsqueda reciben el nombre de <strong>exploraciones del índice</strong>. Algunos de estos algoritmos son:</p>
                         <ul>
-                            <li><strong>Table Scan:</strong> Lectura secuencial de toda la tabla</li>
-                            <li><strong>Index Scan:</strong> Uso de índices para acceso directo</li>
-                            <li><strong>Hash Join:</strong> Unión basada en hash para grandes conjuntos</li>
-                            <li><strong>Nested Loop:</strong> Bucles anidados para uniones pequeñas</li>
+                            <li><strong>Índice primario, igualdad basada en clave:</strong> Búsqueda directa usando el índice primario</li>
+                            <li><strong>Índice primario, igualdad basada en atributo no clave:</strong> Búsqueda usando índice primario pero filtrando por otro atributo</li>
+                            <li><strong>Índice secundario, igualdad:</strong> Búsqueda usando índice secundario para encontrar registros que cumplen una condición</li>
                         </ul>
-                        <strong>Análisis:</strong> Costo estimado, operaciones I/O, uso de memoria
+
+                        <div class="code-block">
+-- Ejemplo: Búsqueda con índice primario
+CREATE INDEX idx_empleados_id ON empleados(id);
+SELECT * FROM empleados WHERE id = 12345;
+-- Coste: 1-2 accesos a disco (índice + dato)
+
+-- Ejemplo: Búsqueda con índice secundario
+CREATE INDEX idx_empleados_departamento ON empleados(departamento);
+SELECT * FROM empleados WHERE departamento = 'IT';
+-- Coste: Acceso al índice + acceso a registros
+                        </div>
                     </div>
                 </div>
 
+                <!-- Ordenación -->
                 <div class="concept-card">
-                    <h3>Estadísticas y Selectividad</h3>
-                    <p>Información sobre la distribución de datos que el optimizador utiliza para tomar decisiones de ejecución.</p>
+                    <h3>Ordenación</h3>
+                    <p>En las bases de datos la ordenación es otra de las operaciones más utilizadas. Desde el punto de vista de las consultas realizadas por los usuarios, estas pueden requerir que los resultados se ordenen acorde a algún parámetro. A su vez, si se tiene en cuenta el procesamiento de las consultas y las operaciones relacionales, el coste de ejecución puede variar si los registros están o no ordenados.</p>
+                    
                     <div class="concept-details">
-                        <strong>Métricas importantes:</strong>
-                        <ul>
-                            <li><strong>Selectividad:</strong> Proporción de filas que cumplen una condición</li>
-                            <li><strong>Cardinalidad:</strong> Número de valores únicos en una columna</li>
-                            <li><strong>Distribución:</strong> Frecuencia de valores en los datos</li>
-                            <li><strong>Correlación:</strong> Relación entre columnas</li>
-                        </ul>
-                        <strong>Fórmula de selectividad:</strong> Selectividad = (Valores únicos) / (Total de filas)
+                        <strong>Ordenación Lógica vs Física:</strong>
+                        <p>Una primera solución para la ordenación pasaría por crear un índice para la clave de ordenación, así los valores estarían ordenados en el archivo de clave y bastaría con leer en orden. Sin embargo, se trata de una <strong>ordenación lógica</strong> y no física, pudiendo requerir el acceso a disco para la lectura de todos los registros.</p>
+
+                        <strong>Ordenación Externa:</strong>
+                        <p>Las técnicas de ordenación que se centran en los casos en los que la relación es mayor que la memoria principal del sistema reciben el nombre de <strong>ordenación-externa</strong>. El algoritmo más utilizado para este tipo de ordenación es el de <strong>ordenación-mezcla externa</strong>.</p>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Ordenación Interna</h4>
+                                <p>Cuando todos los datos caben en memoria principal.</p>
+                                <ul>
+                                    <li>QuickSort, MergeSort, HeapSort</li>
+                                    <li>Coste: O(N log N) comparaciones</li>
+                                    <li>Sin accesos a disco adicionales</li>
+                                </ul>
+                                <div class="code-block">
+-- Ejemplo: Ordenación de tabla pequeña
+SELECT * FROM empleados 
+ORDER BY nombre;
+-- Si la tabla cabe en memoria, ordenación rápida
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Ordenación Externa (Merge Sort)</h4>
+                                <p>Cuando los datos no caben en memoria.</p>
+                                <ol>
+                                    <li>Dividir datos en runs que caben en memoria</li>
+                                    <li>Ordenar cada run internamente</li>
+                                    <li>Mezclar runs ordenados</li>
+                                </ol>
+                                <div class="code-block">
+-- Ejemplo: Ordenación de tabla grande
+SELECT * FROM transacciones 
+ORDER BY fecha DESC;
+-- Requiere ordenación externa
+-- Coste: O(N log N) accesos a disco
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>Algoritmo de Ordenación-Mezcla Externa:</strong>
+                        <ol>
+                            <li><strong>Fase de Creación de Runs:</strong> Leer bloques de datos, ordenarlos en memoria y escribir runs ordenados en disco</li>
+                            <li><strong>Fase de Mezcla:</strong> Mezclar múltiples runs ordenados en un solo run ordenado</li>
+                            <li><strong>Iteración:</strong> Repetir la fase de mezcla hasta tener un solo run ordenado</li>
+                        </ol>
+
+                        <div class="visual-diagram">
+                            <h4>Proceso de Ordenación Externa</h4>
+                            <div class="code-block">
+-- Ejemplo conceptual de ordenación externa
+-- Datos originales (100 bloques, memoria = 10 bloques)
+
+-- Fase 1: Crear runs ordenados
+Run 1: [bloques 1-10 ordenados]
+Run 2: [bloques 11-20 ordenados]
+...
+Run 10: [bloques 91-100 ordenados]
+
+-- Fase 2: Mezclar runs
+Mezclar Run 1 + Run 2 → Run 1-2
+Mezclar Run 3 + Run 4 → Run 3-4
+...
+
+-- Fase 3: Mezclar runs más grandes
+Mezclar Run 1-2 + Run 3-4 → Run 1-4
+...
+
+-- Resultado final: Un solo run ordenado
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Optimización de Consultas -->
                 <div class="concept-card">
-                    <h3>Optimización de JOINs</h3>
-                    <p>Técnicas para mejorar el rendimiento de operaciones de unión entre tablas.</p>
+                    <h3>Introducción a la Optimización de Consultas</h3>
+                    <p>La optimización de consultas consiste en elegir el plan de evaluación de las consultas que suponga un menor coste y que, por lo tanto, sea más eficiente.</p>
+                    
                     <div class="concept-details">
-                        <strong>Algoritmos de JOIN:</strong>
-                        <ul>
-                            <li><strong>Nested Loop Join:</strong> O(n×m) - Para tablas pequeñas</li>
-                            <li><strong>Hash Join:</strong> O(n+m) - Para tablas grandes sin orden</li>
-                            <li><strong>Merge Join:</strong> O(n log n + m log m) - Para datos ordenados</li>
-                            <li><strong>Index Nested Loop:</strong> Usando índices para búsquedas</li>
-                        </ul>
-                        <strong>Factores de decisión:</strong> Tamaño de tablas, índices disponibles, memoria
+                        <strong>Niveles de Optimización:</strong>
+                        <p>Se pueden diferenciar dos niveles de optimización:</p>
+                        <ol>
+                            <li><strong>A nivel del álgebra relacional:</strong> El sistema debe ser capaz de transformar una consulta en otra equivalente que tenga el mismo significado. No es el objetivo de esta asignatura.</li>
+                            <li><strong>A nivel de selección de una estrategia:</strong> Puede suponer la elección de un algoritmo para ejecutar la operación, selección de los índices, etc.</li>
+                        </ol>
+
+                        <strong>Importancia de la Optimización:</strong>
+                        <p>Para grandes volúmenes de datos la diferencia en coste de una estrategia frente a otra puede ser muy grande, de ahí que resulte muy importante que el sistema pase cierta cantidad de tiempo valorando qué estrategia seguir.</p>
+
+                        <strong>El Optimizador:</strong>
+                        <p>El optimizador es la parte del sistema gestor de bases de datos encargada de, por cada expresión de álgebra relacional, generar otra cuyo resultado sea el mismo y su coste sea menor o igual. Como se parte de varios planes de evaluación, el optimizador debe estimar el coste de ejecución de cada plan de evaluación.</p>
+
+                        <strong>Información para la Estimación de Costes:</strong>
+                        <p>Para poder estimar de manera fiable el coste de cada plan, el optimizador se basa en:</p>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Información Estadística de las Relaciones</h4>
+                                <p>Los catálogos de los sistemas gestores de bases de datos contienen información relevante sobre las relaciones. Algunos parámetros referencias a las tuplas de la relación son:</p>
+                                <ul>
+                                    <li><strong>Número de tuplas:</strong> Total de filas en la relación</li>
+                                    <li><strong>Número de bloques:</strong> Bloques de disco ocupados</li>
+                                    <li><strong>Tamaño en bytes de la tupla:</strong> Tamaño promedio de cada fila</li>
+                                    <li><strong>Factor de bloqueo:</strong> Número de tuplas que caben en un bloque</li>
+                                </ul>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Otros Parámetros Importantes</h4>
+                                <ul>
+                                    <li><strong>Tamaño de las relaciones:</strong> Para estimar costes de JOINs</li>
+                                    <li><strong>Índices:</strong> Disponibilidad y tipo de índices</li>
+                                    <li><strong>Accesos a disco:</strong> Parámetro muy utilizado ya que el coste de acceso a disco es mucho mayor que el de a la memoria principal</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+-- Ejemplo: Consultar estadísticas en PostgreSQL
+SELECT 
+    schemaname,
+    tablename,
+    n_tup_ins as inserts,
+    n_tup_upd as updates,
+    n_tup_del as deletes,
+    n_live_tup as live_tuples,
+    n_dead_tup as dead_tuples,
+    last_vacuum,
+    last_autovacuum,
+    last_analyze,
+    last_autoanalyze
+FROM pg_stat_user_tables
+WHERE tablename = 'empleados';
+
+-- Actualizar estadísticas
+ANALYZE empleados;
+                        </div>
+
+                        <strong>Generación de Planes de Evaluación:</strong>
+                        <p>Como hemos comentado, el optimizador debe generar varios planes de evaluación para luego seleccionar el menos costoso. La generación de estos planes requiere de dos etapas:</p>
+                        <ol>
+                            <li><strong>Generación de expresiones equivalentes:</strong> Se realiza utilizando reglas de equivalencia.</li>
+                            <li><strong>Anotación de las expresiones resultantes:</strong> Se añaden anotaciones sobre qué algoritmo usar, qué índices utilizar, etc.</li>
+                        </ol>
+
+                        <strong>Selección del Plan de Evaluación:</strong>
+                        <p>La selección de un plan de evaluación es la segunda etapa que debe realizar el optimizador. A priori podemos pensar que seleccionar un plan de evaluación consistiría en seleccionar, para cada expresión que forma la consulta, el algoritmo más económico. Sin embargo, la selección de algoritmos de forma aislada puede no ser una buena idea ya que, aunque puede ser la forma más eficiente de realizar una operación determinada puede influir negativamente en otra, provocando que el coste aumente significativamente.</p>
+
+                        <p>Los <strong>optimizadores basados en coste</strong> generan un conjunto de planes equivalentes y escogen el de menor coste.</p>
+
+                        <div class="visual-diagram">
+                            <h4>Proceso de Optimización</h4>
+                            <div class="code-block">
+-- Consulta original
+SELECT e.nombre, d.nombre as departamento
+FROM empleados e
+JOIN departamentos d ON e.dept_id = d.id
+WHERE e.salario > 50000;
+
+-- Plan 1: Table Scan + Nested Loop Join
+-- Coste estimado: 1000 unidades
+
+-- Plan 2: Index Scan (salario) + Hash Join
+-- Coste estimado: 250 unidades
+
+-- Plan 3: Index Scan (dept_id) + Merge Join
+-- Coste estimado: 500 unidades
+
+-- Optimizador selecciona: Plan 2 (menor coste)
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Monitorización del Rendimiento -->
                 <div class="concept-card">
-                    <h3>Cache de Consultas</h3>
-                    <p>Mecanismos para reutilizar planes de ejecución y resultados de consultas frecuentes.</p>
+                    <h3>Monitorización del Rendimiento</h3>
+                    <p>La monitorización en un SGBD es un punto clave para detectar los cuellos de botella en el rendimiento.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de cache:</strong>
+                        <strong>Cuellos de Botella:</strong>
+                        <p>En general, los cuellos de botella están presentes en todos los sistemas de software y son inevitables. Sin embargo, la demanda excesiva de recursos compartidos causa un tiempo de respuesta largo y debe identificarse y corregirse. Algunas de las causas más frecuentes para los cuellos de botella son las siguientes:</p>
                         <ul>
-                            <li><strong>Query Plan Cache:</strong> Almacena planes de ejecución compilados</li>
-                            <li><strong>Result Cache:</strong> Almacena resultados de consultas</li>
-                            <li><strong>Buffer Pool:</strong> Cache de páginas de datos en memoria</li>
-                            <li><strong>Metadata Cache:</strong> Cache de metadatos del esquema</li>
+                            <li><strong>Recursos insuficientes:</strong> Que requieren componentes adicionales o actualizados.</li>
+                            <li><strong>Recursos del mismo tipo que no distribuyen de forma equilibrada las cargas de trabajo:</strong> Por ejemplo, cuando un recurso monopoliza un disco.</li>
+                            <li><strong>Recursos que funcionan incorrectamente:</strong> Componentes con fallos o errores.</li>
+                            <li><strong>Recursos mal configurados:</strong> Parámetros no optimizados para la carga de trabajo.</li>
                         </ul>
-                        <strong>Beneficios:</strong> Reducción de tiempo de compilación, reutilización de resultados
+
+                        <strong>Importancia de la Monitorización:</strong>
+                        <p>Cuando se trabaja con conjuntos de datos muy grandes, monitorizar el rendimiento es una pieza clave para conseguir que las llamadas a base de datos no se ralenticen, para conocer cuáles son las que más tardan o las que más recursos del sistema están utilizando. Todos los SGBD tienen un conjunto de parámetros que podemos visualizar y que nos darán la información necesaria para detectar nuestros problemas y optimizar las consultas y recursos.</p>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Métricas de Rendimiento</h4>
+                                <ul>
+                                    <li><strong>Tiempo de respuesta:</strong> Tiempo total de ejecución de consultas</li>
+                                    <li><strong>Throughput:</strong> Número de consultas por segundo</li>
+                                    <li><strong>Uso de CPU:</strong> Porcentaje de utilización del procesador</li>
+                                    <li><strong>Uso de memoria:</strong> Memoria utilizada por el SGBD</li>
+                                    <li><strong>I/O de disco:</strong> Lecturas y escrituras en disco</li>
+                                    <li><strong>Bloqueos:</strong> Número de bloqueos activos</li>
+                                </ul>
+                            </div>
+
+                            <div class="example-card">
+                                <h4>Herramientas de Monitorización</h4>
+                                <ul>
+                                    <li><strong>Vistas del sistema:</strong> Vistas dinámicas con estadísticas</li>
+                                    <li><strong>Eventos extendidos:</strong> Captura de eventos específicos</li>
+                                    <li><strong>Planes de ejecución:</strong> Análisis de planes de consultas</li>
+                                    <li><strong>Logs de transacciones:</strong> Registro de operaciones</li>
+                                    <li><strong>Herramientas de terceros:</strong> Monitores especializados</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+-- PostgreSQL: Consultas lentas
+SELECT 
+    pid,
+    now() - pg_stat_activity.query_start AS duration,
+    query,
+    state
+FROM pg_stat_activity
+WHERE (now() - pg_stat_activity.query_start) > interval '5 minutes'
+  AND state = 'active';
+
+-- PostgreSQL: Estadísticas de tablas
+SELECT 
+    schemaname,
+    tablename,
+    seq_scan,
+    seq_tup_read,
+    idx_scan,
+    idx_tup_fetch,
+    n_tup_ins,
+    n_tup_upd,
+    n_tup_del
+FROM pg_stat_user_tables
+ORDER BY seq_scan DESC;
+
+-- PostgreSQL: Índices no utilizados
+SELECT 
+    schemaname,
+    tablename,
+    indexname,
+    idx_scan,
+    pg_size_pretty(pg_relation_size(indexrelid)) AS index_size
+FROM pg_stat_user_indexes
+WHERE idx_scan = 0
+  AND schemaname = 'public'
+ORDER BY pg_relation_size(indexrelid) DESC;
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Ejemplos Prácticos -->
-            <section id="ejemplos" class="section">
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
                 <h2>
                     <div class="section-icon">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-tasks"></i>
                     </div>
-                    Ejemplos Prácticos
+                    Actividades de Refuerzo
                 </h2>
 
-                <div class="example-grid">
-                    <div class="example-card">
-                        <h4>Análisis de Plan de Ejecución</h4>
-                        <p><strong>Escenario:</strong> Optimización de consulta compleja en PostgreSQL</p>
-                        <div class="code-block">
--- Consulta original (lenta)
-SELECT p.nombre, c.categoria, SUM(oi.cantidad * oi.precio) as total
-FROM productos p
-JOIN categorias c ON p.categoria_id = c.id
-JOIN orden_items oi ON p.id = oi.producto_id
-JOIN ordenes o ON oi.orden_id = o.id
-WHERE o.fecha >= '2024-01-01'
-  AND c.activa = true
-GROUP BY p.id, p.nombre, c.categoria
-HAVING SUM(oi.cantidad * oi.precio) > 1000
-ORDER BY total DESC;
+                <div class="activity-item">
+                    <h4>Actividad 1: Análisis de Planes de Ejecución</h4>
+                    <p><strong>Duración:</strong> 20 minutos</p>
+                    <p><strong>Objetivo:</strong> Aprender a analizar y optimizar planes de ejecución de consultas.</p>
+                    <p><strong>Tareas:</strong></p>
+                    <ol>
+                        <li>Escribe una consulta SQL compleja con múltiples JOINs</li>
+                        <li>Ejecuta EXPLAIN o EXPLAIN ANALYZE para ver el plan de ejecución</li>
+                        <li>Identifica las operaciones más costosas</li>
+                        <li>Crea índices apropiados y vuelve a analizar el plan</li>
+                        <li>Compara los costes antes y después de la optimización</li>
+                    </ol>
+                    <span class="activity-duration">
+                        <i class="fas fa-clock"></i> 20 min
+                    </span>
+                </div>
 
--- Análisis del plan de ejecución
-EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)
-SELECT p.nombre, c.categoria, SUM(oi.cantidad * oi.precio) as total
-FROM productos p
-JOIN categorias c ON p.categoria_id = c.id
-JOIN orden_items oi ON p.id = oi.producto_id
-JOIN ordenes o ON oi.orden_id = o.id
-WHERE o.fecha >= '2024-01-01'
-  AND c.activa = true
-GROUP BY p.id, p.nombre, c.categoria
-HAVING SUM(oi.cantidad * oi.precio) > 1000
-ORDER BY total DESC;
+                <div class="activity-item">
+                    <h4>Actividad 2: Optimización de Consultas</h4>
+                    <p><strong>Duración:</strong> 30 minutos</p>
+                    <p><strong>Objetivo:</strong> Aplicar técnicas de optimización de consultas.</p>
+                    <p><strong>Tareas:</strong></p>
+                    <ol>
+                        <li>Identifica consultas lentas en una base de datos de prueba</li>
+                        <li>Analiza las estadísticas de las tablas involucradas</li>
+                        <li>Reescribe las consultas para mejorar el rendimiento</li>
+                        <li>Crea índices estratégicos</li>
+                        <li>Mide la mejora en el tiempo de ejecución</li>
+                    </ol>
+                    <span class="activity-duration">
+                        <i class="fas fa-clock"></i> 30 min
+                    </span>
+                </div>
 
--- Resultado del análisis:
-{
-  "Plan": {
-    "Node Type": "Sort",
-    "Sort Key": ["total DESC"],
-    "Total Cost": 1250.50,
-    "Actual Time": 45.123,
-    "Rows": 15000,
-    "Buffers": {
-      "Shared Hit": 125,
-      "Shared Read": 45
-    },
-    "Plans": [
-      {
-        "Node Type": "Hash Join",
-        "Join Type": "Inner",
-        "Hash Cond": "(oi.producto_id = p.id)",
-        "Total Cost": 1100.25,
-        "Actual Time": 35.456,
-        "Rows": 15000
-      }
-    ]
-  }
-}
+                <div class="activity-item">
+                    <h4>Actividad 3: Monitorización de Rendimiento</h4>
+                    <p><strong>Duración:</strong> 25 minutos</p>
+                    <p><strong>Objetivo:</strong> Aprender a monitorear el rendimiento de un SGBD.</p>
+                    <p><strong>Tareas:</strong></p>
+                    <ol>
+                        <li>Consulta las vistas del sistema para estadísticas</li>
+                        <li>Identifica las tablas con más operaciones de lectura</li>
+                        <li>Encuentra índices no utilizados</li>
+                        <li>Analiza el uso de CPU y memoria</li>
+                        <li>Genera un reporte de rendimiento</li>
+                    </ol>
+                    <span class="activity-duration">
+                        <i class="fas fa-clock"></i> 25 min
+                    </span>
+                </div>
+            </section>
+        </div>
+    </main>
 
--- Consulta optimizada
-SELECT p.nombre, c.categoria, SUM(oi.cantidad * oi.precio) as total
-FROM productos p
-INNER JOIN categorias c ON p.categoria_id = c.id
-INNER JOIN orden_items oi ON p.id = oi.producto_id
-INNER JOIN ordenes o ON oi.orden_id = o.id
-WHERE o.fecha >= '2024-01-01'
-  AND c.activa = true
-  AND oi.cantidad > 0  -- Filtro temprano
-GROUP BY p.id, p.nombre, c.categoria
-HAVING SUM(oi.cantidad * oi.precio) > 1000
-ORDER BY total DESC;
-
--- Índices recomendados
-CREATE INDEX idx_ordenes_fecha ON ordenes(fecha);
-CREATE INDEX idx_orden_items_producto ON orden_items(producto_id);
-CREATE INDEX idx_categorias_activa ON categorias(activa) WHERE activa = true;
-CREATE INDEX idx_productos_categoria ON productos(categoria_id);
+    <script src="../script.js"></script>
+</body>
+</html>

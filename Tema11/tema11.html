@@ -36,7 +36,7 @@
                 <i class="fas fa-arrow-left"></i> Volver al Inicio
             </a>
             <h1>Tema 11: Data Warehouse y OLAP</h1>
-            <p>Almacenes de datos y procesamiento analítico en línea</p>
+            <p>Almacenes de datos y procesamiento analítico en línea para la toma de decisiones empresariales</p>
         </div>
     </section>
 
@@ -52,74 +52,289 @@
                     Conceptos Clave
                 </h2>
                 
+                <!-- Introducción a Data Warehouse -->
                 <div class="concept-card">
-                    <h3>Modelo Dimensional (Star Schema)</h3>
-                    <p>Arquitectura de almacén de datos centrada en tablas de hechos rodeadas por tablas dimensionales.</p>
+                    <h3>Introducción a Data Warehouse</h3>
+                    <p>A lo largo del tiempo, las empresas detectaron la necesidad de conservar datos históricos para utilizarlos en la toma de decisiones. Mantener una base de datos con la política del negocio y además incluir esta información histórica puede generar efectos contradictorios como reducción del rendimiento. Con esto en mente, surgen los almacenes de datos (data warehouse).</p>
+                    
                     <div class="concept-details">
-                        <strong>Componentes principales:</strong>
+                        <strong>Diferencia Fundamental: OLTP vs OLAP</strong>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>OLTP (Online Transaction Processing)</th>
+                                        <th>OLAP (Online Analytical Processing)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Propósito</strong></td>
+                                        <td>Sistemas para el manejo de transacciones diarias</td>
+                                        <td>Análisis de datos para obtener tendencias y toma de decisiones</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Actualización</strong></td>
+                                        <td>Tiempo real, frecuente</td>
+                                        <td>Periódica, no en tiempo real</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Consultas</strong></td>
+                                        <td>Simples, rápidas, transaccionales</td>
+                                        <td>Complejas, agregaciones, análisis</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Volumen de Datos</strong></td>
+                                        <td>Moderado, datos actuales</td>
+                                        <td>Grandes volúmenes, datos históricos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Usuarios</strong></td>
+                                        <td>Operadores, cajeros, personal operativo</td>
+                                        <td>Analistas, ejecutivos, tomadores de decisiones</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Propiedades de un Almacén de Datos:</strong>
                         <ul>
-                            <li><strong>Fact Tables:</strong> Medidas cuantitativas del negocio</li>
-                            <li><strong>Dimension Tables:</strong> Contexto descriptivo de los hechos</li>
-                            <li><strong>Grain:</strong> Nivel de detalle de los datos</li>
-                            <li><strong>Surrogate Keys:</strong> Claves artificiales para dimensiones</li>
+                            <li><strong>Organizados según áreas:</strong> Contienen datos organizados según las principales áreas de una organización</li>
+                            <li><strong>Múltiples fuentes:</strong> Contienen datos de diferentes fuentes OLTP</li>
+                            <li><strong>No actualización en tiempo real:</strong> Los datos se actualizan periódicamente, no en tiempo real</li>
+                            <li><strong>Orientado a temas:</strong> Organizado por temas de negocio, no por aplicaciones</li>
+                            <li><strong>Integrado:</strong> Datos consistentes y unificados de múltiples fuentes</li>
+                            <li><strong>Variante en el tiempo:</strong> Mantiene historial de cambios</li>
                         </ul>
-                        <strong>Ventajas:</strong> Simplicidad, rendimiento, facilidad de consulta
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Ventajas de Disponer de un Almacén de Datos:</strong>
+                        <ul>
+                            <li><strong>Competitividad:</strong> Mejora la capacidad de tomar decisiones estratégicas</li>
+                            <li><strong>Mayor productividad:</strong> Facilita el análisis y reportes</li>
+                            <li><strong>Posibilidad de mayores ganancias:</strong> Identificación de oportunidades de negocio</li>
+                            <li><strong>Mejor servicio al cliente:</strong> Análisis de comportamiento y preferencias</li>
+                            <li><strong>Optimización de procesos:</strong> Identificación de ineficiencias</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- Componentes de los Almacenes de Datos -->
                 <div class="concept-card">
-                    <h3>ETL/ELT Processes</h3>
-                    <p>Procesos para extraer, transformar y cargar datos desde sistemas operacionales al almacén de datos.</p>
+                    <h3>Componentes de los Almacenes de Datos</h3>
+                    <p>En un almacén de datos, normalmente hay que resolver ciertos problemas fundamentales para garantizar su correcto funcionamiento y utilidad.</p>
+                    
                     <div class="concept-details">
-                        <strong>Fases del proceso:</strong>
+                        <strong>Problemas Principales a Resolver:</strong>
+                        
+                        <h4>1. Instante de Recogida de Datos</h4>
+                        <p>Se pueden distinguir dos tipos de escenarios dependiendo de la arquitectura:</p>
                         <ul>
-                            <li><strong>Extract:</strong> Obtención de datos de fuentes heterogéneas</li>
-                            <li><strong>Transform:</strong> Limpieza, validación y transformación</li>
-                            <li><strong>Load:</strong> Carga en el almacén de datos</li>
+                            <li><strong>Arquitectura dirigida a los orígenes:</strong> Los datos se transmiten al almacén de manera continua; es decir, mientras se procesan las transacciones o en una franja horaria concreta.</li>
+                            <li><strong>Arquitectura dirigida por el destino:</strong> Es el almacén el que envía las solicitudes para recibir nuevos datos.</li>
                         </ul>
-                        <strong>Herramientas:</strong> Apache Airflow, Talend, Informatica, SSIS
+
+                        <h4>2. Selección de la Arquitectura o Esquema</h4>
+                        <p>Es muy frecuente que un almacén de datos obtenga estos de diferentes fuentes, las cuales han sido creadas en distintos instantes en el tiempo. Esto genera que entre los orígenes pueden existir diferentes modelos. Es tarea del almacén integrar las diferentes variantes para poder almacenar los datos. Como resultado, el proceso de almacenamiento no se puede solucionar con una simple copia.</p>
+
+                        <h4>3. Transformación y Limpieza de Datos</h4>
+                        <p>Al tratar diferentes orígenes con sus peculiaridades particulares, antes de incorporar nuevos datos al almacén es necesario realizar una limpieza de datos. Esta consiste en:</p>
+                        <ul>
+                            <li><strong>Corrección de errores:</strong> Identificar y corregir datos incorrectos</li>
+                            <li><strong>Preprocesamiento:</strong> Normalización y estandarización</li>
+                            <li><strong>Transformaciones:</strong> Cambio de unidades de medida, formatos, etc.</li>
+                            <li><strong>Validación:</strong> Verificar integridad y consistencia</li>
+                        </ul>
+
+                        <h4>4. Propagación de Actualizaciones</h4>
+                        <p>Las actualizaciones deben realizarse en el almacén de datos conforme se actualicen en los orígenes. Si las relaciones son exactamente las mismas, se puede realizar una propagación directa. De no ser así, es necesario realizar tareas más complejas de transformación.</p>
+
+                        <h4>5. Resúmenes de Datos</h4>
+                        <p>Al contener gran cantidad de datos, no resulta óptimo mantenerlos todos en línea. Por esta razón se utilizan resúmenes de datos que normalmente resuelven un gran porcentaje de las consultas al almacén.</p>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Proceso ETL (Extract, Transform, Load):</strong>
+                        <div class="visual-diagram">
+                            <h4>Flujo del Proceso ETL</h4>
+                            <div class="etl-process">
+                                <div class="etl-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-download"></i>
+                                    </div>
+                                    <h5>Extracción (Extract)</h5>
+                                    <p>Recuperar datos de múltiples fuentes OLTP</p>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="etl-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </div>
+                                    <h5>Transformación (Transform)</h5>
+                                    <p>Adaptación de los datos para encajar en la arquitectura del almacén</p>
+                                </div>
+                                <div class="step-arrow">→</div>
+                                <div class="etl-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </div>
+                                    <h5>Carga (Load)</h5>
+                                    <p>Introducción de los datos en el almacén</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Arquitectura de un Almacén de Datos -->
                 <div class="concept-card">
-                    <h3>OLAP vs OLTP</h3>
-                    <p>Diferencias entre sistemas de procesamiento analítico y transaccional.</p>
+                    <h3>Arquitectura de un Almacén de Datos</h3>
+                    <p>Se pueden diferenciar dos formas fundamentales de organizar los almacenes de datos, cada una con sus ventajas y casos de uso específicos.</p>
+                    
                     <div class="concept-details">
-                        <strong>OLTP (Online Transaction Processing):</strong>
+                        <h4>1. Arquitectura de Tabla de Resumen</h4>
+                        <p>Los datos se almacenan de forma detallada, conteniendo tablas de resumen orientadas a los procesos analíticos. El objetivo de la tabla resumen es que los procesos analíticos no tengan que calcular siempre determinados valores.</p>
+                        
                         <ul>
-                            <li><strong>Propósito:</strong> Procesamiento de transacciones diarias</li>
-                            <li><strong>Características:</strong> Transacciones cortas, alta concurrencia</li>
-                            <li><strong>Optimización:</strong> Para escritura y consultas simples</li>
+                            <li><strong>Datos detallados:</strong> Se mantienen todos los datos transaccionales</li>
+                            <li><strong>Tablas de resumen:</strong> Agregaciones pre-calculadas para análisis rápido</li>
+                            <li><strong>Actualización periódica:</strong> Los datos de varios sistemas OLTP se trasladan con cierta periodicidad al almacén</li>
+                            <li><strong>Profundización (Drill-down):</strong> El nivel de detalles que sigue el usuario de la base de datos OLAP</li>
+                            <li><strong>Metadatos:</strong> Suelen ser el punto más conflictivo, pues no existen estándares para incluirlos</li>
                         </ul>
-                        <strong>OLAP (Online Analytical Processing):</strong> Análisis complejo, consultas largas, agregaciones
+
+                        <h4>2. Arquitectura de Almacén de Datos de Esquema de Estrella</h4>
+                        <p>Este esquema contiene una tabla única de datos, tabla de hechos. Esta tabla sustituye a la tabla de datos detallados de la arquitectura anterior. Las tablas de dimensiones sustituyen a las tablas resumen.</p>
+                        
+                        <div class="visual-diagram">
+                            <h4>Esquema de Estrella (Star Schema)</h4>
+                            <div class="star-schema">
+                                <div class="fact-table">
+                                    <h5>Tabla de Hechos (Fact Table)</h5>
+                                    <p>Contiene medidas cuantitativas del negocio</p>
+                                    <div class="fact-example">
+                                        <strong>Ejemplo: fact_ventas</strong>
+                                        <ul>
+                                            <li>fecha_id (FK)</li>
+                                            <li>producto_id (FK)</li>
+                                            <li>cliente_id (FK)</li>
+                                            <li>tienda_id (FK)</li>
+                                            <li>cantidad</li>
+                                            <li>monto_total</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="dimensions">
+                                    <div class="dimension">
+                                        <h5>dim_tiempo</h5>
+                                        <p>Dimensión temporal</p>
+                                    </div>
+                                    <div class="dimension">
+                                        <h5>dim_productos</h5>
+                                        <p>Dimensión de productos</p>
+                                    </div>
+                                    <div class="dimension">
+                                        <h5>dim_clientes</h5>
+                                        <p>Dimensión de clientes</p>
+                                    </div>
+                                    <div class="dimension">
+                                        <h5>dim_tiendas</h5>
+                                        <p>Dimensión de tiendas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p><strong>Variaciones del Esquema de Estrella:</strong></p>
+                        <ul>
+                            <li><strong>Esquema de Copo de Nieve (Snowflake Schema):</strong> Permite que las dimensiones tengan medidas propias. Es el resultado de normalizar las dimensiones de la arquitectura original.</li>
+                            <li><strong>Esquema de Copo de Estrella (Starflake Schema):</strong> Combina dimensiones normalizadas y otras que no lo están.</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- Introducción OLAP -->
                 <div class="concept-card">
-                    <h3>Data Marts y Data Lakes</h3>
-                    <p>Diferentes enfoques para almacenamiento y procesamiento de datos analíticos.</p>
+                    <h3>Introducción OLAP</h3>
+                    <p>Para el análisis de los datos es mejor utilizar las herramientas estadísticas destinadas a tal fin, sin embargo, las bases de datos deben soportar algunas operaciones sencillas, utilizadas frecuentemente para el análisis estadístico.</p>
+                    
                     <div class="concept-details">
-                        <strong>Data Marts:</strong>
+                        <strong>¿Qué es OLAP?</strong>
+                        <p>OLAP (Online Analytical Processing) es utilizado en lo que se conoce como inteligencia de negocio (Business Intelligence), cuyo objetivo es agilizar la consulta de grandes cantidades de datos. OLAP está diseñado para hacer uso de estructuras de datos multidimensionales (o Cubos OLAP), que contienen resúmenes de grandes bases de datos o sistemas transaccionales (OLTP).</p>
+                        
+                        <p><strong>Ejemplos comunes de uso:</strong></p>
                         <ul>
-                            <li><strong>Definición:</strong> Subconjunto especializado del data warehouse</li>
-                            <li><strong>Características:</strong> Enfocado en un área específica del negocio</li>
-                            <li><strong>Ventajas:</strong> Implementación más rápida, menor complejidad</li>
+                            <li>Generación de informes de negocios de ventas</li>
+                            <li>Análisis de marketing</li>
+                            <li>Informes de dirección</li>
+                            <li>Minería de datos</li>
+                            <li>Análisis de tendencias</li>
                         </ul>
-                        <strong>Data Lakes:</strong> Almacenamiento de datos en formato nativo, esquema flexible
                     </div>
-                </div>
 
-                <div class="concept-card">
-                    <h3>Agregaciones y Pre-cálculos</h3>
-                    <p>Técnicas para optimizar consultas analíticas mediante pre-cálculo de agregaciones.</p>
                     <div class="concept-details">
-                        <strong>Estrategias de agregación:</strong>
+                        <strong>Tipos de Implementación OLAP:</strong>
+                        
+                        <h4>1. OLAP Multidimensionales (MOLAP)</h4>
+                        <p>Esta implementación almacena los datos en una base de datos multidimensional. Los datos se almacenan en estructuras de cubos optimizadas para consultas rápidas.</p>
                         <ul>
-                            <li><strong>Materialized Views:</strong> Vistas materializadas con agregaciones</li>
-                            <li><strong>Aggregate Tables:</strong> Tablas de resumen pre-calculadas</li>
-                            <li><strong>Rollup Tables:</strong> Jerarquías de agregación</li>
+                            <li><strong>Ventajas:</strong> Consultas muy rápidas, optimización para análisis</li>
+                            <li><strong>Desventajas:</strong> Limitado por el tamaño del cubo, requiere pre-agregación</li>
                         </ul>
-                        <strong>Beneficios:</strong> Reducción de tiempo de consulta, mejor rendimiento
+
+                        <h4>2. OLAP Relacionales (ROLAP)</h4>
+                        <p>En este caso los datos se almacenan en la base de datos relacional donde los datos son detallados, evitando las agregaciones y las tablas se encuentran desnormalizadas.</p>
+                        <ul>
+                            <li><strong>Ventajas:</strong> Escalable, datos detallados disponibles</li>
+                            <li><strong>Desventajas:</strong> Consultas más lentas que MOLAP</li>
+                        </ul>
+
+                        <h4>3. OLAP Híbridos (HOLAP)</h4>
+                        <p>Los sistemas híbridos almacenan algunos resúmenes en la memoria y los datos básicos y otros resúmenes en bases de datos relacionales.</p>
+                        <ul>
+                            <li><strong>Ventajas:</strong> Combina velocidad de MOLAP con escalabilidad de ROLAP</li>
+                            <li><strong>Desventajas:</strong> Mayor complejidad de implementación</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-details">
+                        <strong>Concepto de Cubo OLAP:</strong>
+                        <p>Un cubo OLAP es un array multidimensional de datos. Los cubos OLAP pueden mostrar y agrupar grandes cantidades de datos. De este modo, los datos se pueden agrupar, segmentar y reorganizar según sea necesario para procesar la información en función de las necesidades del usuario.</p>
+                        
+                        <div class="visual-diagram">
+                            <h4>Ejemplo de Cubo OLAP</h4>
+                            <div class="olap-cube">
+                                <div class="cube-dimension">
+                                    <h5>Dimensión: Producto</h5>
+                                    <p>Laptop, Tablet, Smartphone</p>
+                                </div>
+                                <div class="cube-dimension">
+                                    <h5>Dimensión: Región</h5>
+                                    <p>Norte, Sur, Este, Oeste</p>
+                                </div>
+                                <div class="cube-dimension">
+                                    <h5>Dimensión: Tiempo</h5>
+                                    <p>Q1, Q2, Q3, Q4</p>
+                                </div>
+                                <div class="cube-measure">
+                                    <h5>Medida: Ventas</h5>
+                                    <p>Valores en cada intersección</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p><strong>Operaciones OLAP comunes:</strong></p>
+                        <ul>
+                            <li><strong>Roll-up:</strong> Agregación de datos a niveles superiores</li>
+                            <li><strong>Drill-down:</strong> Desagregación a niveles de detalle</li>
+                            <li><strong>Slice:</strong> Selección de una dimensión específica</li>
+                            <li><strong>Dice:</strong> Selección de un subcubo</li>
+                            <li><strong>Pivot:</strong> Rotación de dimensiones</li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -135,60 +350,103 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Data Warehouse para Retail</h4>
-                        <p><strong>Escenario:</strong> Almacén de datos para cadena de tiendas</p>
+                        <h4>Ejemplo 1: Creación de Esquema de Estrella para Ventas</h4>
+                        <p><strong>Escenario:</strong> Implementar un data warehouse para análisis de ventas de una cadena de tiendas</p>
                         <div class="code-block">
--- Tabla de hechos de ventas
-CREATE TABLE fact_ventas (
-    venta_id BIGINT,
-    fecha_id INTEGER,
-    producto_id INTEGER,
-    tienda_id INTEGER,
-    cliente_id INTEGER,
-    cantidad INTEGER,
-    precio_unitario DECIMAL(10,2),
-    descuento DECIMAL(5,2),
-    total DECIMAL(12,2)
-);
+-- ============================================
+-- ESQUEMA DE ESTRELLA PARA VENTAS
+-- ============================================
 
--- Dimensión de tiempo
+-- Tabla de hechos: Ventas
+CREATE TABLE fact_ventas (
+    venta_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fecha_id INTEGER NOT NULL,
+    producto_id INTEGER NOT NULL,
+    cliente_id INTEGER NOT NULL,
+    tienda_id INTEGER NOT NULL,
+    empleado_id INTEGER,
+    cantidad INTEGER NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    descuento DECIMAL(5,2) DEFAULT 0,
+    monto_total DECIMAL(12,2) NOT NULL,
+    costo_total DECIMAL(12,2),
+    margen_ganancia DECIMAL(12,2),
+    INDEX idx_fecha (fecha_id),
+    INDEX idx_producto (producto_id),
+    INDEX idx_cliente (cliente_id),
+    INDEX idx_tienda (tienda_id)
+) ENGINE=InnoDB;
+
+-- Dimensión de Tiempo
 CREATE TABLE dim_tiempo (
     fecha_id INTEGER PRIMARY KEY,
-    fecha DATE,
-    año INTEGER,
-    trimestre INTEGER,
-    mes INTEGER,
-    dia_semana INTEGER,
-    es_fin_semana BOOLEAN,
+    fecha DATE NOT NULL UNIQUE,
+    año INTEGER NOT NULL,
+    trimestre INTEGER NOT NULL,
+    mes INTEGER NOT NULL,
+    semana INTEGER NOT NULL,
+    dia_semana INTEGER NOT NULL,
+    dia_mes INTEGER NOT NULL,
+    es_fin_semana BOOLEAN DEFAULT FALSE,
+    es_festivo BOOLEAN DEFAULT FALSE,
     trimestre_nombre VARCHAR(20),
-    mes_nombre VARCHAR(20)
-);
+    mes_nombre VARCHAR(20),
+    dia_semana_nombre VARCHAR(20),
+    INDEX idx_año (año),
+    INDEX idx_mes (mes),
+    INDEX idx_trimestre (trimestre)
+) ENGINE=InnoDB;
 
--- Dimensión de productos
+-- Dimensión de Productos
 CREATE TABLE dim_productos (
     producto_id INTEGER PRIMARY KEY,
-    sku VARCHAR(50),
-    nombre VARCHAR(255),
+    sku VARCHAR(50) UNIQUE NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
     categoria_id INTEGER,
     subcategoria_id INTEGER,
     marca VARCHAR(100),
     precio_estandar DECIMAL(10,2),
-    fecha_introduccion DATE
-);
+    costo_estandar DECIMAL(10,2),
+    fecha_introduccion DATE,
+    fecha_discontinuacion DATE,
+    activo BOOLEAN DEFAULT TRUE,
+    INDEX idx_categoria (categoria_id)
+) ENGINE=InnoDB;
 
--- Dimensión de tiendas
+-- Dimensión de Clientes
+CREATE TABLE dim_clientes (
+    cliente_id INTEGER PRIMARY KEY,
+    codigo_cliente VARCHAR(50) UNIQUE NOT NULL,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    email VARCHAR(255),
+    telefono VARCHAR(20),
+    fecha_registro DATE,
+    segmento_cliente VARCHAR(50),
+    ciudad VARCHAR(100),
+    region VARCHAR(100),
+    pais VARCHAR(100),
+    INDEX idx_segmento (segmento_cliente),
+    INDEX idx_region (region)
+) ENGINE=InnoDB;
+
+-- Dimensión de Tiendas
 CREATE TABLE dim_tiendas (
     tienda_id INTEGER PRIMARY KEY,
-    codigo_tienda VARCHAR(20),
-    nombre VARCHAR(100),
+    codigo_tienda VARCHAR(20) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     direccion TEXT,
     ciudad VARCHAR(100),
     region VARCHAR(100),
-    gerente VARCHAR(100),
-    fecha_apertura DATE
-);
+    pais VARCHAR(100),
+    gerente_id INTEGER,
+    fecha_apertura DATE,
+    superficie DECIMAL(10,2),
+    tipo_tienda VARCHAR(50),
+    INDEX idx_region (region)
+) ENGINE=InnoDB;
 
--- Vista materializada para ventas por mes
+-- Vista materializada para ventas mensuales
 CREATE MATERIALIZED VIEW mv_ventas_mensuales AS
 SELECT 
     t.año,
@@ -196,11 +454,320 @@ SELECT
     t.mes_nombre,
     p.categoria_id,
     s.region,
+    COUNT(DISTINCT f.venta_id) as num_ventas,
     SUM(f.cantidad) as total_cantidad,
-    SUM(f.total) as total_ventas,
-    COUNT(DISTINCT f.venta_id) as num_ventas
+    SUM(f.monto_total) as total_ventas,
+    SUM(f.costo_total) as total_costos,
+    SUM(f.margen_ganancia) as margen_total,
+    AVG(f.monto_total) as promedio_venta
 FROM fact_ventas f
 JOIN dim_tiempo t ON f.fecha_id = t.fecha_id
 JOIN dim_productos p ON f.producto_id = p.producto_id
 JOIN dim_tiendas s ON f.tienda_id = s.tienda_id
 GROUP BY t.año, t.mes, t.mes_nombre, p.categoria_id, s.region;
+
+-- Consulta OLAP: Ventas por región y trimestre
+SELECT 
+    t.trimestre_nombre,
+    s.region,
+    SUM(f.monto_total) as ventas_totales,
+    COUNT(DISTINCT f.cliente_id) as clientes_unicos,
+    AVG(f.monto_total) as ticket_promedio
+FROM fact_ventas f
+JOIN dim_tiempo t ON f.fecha_id = t.fecha_id
+JOIN dim_tiendas s ON f.tienda_id = s.tienda_id
+WHERE t.año = 2024
+GROUP BY t.trimestre_nombre, s.region
+ORDER BY t.trimestre_nombre, ventas_totales DESC;
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Proceso ETL con Stored Procedures</h4>
+                        <p><strong>Escenario:</strong> Implementar proceso ETL para cargar datos desde sistema OLTP al data warehouse</p>
+                        <div class="code-block">
+-- ============================================
+-- PROCESO ETL: CARGA DE DATOS AL DATA WAREHOUSE
+-- ============================================
+
+DELIMITER //
+
+-- Procedimiento para poblar dimensión de tiempo
+CREATE PROCEDURE sp_poblar_dim_tiempo(
+    IN fecha_inicio DATE,
+    IN fecha_fin DATE
+)
+BEGIN
+    DECLARE fecha_actual DATE;
+    DECLARE fecha_id_counter INT DEFAULT 1;
+    
+    SET fecha_actual = fecha_inicio;
+    
+    WHILE fecha_actual <= fecha_fin DO
+        INSERT INTO dim_tiempo (
+            fecha_id, fecha, año, trimestre, mes, semana,
+            dia_semana, dia_mes, es_fin_semana,
+            trimestre_nombre, mes_nombre, dia_semana_nombre
+        ) VALUES (
+            fecha_id_counter,
+            fecha_actual,
+            YEAR(fecha_actual),
+            QUARTER(fecha_actual),
+            MONTH(fecha_actual),
+            WEEK(fecha_actual),
+            WEEKDAY(fecha_actual),
+            DAY(fecha_actual),
+            CASE WHEN WEEKDAY(fecha_actual) IN (5, 6) THEN TRUE ELSE FALSE END,
+            CONCAT('Q', QUARTER(fecha_actual), ' ', YEAR(fecha_actual)),
+            MONTHNAME(fecha_actual),
+            DAYNAME(fecha_actual)
+        )
+        ON DUPLICATE KEY UPDATE fecha_id = fecha_id;
+        
+        SET fecha_actual = DATE_ADD(fecha_actual, INTERVAL 1 DAY);
+        SET fecha_id_counter = fecha_id_counter + 1;
+    END WHILE;
+END //
+
+-- Procedimiento para extraer y transformar datos de ventas
+CREATE PROCEDURE sp_etl_cargar_ventas(
+    IN fecha_carga DATE
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+    
+    START TRANSACTION;
+    
+    -- Extraer y transformar datos de ventas desde OLTP
+    INSERT INTO fact_ventas (
+        fecha_id, producto_id, cliente_id, tienda_id, empleado_id,
+        cantidad, precio_unitario, descuento, monto_total, costo_total, margen_ganancia
+    )
+    SELECT 
+        dt.fecha_id,
+        dp.producto_id,
+        dc.cliente_id,
+        ds.tienda_id,
+        de.empleado_id,
+        v.cantidad,
+        v.precio_unitario,
+        v.descuento,
+        v.monto_total,
+        v.costo_total,
+        (v.monto_total - v.costo_total) as margen_ganancia
+    FROM sistema_oltp.ventas v
+    JOIN dim_tiempo dt ON DATE(v.fecha_venta) = dt.fecha
+    JOIN dim_productos dp ON v.sku_producto = dp.sku
+    JOIN dim_clientes dc ON v.codigo_cliente = dc.codigo_cliente
+    JOIN dim_tiendas ds ON v.codigo_tienda = ds.codigo_tienda
+    LEFT JOIN dim_empleados de ON v.empleado_id = de.empleado_id
+    WHERE DATE(v.fecha_venta) = fecha_carga
+    AND NOT EXISTS (
+        SELECT 1 FROM fact_ventas fv 
+        WHERE fv.fecha_id = dt.fecha_id 
+        AND fv.producto_id = dp.producto_id
+        AND fv.cliente_id = dc.cliente_id
+    );
+    
+    -- Actualizar vista materializada
+    REFRESH MATERIALIZED VIEW mv_ventas_mensuales;
+    
+    COMMIT;
+END //
+
+DELIMITER ;
+
+-- Ejecutar proceso ETL
+CALL sp_poblar_dim_tiempo('2020-01-01', '2025-12-31');
+CALL sp_etl_cargar_ventas('2024-01-15');
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Consultas OLAP Avanzadas</h4>
+                        <p><strong>Escenario:</strong> Análisis multidimensional de ventas con operaciones OLAP</p>
+                        <div class="code-block">
+-- ============================================
+-- CONSULTAS OLAP: OPERACIONES MULTIDIMENSIONALES
+-- ============================================
+
+-- ROLL-UP: Agregación de ventas por diferentes niveles jerárquicos
+-- De día → mes → trimestre → año
+SELECT 
+    t.año,
+    t.trimestre_nombre,
+    t.mes_nombre,
+    SUM(f.monto_total) as ventas_totales,
+    COUNT(DISTINCT f.venta_id) as num_transacciones
+FROM fact_ventas f
+JOIN dim_tiempo t ON f.fecha_id = t.fecha_id
+WHERE t.año = 2024
+GROUP BY t.año, t.trimestre_nombre, t.mes_nombre WITH ROLLUP
+ORDER BY t.año, t.trimestre_nombre, t.mes_nombre;
+
+-- DRILL-DOWN: Análisis detallado de una región específica
+-- De región → ciudad → tienda
+SELECT 
+    s.region,
+    s.ciudad,
+    s.nombre as nombre_tienda,
+    SUM(f.monto_total) as ventas_totales,
+    COUNT(DISTINCT f.cliente_id) as clientes_unicos
+FROM fact_ventas f
+JOIN dim_tiendas s ON f.tienda_id = s.tienda_id
+WHERE s.region = 'Andalucía'
+GROUP BY s.region, s.ciudad, s.nombre
+ORDER BY ventas_totales DESC;
+
+-- SLICE: Cortar el cubo por una dimensión específica
+-- Análisis de ventas solo para productos de una categoría
+SELECT 
+    p.categoria_id,
+    p.nombre as producto,
+    SUM(f.cantidad) as unidades_vendidas,
+    SUM(f.monto_total) as ingresos_totales,
+    AVG(f.precio_unitario) as precio_promedio
+FROM fact_ventas f
+JOIN dim_productos p ON f.producto_id = p.producto_id
+WHERE p.categoria_id = 'ELECTRONICA'
+GROUP BY p.categoria_id, p.nombre
+ORDER BY ingresos_totales DESC;
+
+-- DICE: Seleccionar un subcubo específico
+-- Ventas de productos específicos en regiones específicas en un período
+SELECT 
+    p.nombre as producto,
+    s.region,
+    t.trimestre_nombre,
+    SUM(f.monto_total) as ventas_totales
+FROM fact_ventas f
+JOIN dim_productos p ON f.producto_id = p.producto_id
+JOIN dim_tiendas s ON f.tienda_id = s.tienda_id
+JOIN dim_tiempo t ON f.fecha_id = t.fecha_id
+WHERE p.producto_id IN (101, 102, 103)
+  AND s.region IN ('Andalucía', 'Cataluña', 'Madrid')
+  AND t.año = 2024
+GROUP BY p.nombre, s.region, t.trimestre_nombre
+ORDER BY p.nombre, s.region, t.trimestre_nombre;
+
+-- PIVOT: Rotar dimensiones para análisis comparativo
+-- Comparar ventas por región y trimestre
+SELECT 
+    region,
+    SUM(CASE WHEN trimestre = 1 THEN ventas_totales ELSE 0 END) as Q1,
+    SUM(CASE WHEN trimestre = 2 THEN ventas_totales ELSE 0 END) as Q2,
+    SUM(CASE WHEN trimestre = 3 THEN ventas_totales ELSE 0 END) as Q3,
+    SUM(CASE WHEN trimestre = 4 THEN ventas_totales ELSE 0 END) as Q4,
+    SUM(ventas_totales) as Total_Año
+FROM (
+    SELECT 
+        s.region,
+        t.trimestre,
+        SUM(f.monto_total) as ventas_totales
+    FROM fact_ventas f
+    JOIN dim_tiendas s ON f.tienda_id = s.tienda_id
+    JOIN dim_tiempo t ON f.fecha_id = t.fecha_id
+    WHERE t.año = 2024
+    GROUP BY s.region, t.trimestre
+) as ventas_por_trimestre
+GROUP BY region
+ORDER BY Total_Año DESC;
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <h3>Actividad 1: Diseño de Esquema de Estrella</h3>
+                        <p><strong>Duración:</strong> 45 minutos</p>
+                        <p><strong>Objetivo:</strong> Diseñar un esquema de estrella para un sistema de análisis de pedidos online</p>
+                        <div class="activity-details">
+                            <h4>Tareas:</h4>
+                            <ol>
+                                <li>Identificar la tabla de hechos principal (fact_pedidos)</li>
+                                <li>Diseñar al menos 4 dimensiones relevantes</li>
+                                <li>Crear las tablas con sus relaciones</li>
+                                <li>Definir índices apropiados</li>
+                                <li>Crear una vista materializada para análisis mensual</li>
+                            </ol>
+                            <h4>Entregables:</h4>
+                            <ul>
+                                <li>Script SQL con todas las tablas</li>
+                                <li>Diagrama del esquema de estrella</li>
+                                <li>Documentación de las decisiones de diseño</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="activity-card">
+                        <h3>Actividad 2: Implementación de Proceso ETL</h3>
+                        <p><strong>Duración:</strong> 60 minutos</p>
+                        <p><strong>Objetivo:</strong> Crear un proceso ETL completo para cargar datos históricos</p>
+                        <div class="activity-details">
+                            <h4>Tareas:</h4>
+                            <ol>
+                                <li>Crear procedimiento para poblar dimensión de tiempo</li>
+                                <li>Implementar extracción de datos desde sistema OLTP</li>
+                                <li>Agregar transformaciones de datos (limpieza, validación)</li>
+                                <li>Implementar carga incremental</li>
+                                <li>Agregar manejo de errores y logging</li>
+                            </ol>
+                            <h4>Entregables:</h4>
+                            <ul>
+                                <li>Stored procedures completos</li>
+                                <li>Script de ejecución del proceso ETL</li>
+                                <li>Reporte de datos cargados</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="activity-card">
+                        <h3>Actividad 3: Análisis OLAP Completo</h3>
+                        <p><strong>Duración:</strong> 30 minutos</p>
+                        <p><strong>Objetivo:</strong> Realizar análisis multidimensional usando operaciones OLAP</p>
+                        <div class="activity-details">
+                            <h4>Tareas:</h4>
+                            <ol>
+                                <li>Implementar consulta ROLL-UP por jerarquía temporal</li>
+                                <li>Crear consulta DRILL-DOWN por región</li>
+                                <li>Realizar SLICE por categoría de producto</li>
+                                <li>Implementar DICE para subcubo específico</li>
+                                <li>Crear consulta PIVOT para comparación trimestral</li>
+                            </ol>
+                            <h4>Entregables:</h4>
+                            <ul>
+                                <li>5 consultas OLAP documentadas</li>
+                                <li>Resultados de cada consulta</li>
+                                <li>Análisis de los resultados obtenidos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Bases de Datos Avanzadas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

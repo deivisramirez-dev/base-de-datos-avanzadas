@@ -6,6 +6,10 @@
     <title>Tema 8: Sistemas de Recuperación - Bases de Datos Avanzadas</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -52,78 +56,465 @@
                     Conceptos Clave
                 </h2>
                 
+                <!-- Introducción -->
                 <div class="concept-card">
-                    <h3>Tipos de Fallos</h3>
-                    <p>Clasificación de los diferentes tipos de fallos que pueden afectar un sistema de base de datos.</p>
+                    <h3>Introducción</h3>
+                    <p>Desde el punto de vista del software es normal enfrentarse a situaciones en las que se produce un fallo. Los sistemas gestores de bases de datos no están exentos de ellos. Sin embargo, el usuario del sistema gestor espera ciertas características que garanticen el funcionamiento de sus aplicaciones.</p>
+                    
                     <div class="concept-details">
-                        <strong>Categorías de fallos:</strong>
-                        <ul>
-                            <li><strong>Fallos de Transacción:</strong> Abortos por violación de restricciones</li>
-                            <li><strong>Fallos del Sistema:</strong> Fallos de hardware o software</li>
-                            <li><strong>Fallos de Disco:</strong> Pérdida de datos en almacenamiento</li>
-                            <li><strong>Fallos de Red:</strong> Pérdida de conectividad</li>
-                        </ul>
-                        <strong>Impacto:</strong> Pérdida de datos, inconsistencia, indisponibilidad
+                        <p>Atendiendo a las propiedades <strong>ACID</strong> de las transacciones, estas deben cumplirse aunque se produzca un fallo interno o externo en la base de datos. Por esta razón, el <strong>esquema de recuperación</strong> de la base de datos se convierte en un elemento fundamental.</p>
+                        
+                        <p>De este sistema depende la <strong>consistencia</strong>, <strong>disponibilidad</strong> y <strong>tiempo de pérdida de servicio</strong> para resolver un posible fallo. Nótese que el tiempo de recuperación ante un fallo debe ser <strong>mínimo</strong>.</p>
+                        
+                        <!-- Diagrama de Importancia del Sistema de Recuperación -->
+                        <div class="diagram-container" style="margin-top: 20px;">
+                            <h4>Importancia del Sistema de Recuperación</h4>
+                            <div class="mermaid">
+graph TB
+    SGBD["Sistema Gestor de<br/>Bases de Datos"]
+    FALLOS["Posibles Fallos"]
+    RECUPERACION["Sistema de<br/>Recuperación"]
+    PROPIEDADES["Propiedades ACID"]
+    
+    SGBD --> FALLOS
+    FALLOS -->|"Requiere"| RECUPERACION
+    RECUPERACION -->|"Garantiza"| PROPIEDADES
+    
+    PROPIEDADES --> CONSISTENCIA["Consistencia"]
+    PROPIEDADES --> DISPONIBILIDAD["Disponibilidad"]
+    PROPIEDADES --> TIEMPO["Tiempo de<br/>Recuperación Mínimo"]
+    
+    style SGBD fill:#667eea,stroke:#764ba2,color:#fff
+    style FALLOS fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style RECUPERACION fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style PROPIEDADES fill:#f9ca24,stroke:#f59f00,color:#000
+    style CONSISTENCIA fill:#51cf66,stroke:#2f9e44,color:#fff
+    style DISPONIBILIDAD fill:#51cf66,stroke:#2f9e44,color:#fff
+    style TIEMPO fill:#51cf66,stroke:#2f9e44,color:#fff
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Clasificación de Fallos -->
                 <div class="concept-card">
-                    <h3>Log de Recuperación</h3>
-                    <p>Registro detallado de todas las operaciones para permitir la recuperación del sistema.</p>
+                    <h3>Clasificación de Fallos</h3>
+                    <p>En un sistema gestor de bases de datos los fallos se pueden dividir en diferentes categorías. Los fallos más comunes son:</p>
+                    
                     <div class="concept-details">
-                        <strong>Componentes del log:</strong>
-                        <ul>
-                            <li><strong>Log Records:</strong> Registros de operaciones (BEGIN, UPDATE, COMMIT, ABORT)</li>
-                            <li><strong>Checkpoints:</strong> Puntos de sincronización periódicos</li>
-                            <li><strong>WAL (Write-Ahead Logging):</strong> Escribir log antes que datos</li>
-                            <li><strong>Log Buffering:</strong> Cache de registros de log</li>
-                        </ul>
-                        <strong>Beneficios:</strong> Durabilidad, recuperación, replicación
+                        <!-- Diagrama de Clasificación de Fallos -->
+                        <div class="diagram-container">
+                            <h4>Tipos de Fallos en un SGBD</h4>
+                            <div class="mermaid">
+graph TD
+    FALLOS["Fallos en SGBD"]
+    
+    FALLOS --> TX["Fallo en la Transacción"]
+    FALLOS --> SISTEMA["Fallo del Sistema"]
+    FALLOS --> DISCO["Fallo de Disco"]
+    
+    TX --> LOGICO["Error Lógico<br/>• Restricción violada<br/>• Entrada incorrecta"]
+    TX --> ERROR_SISTEMA["Error del Sistema<br/>• Estado inconsistente<br/>• Procesos bloqueados"]
+    
+    SISTEMA --> CAIDA["Caída del Sistema<br/>• Fallo hardware<br/>• Corte eléctrico<br/>• Memoria volátil perdida"]
+    
+    DISCO --> CORRUPCION["Corrupción de Datos<br/>• Exceso de uso<br/>• Fallo hardware<br/>• Requiere backups"]
+    
+    style FALLOS fill:#667eea,stroke:#764ba2,color:#fff
+    style TX fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style SISTEMA fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style DISCO fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style LOGICO fill:#ffd43b,stroke:#f59f00,color:#000
+    style ERROR_SISTEMA fill:#ffd43b,stroke:#f59f00,color:#000
+    style CAIDA fill:#ffd43b,stroke:#f59f00,color:#000
+    style CORRUPCION fill:#ffd43b,stroke:#f59f00,color:#000
+                            </div>
+                        </div>
+
+                        <h4>Tipos de Fallos Detallados:</h4>
+                        
+                        <div style="margin-top: 20px;">
+                            <h5 style="color: #667eea; margin-bottom: 10px;">
+                                <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>
+                                1. Fallo en la Transacción
+                            </h5>
+                            <p>En una transacción abortada pueden producirse fallos por diferentes motivos:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li><strong>Error lógico:</strong> Puede existir una restricción lógica en el sistema que evite que esa transacción se ejecute correctamente. Por ejemplo, una entrada incorrecta.</li>
+                                <li><strong>Error del sistema:</strong> En este caso el sistema se puede encontrar en un estado inconsistente, por ejemplo los procesos bloqueados por una mala solución en concurrencia.</li>
+                                <li><strong>Caída del sistema:</strong> Este error se debe normalmente a un mal funcionamiento de un dispositivo hardware (o corte de suministro eléctrico). Como consecuencia la máquina se apaga y se pierde la memoria no permanente. La transacción en ejecución no debe continuar. Los soportes de memoria permanente (discos) no se ven afectados.</li>
+                                <li><strong>Fallo de disco:</strong> Debido a un fallo hardware pero en el dispositivo de almacenamiento volátil. Puede ocurrir por diferentes motivos como por ejemplo un exceso de uso, un corte de suministro eléctrico, etc. La información se corrompe y es necesario ejecutar procesos de recuperación de información a través de los backups existentes.</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 25px; padding: 15px; background: #e3f2fd; border-radius: 6px; border-left: 4px solid #2196F3;">
+                            <h5 style="color: #1976D2; margin-bottom: 10px;">
+                                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                                Algoritmos de Recuperación
+                            </h5>
+                            <p style="margin-bottom: 10px;">Dependiendo del tipo de fallo se selecciona una forma de recuperación que usan diferentes tipos de algoritmos. Estos algoritmos constan de dos partes:</p>
+                            <ol style="margin-left: 20px;">
+                                <li><strong>Tareas de preparación ante posibles fallos:</strong> Son aquellas que se ejecutan durante el funcionamiento normal del sistema con el fin de asegurar que, si se produce un fallo, este se pueda recuperar.</li>
+                                <li><strong>Acciones posteriores a un fallo:</strong> Se encargan de comprobar la consistencia de la base de datos y asegurar las propiedades ACID.</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Estructuras de Almacenamiento -->
                 <div class="concept-card">
-                    <h3>Algoritmos de Recuperación</h3>
-                    <p>Técnicas para restaurar la consistencia de la base de datos después de un fallo.</p>
+                    <h3>Estructuras de Almacenamiento</h3>
+                    <p>La base de datos puede combinar diferentes formas de almacenamiento. Para entender el funcionamiento de las propiedades de atomicidad y durabilidad es necesario estudiar los diferentes medios de almacenamiento:</p>
+                    
                     <div class="concept-details">
-                        <strong>Algoritmos principales:</strong>
-                        <ul>
-                            <li><strong>ARIES (Algorithm for Recovery and Isolation Exploiting Semantics):</strong> Recuperación avanzada</li>
-                            <li><strong>Redo Recovery:</strong> Reaplicar operaciones confirmadas</li>
-                            <li><strong>Undo Recovery:</strong> Deshacer operaciones no confirmadas</li>
-                            <li><strong>Checkpoint Recovery:</strong> Recuperación desde checkpoints</li>
-                        </ul>
-                        <strong>Fases:</strong> Análisis, Redo, Undo
+                        <!-- Diagrama de Estructuras de Almacenamiento -->
+                        <div class="diagram-container">
+                            <h4>Jerarquía de Almacenamiento</h4>
+                            <div class="mermaid">
+graph TB
+    ALMACENAMIENTO["Almacenamiento"]
+    
+    ALMACENAMIENTO --> VOLATIL["Almacenamiento Volátil<br/>• Memoria RAM<br/>• Cache del procesador<br/>• Se pierde al apagar"]
+    
+    ALMACENAMIENTO --> NO_VOLATIL["Almacenamiento No Volátil<br/>• Discos duros (HDD)<br/>• SSD<br/>• Persiste al apagar"]
+    
+    ALMACENAMIENTO --> ESTABLE["Almacenamiento Estable<br/>• Aproximación mediante<br/>  replicación y backups<br/>• Garantiza durabilidad"]
+    
+    VOLATIL -->|"Rápido pero<br/>temporal"| CARACTERISTICAS1["• Acceso rápido<br/>• Capacidad limitada<br/>• Costo por GB alto"]
+    
+    NO_VOLATIL -->|"Persistente<br/>pero más lento"| CARACTERISTICAS2["• Acceso más lento<br/>• Mayor capacidad<br/>• Costo por GB menor"]
+    
+    ESTABLE -->|"Máxima<br/>confiabilidad"| CARACTERISTICAS3["• Replicación<br/>• Backups múltiples<br/>• Tolerancia a fallos"]
+    
+    style ALMACENAMIENTO fill:#667eea,stroke:#764ba2,color:#fff
+    style VOLATIL fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style NO_VOLATIL fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style ESTABLE fill:#51cf66,stroke:#2f9e44,color:#fff
+    style CARACTERISTICAS1 fill:#ffe0e0,stroke:#ff6b6b
+    style CARACTERISTICAS2 fill:#e0f7f4,stroke:#4ecdc4
+    style CARACTERISTICAS3 fill:#e8f5e9,stroke:#51cf66
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4>Características de cada tipo:</h4>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li><strong>Almacenamiento volátil:</strong> Memoria que se pierde cuando el sistema se apaga. Es muy rápida pero temporal.</li>
+                                <li><strong>Almacenamiento no volátil:</strong> Persiste después de apagar el sistema. Es más lenta que la memoria volátil pero mantiene los datos.</li>
+                                <li><strong>Almacenamiento estable:</strong> Se centra en asegurar que los datos «nunca» puedan perderse. Esto se puede imitar realizando aproximaciones de almacenamiento mediante replicación y backups múltiples.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Recuperación y Atomicidad -->
                 <div class="concept-card">
-                    <h3>Checkpoints</h3>
-                    <p>Puntos de sincronización que facilitan la recuperación al reducir el trabajo necesario.</p>
+                    <h3>Recuperación y Atomicidad</h3>
+                    <p>Durante la ejecución de una transacción puede producirse un error. En este caso no se sabe si esta se ha ejecutado correctamente o no.</p>
+                    
                     <div class="concept-details">
-                        <strong>Tipos de checkpoints:</strong>
-                        <ul>
-                            <li><strong>Fuzzy Checkpoint:</strong> No requiere parar el sistema</li>
-                            <li><strong>Sharp Checkpoint:</strong> Para todas las transacciones</li>
-                            <li><strong>Incremental Checkpoint:</strong> Solo cambios desde último checkpoint</li>
-                            <li><strong>Dirty Page Checkpoint:</strong> Solo páginas modificadas</li>
+                        <p>Teniendo en mente las dos alternativas se puede:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>Volver a ejecutar la transacción:</strong> Se asume que no ha tenido efecto en la base de datos.</li>
+                            <li><strong>No volver a ejecutar la transacción:</strong> Se asume que se ha ejecutado correctamente.</li>
                         </ul>
-                        <strong>Beneficios:</strong> Reducción de tiempo de recuperación, menor overhead
+                        
+                        <div style="margin-top: 15px; padding: 15px; background: #fff3cd; border-radius: 6px; border-left: 4px solid #ffc107;">
+                            <p><strong>⚠️ Problema:</strong> Independientemente de la opción escogida, la base de datos queda en un estado inconsistente. Claramente este esquema de recuperación no es válido.</p>
+                            <p style="margin-top: 10px;"><strong>💡 Solución:</strong> Si analizamos el problema, vemos que esta situación se produce por no tener certeza sobre si la transacción ha finalizado correctamente o no. Por eso es necesario implementar un <strong>sistema de registro histórico (log)</strong> que permita determinar el estado exacto de cada transacción.</p>
+                        </div>
+
+                        <!-- Diagrama del Problema de Recuperación -->
+                        <div class="diagram-container" style="margin-top: 20px;">
+                            <h4>Problema de Recuperación sin Log</h4>
+                            <div class="mermaid">
+flowchart TD
+    TX["Transacción en<br/>Ejecución"]
+    FALLO["Fallo del Sistema"]
+    DECISION{"¿Qué hacer?"}
+    
+    TX --> FALLO
+    FALLO --> DECISION
+    
+    DECISION -->|"Opción 1"| RE_EJECUTAR["Re-ejecutar<br/>Transacción"]
+    DECISION -->|"Opción 2"| NO_RE_EJECUTAR["No re-ejecutar<br/>Transacción"]
+    
+    RE_EJECUTAR --> PROBLEMA1["❌ Si ya se ejecutó:<br/>Datos duplicados<br/>Estado inconsistente"]
+    NO_RE_EJECUTAR --> PROBLEMA2["❌ Si no se ejecutó:<br/>Datos perdidos<br/>Estado inconsistente"]
+    
+    PROBLEMA1 --> INCONSISTENCIA["Base de Datos<br/>Inconsistente"]
+    PROBLEMA2 --> INCONSISTENCIA
+    
+    INCONSISTENCIA --> SOLUCION["✅ Solución:<br/>Sistema de Log<br/>Histórico"]
+    
+    style TX fill:#667eea,stroke:#764ba2,color:#fff
+    style FALLO fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style DECISION fill:#ffd43b,stroke:#f59f00,color:#000
+    style PROBLEMA1 fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style PROBLEMA2 fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style INCONSISTENCIA fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style SOLUCION fill:#51cf66,stroke:#2f9e44,color:#fff
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Recuperación basada en Registro Histórico -->
                 <div class="concept-card">
-                    <h3>Recuperación de Transacciones</h3>
-                    <p>Mecanismos para manejar transacciones incompletas y mantener la consistencia.</p>
+                    <h3>Recuperación basada en Registro Histórico</h3>
+                    <p>El registro histórico es la forma más utilizada para almacenar todas las modificaciones realizadas en la base de datos.</p>
+                    
                     <div class="concept-details">
-                        <strong>Estrategias:</strong>
-                        <ul>
-                            <li><strong>Rollback:</strong> Deshacer transacciones incompletas</li>
-                            <li><strong>Rollforward:</strong> Reaplicar transacciones confirmadas</li>
-                            <li><strong>Compensation:</strong> Operaciones de compensación</li>
-                            <li><strong>Restart:</strong> Reiniciar transacciones abortadas</li>
-                        </ul>
-                        <strong>Consideraciones:</strong> Consistencia, durabilidad, rendimiento
+                        <h4>Estructura del Registro Histórico</h4>
+                        <p>Un registro del registro histórico debe tener la misma estructura en el sistema. Al menos tiene que tener los siguientes campos:</p>
+                        
+                        <!-- Diagrama de Estructura del Log -->
+                        <div class="diagram-container" style="margin-top: 15px;">
+                            <h4>Estructura de un Registro de Log</h4>
+                            <div class="mermaid">
+graph LR
+    LOG_RECORD["Registro de Log"]
+    
+    LOG_RECORD --> TX_ID["Identificador de<br/>Transacción<br/>(TX_ID)"]
+    LOG_RECORD --> DATA_ID["Identificador del<br/>Elemento de Datos<br/>(Ubicación en disco)"]
+    LOG_RECORD --> VALOR_ANTERIOR["Valor Anterior<br/>(Before Image)"]
+    LOG_RECORD --> VALOR_NUEVO["Valor Nuevo<br/>(After Image)"]
+    
+    style LOG_RECORD fill:#667eea,stroke:#764ba2,color:#fff
+    style TX_ID fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style DATA_ID fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style VALOR_ANTERIOR fill:#ffd43b,stroke:#f59f00,color:#000
+    style VALOR_NUEVO fill:#51cf66,stroke:#2f9e44,color:#fff
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 6px; border-left: 4px solid #4CAF50;">
+                            <h5 style="color: #2e7d32; margin-bottom: 10px;">
+                                <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+                                Principio Write-Ahead Logging (WAL)
+                            </h5>
+                            <p><strong>Regla fundamental:</strong> Al realizar una escritura es necesario crear el registro histórico <strong>ANTES</strong> de modificar nada en la base de datos. Una vez que se crea el registro histórico se procede a modificar la base de datos.</p>
+                            <p style="margin-top: 10px;">Gracias a este comportamiento se puede realizar operaciones de <strong>deshacer (undo)</strong> para volver a valores anteriores. Normalmente estos registros históricos suelen tener un tamaño determinado ya que pueden suponer un gran consumo de recursos.</p>
+                        </div>
+
+                        <h4 style="margin-top: 25px;">Técnicas de Recuperación:</h4>
+                        
+                        <div style="margin-top: 15px;">
+                            <h5 style="color: #667eea; margin-bottom: 10px;">
+                                <i class="fas fa-clock" style="margin-right: 8px;"></i>
+                                1. Modificación Diferida (Deferred Modification)
+                            </h5>
+                            <p>La técnica de modificación diferida permite asegurar la atomicidad de las transacciones gracias a que se utiliza el registro histórico para <strong>retrasar la ejecución de operaciones</strong> hasta que la transacción se compromete parcialmente.</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>En ese caso la información del registro se utiliza para realizar las modificaciones de manera diferida.</li>
+                                <li>Cuando se desea deshacer una operación, debe asegurarse que es una <strong>operación idempotente</strong>, es decir, solo tiene efecto la primera vez que se ejecuta.</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h5 style="color: #667eea; margin-bottom: 10px;">
+                                <i class="fas fa-bolt" style="margin-right: 8px;"></i>
+                                2. Modificación Inmediata (Immediate Modification)
+                            </h5>
+                            <p>Como alternativa a la modificación diferida, tenemos la modificación inmediata. En este caso, las modificaciones se realizan <strong>sin esperar</strong> a que la transacción esté comprometida, pues se hacen cuando la transacción está activa.</p>
+                            <p style="margin-top: 10px;">Cuando se produce un error se ejecuta la operación <strong>deshacer (undo)</strong> que se encarga de:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Restaurar el valor de todos los elementos actualizados a sus valores anteriores.</li>
+                                <li>Cambiar el valor de todos los elementos actualizados por la transacción.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Diagrama Comparativo -->
+                        <div class="diagram-container" style="margin-top: 25px;">
+                            <h4>Comparación: Modificación Diferida vs Inmediata</h4>
+                            <div class="mermaid">
+graph TB
+    subgraph DIFERIDA["Modificación Diferida"]
+        D1["1. Escribir en Log"]
+        D2["2. Esperar COMMIT"]
+        D3["3. Aplicar cambios<br/>a la BD"]
+        D1 --> D2 --> D3
+    end
+    
+    subgraph INMEDIATA["Modificación Inmediata"]
+        I1["1. Escribir en Log"]
+        I2["2. Aplicar cambios<br/>a la BD inmediatamente"]
+        I3["3. Si falla: UNDO<br/>desde Log"]
+        I1 --> I2 --> I3
+    end
+    
+    DIFERIDA -->|"Ventaja"| VENTAJA_D["Menos trabajo<br/>de UNDO"]
+    INMEDIATA -->|"Ventaja"| VENTAJA_I["Mejor rendimiento<br/>durante ejecución"]
+    
+    style DIFERIDA fill:#e3f2fd,stroke:#2196F3,color:#000
+    style INMEDIATA fill:#fff3e0,stroke:#ff9800,color:#000
+    style VENTAJA_D fill:#51cf66,stroke:#2f9e44,color:#fff
+    style VENTAJA_I fill:#51cf66,stroke:#2f9e44,color:#fff
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transacciones Concurrentes y Recuperación -->
+                <div class="concept-card">
+                    <h3>Transacciones Concurrentes y Recuperación</h3>
+                    <p>El esquema de recuperación debe interactuar con el planificador de concurrencia del sistema operativo.</p>
+                    
+                    <div class="concept-details">
+                        <p>La problemática de las transacciones concurrentes se puede observar cuando varias transacciones acceden al mismo dato. Cuando se produce un error en el sistema de bases de datos no es trivial averiguar las transacciones que están afectadas.</p>
+                        
+                        <div style="margin-top: 15px; padding: 15px; background: #ffebee; border-radius: 6px; border-left: 4px solid #f44336;">
+                            <p><strong>⚠️ Restricción importante:</strong> Por lo tanto, se establece una restricción de modificación de datos, pues una transacción no puede modificar un dato que está siendo accedido por otra transacción.</p>
+                        </div>
+
+                        <!-- Diagrama de Concurrencia y Recuperación -->
+                        <div class="diagram-container" style="margin-top: 20px;">
+                            <h4>Interacción entre Concurrencia y Recuperación</h4>
+                            <div class="mermaid">
+graph TB
+    SISTEMA["Sistema de BD"]
+    
+    SISTEMA --> CONCURRENCIA["Planificador de<br/>Concurrencia"]
+    SISTEMA --> RECUPERACION["Sistema de<br/>Recuperación"]
+    
+    CONCURRENCIA --> BLOQUEOS["Gestión de<br/>Bloqueos"]
+    CONCURRENCIA --> AISLAMIENTO["Niveles de<br/>Aislamiento"]
+    
+    RECUPERACION --> LOG["Registro<br/>Histórico"]
+    RECUPERACION --> CHECKPOINT["Checkpoints"]
+    
+    BLOQUEOS --> RESTRICCION["Restricción:<br/>No modificar datos<br/>accedidos por otra TX"]
+    LOG --> RESTRICCION
+    
+    RESTRICCION --> CONSISTENCIA["Garantiza<br/>Consistencia"]
+    
+    style SISTEMA fill:#667eea,stroke:#764ba2,color:#fff
+    style CONCURRENCIA fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style RECUPERACION fill:#f9ca24,stroke:#f59f00,color:#000
+    style RESTRICCION fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style CONSISTENCIA fill:#51cf66,stroke:#2f9e44,color:#fff
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alta Disponibilidad en Bases de Datos -->
+                <div class="concept-card">
+                    <h3>Alta Disponibilidad en Bases de Datos</h3>
+                    <p>En la actualidad los servidores de partes de datos juegan un papel muy importante en las organizaciones, por eso es necesario contar con planes de recuperación ante desastres.</p>
+                    
+                    <div class="concept-details">
+                        <p>Las soluciones de alta disponibilidad están pensadas para aquellos sistemas que requieren estar activos <strong>24/7</strong> y que puedan sobreponerse a cualquier incidente de manera rápida. Los principales proveedores de bases de datos ofrecen servicios para garantizar la alta disponibilidad de sus sistemas.</p>
+
+                        <!-- Soluciones Oracle -->
+                        <div style="margin-top: 25px;">
+                            <h4 style="color: #667eea; margin-bottom: 15px;">
+                                <i class="fas fa-database" style="margin-right: 8px;"></i>
+                                Soluciones de Alta Disponibilidad en Oracle
+                            </h4>
+                            <p>Oracle ofrece distintos servicios para dar soporte a la alta disponibilidad. Para todos los fallos relacionados con errores de hardware propone lo siguiente:</p>
+                            
+                            <div class="comparison-table" style="margin-top: 15px;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Característica</th>
+                                            <th>Descripción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Enterprise Grids</strong></td>
+                                            <td>En un entorno de Oracle RAC, Oracle Database se ejecuta en dos o más sistemas en un clúster al mismo tiempo que accede a una única base de datos compartida. Un solo sistema de base de datos abarca varios sistemas de hardware, pero para la aplicación aparece como una única base de datos.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Oracle Data Guard</strong></td>
+                                            <td>Data Guard permite mantener una o más copias de una base de datos de producción, llamada base de datos de reserva, que puede residir en diferentes continentes o en el mismo centro de datos. Si la base de datos principal no está disponible debido a una interrupción, entonces Data Guard puede cambiar cualquier base de datos en espera a la función principal, minimizando el tiempo de inactividad.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Global Data Services</strong></td>
+                                            <td>Global Data Services automatiza y centraliza la configuración, el mantenimiento y el monitoreo de una base de datos en la nube.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Fast Start Fault Recovery</strong></td>
+                                            <td>Una causa común del tiempo de inactividad no planificado es un fallo o fallo del sistema. Oracle Database proporciona una tecnología de recuperación rápida de fallos que limita automáticamente el tiempo de recuperación de la instancia de la base de datos.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 6px; border-left: 4px solid #2196F3;">
+                                <h5 style="color: #1976D2; margin-bottom: 10px;">
+                                    <i class="fas fa-tools" style="margin-right: 8px;"></i>
+                                    Recovery Manager (RMAN)
+                                </h5>
+                                <p>Para los problemas relacionados con los fallos en el almacenamiento, Oracle propone <strong>The Recovery Manager (RMAN)</strong>. RMAN proporciona una base completa para hacer copias de seguridad y recuperación de manera eficiente de la base de datos Oracle.</p>
+                                <p style="margin-top: 10px;">RMAN puede realizar copias de seguridad de datos, restaurar datos de una copia de seguridad anterior y recuperar cambios en esos datos hasta el momento antes de que se produjera el fallo. Está diseñado para trabajar íntimamente con el servidor, proporcionando detección de corrupción a nivel de bloque durante la copia de seguridad y restauración.</p>
+                            </div>
+                        </div>
+
+                        <!-- Soluciones SQL Server -->
+                        <div style="margin-top: 30px;">
+                            <h4 style="color: #667eea; margin-bottom: 15px;">
+                                <i class="fas fa-server" style="margin-right: 8px;"></i>
+                                Soluciones de Alta Disponibilidad en SQL Server
+                            </h4>
+                            <p>SQL Server ofrece servicios desde más básicos hasta más avanzados:</p>
+                            
+                            <div style="margin-top: 15px;">
+                                <h5 style="color: #495057; margin-bottom: 10px;">1. Log Shipping</h5>
+                                <p>En un primer nivel cuenta con <strong>Log Shipping</strong>, en el que implementa un sistema automatizado para mantener uno o varios servidores secundarios con una copia de seguridad restaurándose automáticamente de forma asíncrona cada x minutos. En caso de fallo necesita intervención manual para cargar la base de datos secundaria.</p>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <h5 style="color: #495057; margin-bottom: 10px;">2. Database Mirroring (Deprecado)</h5>
+                                <p>Database Mirroring, mantenido hasta la versión SQL Server 2017, en la actualidad ha sido reemplazado por los grupos AlwaysOn. Database Mirroring permite configurar una base de datos refleja a un único servidor secundario, la sincronización de datos puede ser síncrona o asíncrona, puede configurarse con una tercera instancia testigo, para que en caso de fallo de la principal cambie automáticamente como activa la del servidor secundario.</p>
+                            </div>
+
+                            <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 6px; border-left: 4px solid #4CAF50;">
+                                <h5 style="color: #2e7d32; margin-bottom: 10px;">
+                                    <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+                                    3. AlwaysOn Availability Groups (Recomendado)
+                                </h5>
+                                <p>Aunque la recomendación actual de Microsoft es usar los <strong>grupos de disponibilidad AlwaysOn</strong>. Un grupo de disponibilidad admite un entorno replicado de un conjunto discreto de bases de datos de usuario, conocido como bases de datos de disponibilidad.</p>
+                                <p style="margin-top: 10px;">Un grupo de disponibilidad se puede crear para:</p>
+                                <ul style="margin-left: 20px; margin-top: 10px;">
+                                    <li><strong>Alta disponibilidad:</strong> Un grupo de bases de datos que realizan la conmutación por error conjuntamente.</li>
+                                    <li><strong>Escalado de lectura:</strong> Un grupo de bases de datos que se copian en otras instancias de SQL Server para cargas de trabajo de solo lectura.</li>
+                                </ul>
+                                <p style="margin-top: 10px;"><strong>Características:</strong> Un grupo de disponibilidad admite un conjunto de bases de datos principales y entre uno y ocho conjuntos de las bases de datos secundarias correspondientes. Las bases de datos secundarias no son copias de seguridad.</p>
+                            </div>
+                        </div>
+
+                        <!-- Diagrama de Alta Disponibilidad -->
+                        <div class="diagram-container" style="margin-top: 25px;">
+                            <h4>Arquitectura de Alta Disponibilidad</h4>
+                            <div class="mermaid">
+graph TB
+    APLICACION["Aplicación"]
+    
+    APLICACION --> PRINCIPAL["Base de Datos<br/>Principal<br/>(Activa)"]
+    
+    PRINCIPAL -->|"Replicación"| SECUNDARIA1["Base de Datos<br/>Secundaria 1<br/>(Standby)"]
+    PRINCIPAL -->|"Replicación"| SECUNDARIA2["Base de Datos<br/>Secundaria 2<br/>(Standby)"]
+    
+    FALLO["Fallo en Principal"]
+    PRINCIPAL -.->|"Si falla"| FALLO
+    
+    FALLO --> FAILOVER["Conmutación por<br/>Error (Failover)"]
+    FAILOVER --> SECUNDARIA1
+    
+    SECUNDARIA1 -->|"Promovida a"| NUEVA_PRINCIPAL["Nueva Principal<br/>(Activa)"]
+    
+    style APLICACION fill:#667eea,stroke:#764ba2,color:#fff
+    style PRINCIPAL fill:#51cf66,stroke:#2f9e44,color:#fff
+    style SECUNDARIA1 fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style SECUNDARIA2 fill:#4ecdc4,stroke:#087f5b,color:#fff
+    style FALLO fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style FAILOVER fill:#ffd43b,stroke:#f59f00,color:#000
+    style NUEVA_PRINCIPAL fill:#51cf66,stroke:#2f9e44,color:#fff
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -139,11 +530,10 @@
 
                 <div class="example-grid">
                     <div class="example-card">
-                        <h4>Configuración de Recuperación en PostgreSQL</h4>
-                        <p><strong>Escenario:</strong> Sistema de recuperación robusto para base de datos crítica</p>
+                        <h4>Ejemplo 1: Configuración de WAL en PostgreSQL</h4>
+                        <p><strong>Escenario:</strong> Configurar Write-Ahead Logging para garantizar durabilidad</p>
                         <div class="code-block">
--- Configuración de WAL en PostgreSQL
--- postgresql.conf
+<pre>-- Configuración de WAL en postgresql.conf
 wal_level = replica
 max_wal_size = 4GB
 min_wal_size = 1GB
@@ -156,11 +546,6 @@ archive_mode = on
 archive_command = 'cp %p /backup/wal_archive/%f'
 archive_timeout = 300
 
--- Configuración de replicación
-max_wal_senders = 3
-max_replication_slots = 3
-hot_standby = on
-
 -- Verificar estado del WAL
 SELECT * FROM pg_stat_archiver;
 
@@ -170,14 +555,832 @@ SELECT * FROM pg_stat_bgwriter;
 -- Monitoreo de WAL
 SELECT 
     pg_current_wal_lsn() as current_lsn,
-    pg_wal_lsn_diff(pg_current_wal_lsn(), '0/0') as wal_bytes;
+    pg_wal_lsn_diff(pg_current_wal_lsn(), '0/0') as wal_bytes;</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Configuración completa del sistema de logging de PostgreSQL para garantizar recuperación ante fallos.</p>
+                    </div>
 
--- Backup base
+                    <div class="example-card">
+                        <h4>Ejemplo 2: Backup y Restore en PostgreSQL</h4>
+                        <p><strong>Escenario:</strong> Realizar backup completo y restaurar desde un punto específico</p>
+                        <div class="code-block">
+<pre>-- Backup base completo
 pg_basebackup -D /backup/base_backup -Ft -z -P
 
--- Restore desde backup
+-- Backup lógico con pg_dump
+pg_dump -Fc -f backup.dump nombre_bd
+
+-- Restaurar desde backup
 -- 1. Detener PostgreSQL
+systemctl stop postgresql
+
 -- 2. Restaurar archivos de datos
--- 3. Restaurar archivos WAL
--- 4. Crear recovery.conf
--- 5. Iniciar PostgreSQL
+rm -rf /var/lib/postgresql/data/*
+tar -xzf /backup/base_backup/base.tar.gz -C /var/lib/postgresql/data/
+
+-- 3. Configurar recovery.conf (PostgreSQL 12+)
+-- Crear postgresql.auto.conf o recovery.signal
+echo "restore_command = 'cp /backup/wal_archive/%f %p'" > recovery.conf
+echo "recovery_target_time = '2024-01-15 10:00:00'"
+
+-- 4. Iniciar PostgreSQL
+systemctl start postgresql</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Proceso completo de backup y restauración punto-en-tiempo usando WAL archiving.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 3: Oracle RMAN - Backup Completo</h4>
+                        <p><strong>Escenario:</strong> Usar Recovery Manager para backup y recuperación</p>
+                        <div class="code-block">
+<pre>-- Conectar a RMAN
+rman target /
+
+-- Backup completo de la base de datos
+BACKUP DATABASE PLUS ARCHIVELOG;
+
+-- Backup de tablespace específico
+BACKUP TABLESPACE usuarios;
+
+-- Backup incremental
+BACKUP INCREMENTAL LEVEL 1 DATABASE;
+
+-- Listar backups
+LIST BACKUP;
+
+-- Restaurar y recuperar
+RESTORE DATABASE;
+RECOVER DATABASE;
+
+-- Recuperación punto-en-tiempo
+RUN {
+    SET UNTIL TIME "TO_DATE('2024-01-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS')";
+    RESTORE DATABASE;
+    RECOVER DATABASE;
+}</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Uso de RMAN para realizar backups completos, incrementales y recuperación punto-en-tiempo.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 4: SQL Server AlwaysOn - Configuración</h4>
+                        <p><strong>Escenario:</strong> Configurar grupo de disponibilidad AlwaysOn</p>
+                        <div class="code-block">
+<pre>-- Habilitar AlwaysOn
+EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+EXEC sp_configure 'always on availability groups', 1;
+RECONFIGURE;
+
+-- Crear grupo de disponibilidad
+CREATE AVAILABILITY GROUP AG_Ejemplo
+WITH (
+    AUTOMATED_BACKUP_PREFERENCE = PRIMARY,
+    FAILURE_CONDITION_LEVEL = 3,
+    HEALTH_CHECK_TIMEOUT = 30000
+)
+FOR DATABASE MiBaseDeDatos
+REPLICA ON
+    'SERVER1' WITH (
+        ENDPOINT_URL = 'TCP://server1:5022',
+        AVAILABILITY_MODE = SYNCHRONOUS_COMMIT,
+        FAILOVER_MODE = AUTOMATIC,
+        SEEDING_MODE = AUTOMATIC
+    ),
+    'SERVER2' WITH (
+        ENDPOINT_URL = 'TCP://server2:5022',
+        AVAILABILITY_MODE = SYNCHRONOUS_COMMIT,
+        FAILOVER_MODE = AUTOMATIC,
+        SEEDING_MODE = AUTOMATIC
+    );
+
+-- Agregar base de datos al grupo
+ALTER AVAILABILITY GROUP AG_Ejemplo
+ADD DATABASE MiBaseDeDatos;
+
+-- Verificar estado
+SELECT 
+    ag.name AS 'Availability Group',
+    ar.replica_server_name AS 'Replica',
+    ar.availability_mode_desc AS 'Availability Mode',
+    ar.failover_mode_desc AS 'Failover Mode'
+FROM sys.availability_groups ag
+JOIN sys.availability_replicas ar ON ag.group_id = ar.group_id;</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Configuración de alta disponibilidad con AlwaysOn Availability Groups en SQL Server.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 5: Simulación de Recuperación con Log</h4>
+                        <p><strong>Escenario:</strong> Simular proceso de recuperación usando registro histórico</p>
+                        <div class="code-block">
+<pre>-- Tabla de ejemplo
+CREATE TABLE cuentas (
+    id INT PRIMARY KEY,
+    saldo DECIMAL(10,2)
+);
+
+-- Transacción que falla
+BEGIN TRANSACTION;
+
+-- Operación 1: Registrar en log (simulado)
+-- Log: TX-001, UPDATE, cuentas(id=1), saldo=1000, saldo=1500
+UPDATE cuentas SET saldo = 1500 WHERE id = 1;
+
+-- Operación 2: Registrar en log
+-- Log: TX-001, UPDATE, cuentas(id=2), saldo=2000, saldo=2500
+UPDATE cuentas SET saldo = 2500 WHERE id = 2;
+
+-- FALLO DEL SISTEMA (simulado)
+-- El sistema se reinicia
+
+-- Proceso de recuperación:
+-- 1. Análisis: Identificar transacciones activas
+-- 2. Redo: Reaplicar operaciones confirmadas desde log
+-- 3. Undo: Deshacer operaciones no confirmadas
+
+-- Si TX-001 no tenía COMMIT:
+ROLLBACK; -- Deshacer cambios usando valores anteriores del log
+
+-- Si TX-001 tenía COMMIT:
+-- Los cambios ya están aplicados, no se necesita hacer nada</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Proceso de recuperación usando el registro histórico para determinar qué operaciones deshacer o reaplicar.</p>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>Ejemplo 6: Checkpoints en MySQL</h4>
+                        <p><strong>Escenario:</strong> Configurar y monitorear checkpoints</p>
+                        <div class="code-block">
+<pre>-- Ver configuración de InnoDB
+SHOW VARIABLES LIKE 'innodb%checkpoint%';
+
+-- Configurar checkpoints
+SET GLOBAL innodb_max_dirty_pages_pct = 75;
+SET GLOBAL innodb_checkpoint_disabled = 0;
+
+-- Forzar checkpoint manual
+FLUSH LOGS;
+
+-- Verificar estado de checkpoints
+SHOW ENGINE INNODB STATUS\G
+
+-- En la sección LOG verás:
+-- Log sequence number: [número]
+-- Log flushed up to: [número]
+-- Pages flushed up to: [número]
+
+-- Monitoreo de actividad de checkpoint
+SELECT 
+    VARIABLE_NAME,
+    VARIABLE_VALUE
+FROM performance_schema.global_status
+WHERE VARIABLE_NAME LIKE 'Innodb%checkpoint%';</pre>
+                        </div>
+                        <p><strong>Explicación:</strong> Configuración y monitoreo de checkpoints en MySQL/InnoDB para optimizar la recuperación.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actividades de Refuerzo -->
+            <section id="actividades" class="section">
+                <h2>
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Actividades de Refuerzo
+                </h2>
+
+                <div class="activity-card">
+                    <h3>Actividad 1: Test Interactivo de Conocimientos</h3>
+                    <p><strong>Duración:</strong> 15-20 minutos</p>
+                    <p><strong>Objetivo:</strong> Evaluar comprensión de conceptos fundamentales de sistemas de recuperación</p>
+                    
+                    <div class="activity-content" id="test-container">
+                        <div id="test-questions"></div>
+                        <div id="test-results" style="display: none;">
+                            <h3>Resultados del Test</h3>
+                            <div id="results-content"></div>
+                            <button id="restart-test" class="btn-primary" style="margin-top: 20px;">Reiniciar Test</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script>
+        // Test Interactivo de Sistemas de Recuperación
+        const testQuestions = [
+            {
+                question: "¿Cuál es el principio fundamental del Write-Ahead Logging (WAL)?",
+                options: {
+                    A: "Escribir primero en la base de datos y luego en el log.",
+                    B: "Escribir primero en el log y luego en la base de datos.",
+                    C: "Escribir simultáneamente en el log y en la base de datos.",
+                    D: "No es necesario escribir en el log si se escribe en la base de datos."
+                },
+                correct: "B",
+                explanation: "El principio Write-Ahead Logging (WAL) establece que se debe escribir primero en el registro histórico (log) antes de modificar la base de datos. Esto garantiza que siempre tengamos un registro de las operaciones para poder recuperar el sistema ante fallos."
+            },
+            {
+                question: "Un fallo de disco se diferencia de una caída del sistema porque:",
+                options: {
+                    A: "El fallo de disco afecta solo a la memoria volátil.",
+                    B: "El fallo de disco corrompe la información en el almacenamiento permanente y requiere restauración desde backups.",
+                    C: "La caída del sistema siempre requiere intervención manual.",
+                    D: "No hay diferencia entre ambos tipos de fallos."
+                },
+                correct: "B",
+                explanation: "Un fallo de disco afecta al almacenamiento permanente (discos), corrompiendo la información almacenada. Esto requiere procesos de recuperación desde backups existentes. Una caída del sistema normalmente solo afecta la memoria volátil, pero los discos permanecen intactos."
+            },
+            {
+                question: "¿Qué información debe contener como mínimo un registro del log histórico?",
+                options: {
+                    A: "Solo el identificador de transacción y el valor nuevo.",
+                    B: "Identificador de transacción, identificador del elemento de datos, valor anterior y valor nuevo.",
+                    C: "Solo el identificador de transacción y el tipo de operación.",
+                    D: "El timestamp y el identificador de transacción."
+                },
+                correct: "B",
+                explanation: "Un registro del log histórico debe contener al menos: el identificador de transacción, el identificador del elemento de datos (ubicación en disco), el valor anterior (before image) y el valor nuevo (after image). Esta información es esencial para realizar operaciones de undo y redo."
+            },
+            {
+                question: "En la técnica de modificación inmediata, ¿qué sucede si una transacción falla antes del COMMIT?",
+                options: {
+                    A: "Los cambios se mantienen en la base de datos porque ya se aplicaron.",
+                    B: "Se ejecuta una operación UNDO que restaura los valores anteriores usando el log.",
+                    C: "No se puede recuperar porque los cambios ya se aplicaron.",
+                    D: "Se espera a que la transacción se complete automáticamente."
+                },
+                correct: "B",
+                explanation: "En modificación inmediata, las modificaciones se aplican a la base de datos mientras la transacción está activa. Si falla antes del COMMIT, se ejecuta una operación UNDO que lee el log histórico y restaura todos los valores anteriores de los elementos modificados por esa transacción."
+            },
+            {
+                question: "¿Cuál es la principal ventaja de los checkpoints en un sistema de recuperación?",
+                options: {
+                    A: "Eliminan la necesidad de usar logs históricos.",
+                    B: "Reducen el tiempo de recuperación al limitar la cantidad de log que se debe procesar.",
+                    C: "Permiten evitar completamente los fallos del sistema.",
+                    D: "Reemplazan la necesidad de backups."
+                },
+                correct: "B",
+                explanation: "Los checkpoints son puntos de sincronización periódicos que reducen significativamente el tiempo de recuperación. Al establecer un checkpoint, se sabe que todas las transacciones confirmadas antes del checkpoint ya están escritas en disco, por lo que solo se necesita procesar el log desde el último checkpoint."
+            },
+            {
+                question: "Oracle Data Guard permite:",
+                options: {
+                    A: "Solo realizar backups incrementales de la base de datos.",
+                    B: "Mantener una o más copias de la base de datos de producción (standby) que pueden activarse como principal en caso de fallo.",
+                    C: "Eliminar la necesidad de logs de transacciones.",
+                    D: "Solo funciona en el mismo centro de datos."
+                },
+                correct: "B",
+                explanation: "Oracle Data Guard permite mantener una o más bases de datos de reserva (standby) que pueden residir en diferentes continentes o en el mismo centro de datos. Si la base de datos principal falla, Data Guard puede cambiar automáticamente cualquier base de datos en espera a la función principal, minimizando el tiempo de inactividad."
+            },
+            {
+                question: "¿Qué es Oracle RMAN (Recovery Manager)?",
+                options: {
+                    A: "Un módulo de Oracle para gestionar usuarios y permisos.",
+                    B: "Una herramienta completa para realizar copias de seguridad y recuperación eficiente de bases de datos Oracle, con detección de corrupción a nivel de bloque.",
+                    C: "Un sistema de monitoreo de rendimiento de consultas.",
+                    D: "Una herramienta para optimizar índices."
+                },
+                correct: "B",
+                explanation: "Oracle RMAN (Recovery Manager) es una herramienta especializada que proporciona una base completa para hacer copias de seguridad y recuperación eficiente de bases de datos Oracle. Está diseñado para trabajar íntimamente con el servidor, proporcionando detección de corrupción a nivel de bloque durante la copia de seguridad y restauración."
+            },
+            {
+                question: "En SQL Server, ¿qué característica reemplazó a Database Mirroring y es la recomendación actual?",
+                options: {
+                    A: "Log Shipping.",
+                    B: "AlwaysOn Availability Groups.",
+                    C: "Transaction Replication.",
+                    D: "Snapshot Replication."
+                },
+                correct: "B",
+                explanation: "Database Mirroring fue mantenido hasta SQL Server 2017, pero actualmente ha sido reemplazado por los grupos AlwaysOn Availability Groups, que es la recomendación actual de Microsoft. AlwaysOn ofrece mejor rendimiento, más flexibilidad y soporte para múltiples bases de datos secundarias."
+            },
+            {
+                question: "¿Por qué es importante que las operaciones de recuperación sean idempotentes?",
+                options: {
+                    A: "Para que se ejecuten más rápido.",
+                    B: "Para garantizar que ejecutar una operación de recuperación múltiples veces produzca el mismo resultado que ejecutarla una vez, evitando efectos duplicados o inconsistentes.",
+                    C: "Para reducir el espacio en disco del log.",
+                    D: "No es importante que sean idempotentes."
+                },
+                correct: "B",
+                explanation: "Las operaciones idempotentes son cruciales en sistemas de recuperación porque durante el proceso de recuperación, especialmente en modificación diferida, una operación puede necesitar ejecutarse múltiples veces. Si no es idempotente, podría producir efectos duplicados o estados inconsistentes en la base de datos."
+            },
+            {
+                question: "¿Qué restricción se establece entre el sistema de recuperación y el planificador de concurrencia?",
+                options: {
+                    A: "Las transacciones no pueden ejecutarse concurrentemente.",
+                    B: "Una transacción no puede modificar un dato que está siendo accedido por otra transacción.",
+                    C: "Solo se permite una transacción activa a la vez.",
+                    D: "No existe ninguna restricción entre ambos sistemas."
+                },
+                correct: "B",
+                explanation: "Para que el sistema de recuperación funcione correctamente con transacciones concurrentes, se establece la restricción de que una transacción no puede modificar un dato que está siendo accedido por otra transacción. Esto es necesario porque cuando se produce un error, no es trivial determinar qué transacciones están afectadas si múltiples transacciones modifican los mismos datos simultáneamente."
+            },
+            {
+                question: "¿Cuál es la diferencia principal entre almacenamiento volátil y no volátil en el contexto de recuperación?",
+                options: {
+                    A: "El almacenamiento volátil es más rápido pero se pierde al apagar el sistema, mientras que el no volátil persiste pero es más lento.",
+                    B: "Ambos tipos de almacenamiento persisten después de apagar el sistema.",
+                    C: "El almacenamiento no volátil es más rápido que el volátil.",
+                    D: "No hay diferencia relevante para la recuperación."
+                },
+                correct: "A",
+                explanation: "El almacenamiento volátil (como RAM) es muy rápido pero se pierde cuando el sistema se apaga. El almacenamiento no volátil (como discos) persiste después de apagar el sistema pero es más lento. Esta diferencia es crucial para la recuperación: los datos en almacenamiento volátil se pierden en una caída del sistema, mientras que los datos en almacenamiento no volátil pueden recuperarse."
+            },
+            {
+                question: "En un sistema de alta disponibilidad 24/7, ¿qué característica es esencial?",
+                options: {
+                    A: "Tener solo una copia de la base de datos.",
+                    B: "Poder sobreponerse a cualquier incidente de manera rápida y mantener el servicio activo continuamente.",
+                    C: "No necesitar backups porque el sistema nunca falla.",
+                    D: "Usar solo almacenamiento volátil."
+                },
+                correct: "B",
+                explanation: "Los sistemas de alta disponibilidad 24/7 están diseñados para estar activos continuamente y poder sobreponerse rápidamente a cualquier incidente. Esto requiere soluciones como replicación, bases de datos standby, y mecanismos de conmutación por error automática para minimizar el tiempo de inactividad."
+            }
+        ];
+
+        let userAnswers = {};
+        let currentQuestionIndex = 0;
+
+        function initTest() {
+            const container = document.getElementById('test-questions');
+            container.innerHTML = '';
+            userAnswers = {};
+            currentQuestionIndex = 0;
+            document.getElementById('test-results').style.display = 'none';
+            
+            testQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'test-question';
+                questionDiv.id = `question-${index}`;
+                questionDiv.innerHTML = `
+                    <div class="question-header">
+                        <h4>Pregunta ${index + 1} de ${testQuestions.length}</h4>
+                        <div class="question-text">${q.question}</div>
+                    </div>
+                    <div class="question-options">
+                        ${Object.entries(q.options).map(([key, value]) => `
+                            <label class="option-label">
+                                <input type="radio" name="question-${index}" value="${key}" onchange="selectAnswer(${index}, '${key}')">
+                                <span class="option-text"><strong>${key}.</strong> ${value}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${index}" class="feedback" style="display: none;"></div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            const submitButton = document.createElement('button');
+            submitButton.className = 'btn-primary';
+            submitButton.textContent = 'Enviar Respuestas';
+            submitButton.style.marginTop = '20px';
+            submitButton.onclick = submitTest;
+            container.appendChild(submitButton);
+        }
+
+        function selectAnswer(questionIndex, answer) {
+            userAnswers[questionIndex] = answer;
+            showFeedback(questionIndex, answer);
+        }
+
+        function showFeedback(questionIndex, selectedAnswer) {
+            const question = testQuestions[questionIndex];
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            const isCorrect = selectedAnswer === question.correct;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                <div class="feedback-icon">
+                    <i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                </div>
+                <div class="feedback-text">
+                    <strong>${isCorrect ? '¡Correcto!' : 'Incorrecto'}</strong>
+                    <p>${question.explanation}</p>
+                    ${!isCorrect ? `<p><strong>Respuesta correcta: ${question.correct}</strong></p>` : ''}
+                </div>
+            `;
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let incorrect = 0;
+            const results = [];
+
+            testQuestions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) {
+                    correct++;
+                } else {
+                    incorrect++;
+                }
+
+                results.push({
+                    question: q.question,
+                    userAnswer: userAnswer || 'No respondida',
+                    correctAnswer: q.correct,
+                    isCorrect: isCorrect,
+                    explanation: q.explanation
+                });
+            });
+
+            displayResults(correct, incorrect, results);
+        }
+
+        function displayResults(correct, incorrect, results) {
+            const total = testQuestions.length;
+            const percentage = Math.round((correct / total) * 100);
+            
+            document.getElementById('test-questions').style.display = 'none';
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.style.display = 'block';
+            
+            const resultsContent = document.getElementById('results-content');
+            resultsContent.innerHTML = `
+                <div class="results-summary">
+                    <div class="result-stat">
+                        <div class="stat-icon correct">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">${correct}</div>
+                            <div class="stat-label">Correctas</div>
+                        </div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-icon incorrect">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">${incorrect}</div>
+                            <div class="stat-label">Incorrectas</div>
+                        </div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-icon total">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">${percentage}%</div>
+                            <div class="stat-label">Calificación</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-details">
+                    <h4>Detalle de Respuestas:</h4>
+                    ${results.map((result, index) => `
+                        <div class="result-item ${result.isCorrect ? 'result-correct' : 'result-incorrect'}">
+                            <div class="result-question-number">Pregunta ${index + 1}</div>
+                            <div class="result-question-text">${result.question}</div>
+                            <div class="result-answer">
+                                <span class="answer-label">Tu respuesta:</span>
+                                <span class="answer-value ${result.isCorrect ? 'correct' : 'incorrect'}">
+                                    ${result.userAnswer || 'No respondida'}
+                                </span>
+                                ${!result.isCorrect ? `
+                                    <span class="answer-label">Respuesta correcta:</span>
+                                    <span class="answer-value correct">${result.correctAnswer}</span>
+                                ` : ''}
+                            </div>
+                            <div class="result-explanation">${result.explanation}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('restart-test').onclick = () => {
+                document.getElementById('test-questions').style.display = 'block';
+                resultsDiv.style.display = 'none';
+                initTest();
+            };
+        }
+
+        // Inicializar el test cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            initTest();
+        });
+    </script>
+    <style>
+        .test-question {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .test-question:hover {
+            border-color: #4CAF50;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+        }
+
+        .question-header {
+            margin-bottom: 15px;
+        }
+
+        .question-header h4 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .question-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            border-color: #4CAF50;
+            background: #f1f8f4;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .option-label input[type="radio"]:checked + .option-text {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .feedback-correct {
+            background: #e8f5e9;
+            border: 2px solid #4CAF50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .feedback-icon {
+            font-size: 24px;
+        }
+
+        .feedback-correct .feedback-icon {
+            color: #4CAF50;
+        }
+
+        .feedback-incorrect .feedback-icon {
+            color: #f44336;
+        }
+
+        .feedback-text {
+            flex: 1;
+        }
+
+        .feedback-text strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .feedback-text p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .results-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-stat {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.correct {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+
+        .stat-icon.incorrect {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .stat-icon.total {
+            background: #e3f2fd;
+            color: #2196F3;
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .results-details {
+            margin-top: 30px;
+        }
+
+        .results-details h4 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .result-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+
+        .result-correct {
+            background: #e8f5e9;
+            border-left-color: #4CAF50;
+        }
+
+        .result-incorrect {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+
+        .result-question-number {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-question-text {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .result-answer {
+            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .answer-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .answer-value {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .answer-value.correct {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .answer-value.incorrect {
+            background: #f44336;
+            color: white;
+        }
+
+        .result-explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            color: #555;
+            font-style: italic;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .results-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Estilos para diagramas Mermaid */
+        .diagram-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .diagram-container h4 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .diagram-container .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .diagram-container .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .diagram-container {
+                padding: 15px;
+            }
+            
+            .diagram-container .mermaid {
+                padding: 15px;
+            }
+        }
+    </style>
+</body>
+</html>
