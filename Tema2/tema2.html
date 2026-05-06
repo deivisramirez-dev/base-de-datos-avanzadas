@@ -618,236 +618,300 @@ WHERE (xpath('//totales/total/text()', documento_xml))[1]::text::numeric > 2000
                 </div>
             </section>
 
-            <!-- Actividades de Refuerzo -->
-            <section id="actividades" class="section">
+            <!-- XPath y XQuery -->
+            <section id="xpath-xquery" class="section">
                 <h2>
                     <div class="section-icon">
-                        <i class="fas fa-tasks"></i>
+                        <i class="fas fa-route"></i>
                     </div>
-                    Actividades de Refuerzo
+                    Lenguajes de Consulta XML: XPath y XQuery
                 </h2>
 
-                <div class="activity-item">
-                    <h4>Actividad 1: Creación de Documento XML</h4>
-                    <p><strong>Duración:</strong> 20 minutos</p>
-                    <p>Crea un documento XML para un sistema de gestión de empleados que incluya:</p>
+                <div class="concept-card">
+                    <h3>Contenido</h3>
                     <ul>
-                        <li>Información personal del empleado</li>
-                        <li>Departamento y cargo</li>
-                        <li>Salario y fecha de contratación</li>
-                        <li>Proyectos asignados</li>
+                        <li><a href="#xx-s1">1. Contexto XML</a></li>
+                        <li><a href="#xx-s2">2. XPath</a></li>
+                        <li><a href="#xx-s3">3. Ejes de navegación</a></li>
+                        <li><a href="#xx-s4">4. XQuery</a></li>
+                        <li><a href="#xx-s5">5. Expresión FLWOR</a></li>
+                        <li><a href="#xx-s6">6. XPath vs XQuery</a></li>
+                        <li><a href="#xx-s7">7. XQuery vs SQL</a></li>
+                        <li><a href="#xx-s8">8. Casos de uso</a></li>
                     </ul>
-                    <div class="activity-duration">
-                        <i class="fas fa-clock"></i> 20 min
+                </div>
+
+                <div class="concept-card" id="xx-s1">
+                    <h3>1. El contexto: ¿por qué consultar XML?</h3>
+                    <p>XML (eXtensible Markup Language) es un formato jerárquico ampliamente usado para almacenar e intercambiar datos estructurados. A diferencia de las tablas planas de las bases de datos relacionales, los documentos XML organizan la información en árboles de nodos anidados.</p>
+
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>📄 Modelo jerárquico</h4>
+                            <p>Los datos se organizan en árboles con nodos padre, hijos y atributos, no en filas y columnas.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>🗄️ Bases de datos XML nativas</h4>
+                            <p>Sistemas como BaseX, eXist-db y MarkLogic almacenan documentos XML y requieren lenguajes propios de consulta.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>🔄 Intercambio de datos</h4>
+                            <p>XML es estándar en servicios web SOAP, EDI, configuraciones y documentos empresariales.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>🔍 Necesidad de consulta</h4>
+                            <p>Igual que SQL para tablas, XML necesita lenguajes especializados para filtrar, navegar y transformar su contenido.</p>
+                        </div>
+                    </div>
+
+                    <h4>Documento XML de ejemplo</h4>
+                    <div class="code-block">
+&lt;librería&gt;
+  &lt;libro categoria="novela"&gt;
+    &lt;título&gt;Cien Años de Soledad&lt;/título&gt;
+    &lt;autor&gt;García Márquez&lt;/autor&gt;
+    &lt;precio&gt;25.00&lt;/precio&gt;
+  &lt;/libro&gt;
+  &lt;libro categoria="técnico"&gt;
+    &lt;título&gt;XML Avanzado&lt;/título&gt;
+    &lt;autor&gt;John Smith&lt;/autor&gt;
+    &lt;precio&gt;45.00&lt;/precio&gt;
+  &lt;/libro&gt;
+  &lt;libro categoria="novela"&gt;
+    &lt;título&gt;Pedro Páramo&lt;/título&gt;
+    &lt;autor&gt;Juan Rulfo&lt;/autor&gt;
+    &lt;precio&gt;18.50&lt;/precio&gt;
+  &lt;/libro&gt;
+&lt;/librería&gt;
                     </div>
                 </div>
 
-                <div class="activity-item">
-                    <h4>Actividad 2: Validación con DTD</h4>
-                    <p><strong>Duración:</strong> 25 minutos</p>
-                    <p>Diseña un DTD para validar el documento XML de empleados creado en la actividad anterior. Incluye:</p>
-                    <ul>
-                        <li>Definición de todos los elementos</li>
-                        <li>Atributos requeridos y opcionales</li>
-                        <li>Restricciones de cardinalidad</li>
-                    </ul>
-                    <div class="activity-duration">
-                        <i class="fas fa-clock"></i> 25 min
+                <div class="concept-card" id="xx-s2">
+                    <h3>2. XPath — lenguaje de navegación</h3>
+                    <p><strong>XPath</strong> (XML Path Language) es un lenguaje de expresiones para navegar y seleccionar nodos dentro de un documento XML, usando una notación de rutas similar a la de sistemas de archivos. Es la base sobre la que se construye XQuery.</p>
+
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>Tipos de nodos</h4>
+                            <ul>
+                                <li><strong>Elemento</strong>: <code>&lt;libro&gt;</code>, <code>&lt;autor&gt;</code></li>
+                                <li><strong>Atributo</strong>: <code>@categoria</code></li>
+                                <li><strong>Texto</strong>: contenido dentro de un elemento</li>
+                                <li><strong>Raíz</strong>: nodo inicial del árbol</li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>Operadores</h4>
+                            <ul>
+                                <li><strong>Aritméticos</strong>: <code>+ - * div mod</code></li>
+                                <li><strong>Comparación</strong>: <code>= != &lt; &gt; &lt;= &gt;=</code></li>
+                                <li><strong>Lógicos</strong>: <code>and or not()</code></li>
+                                <li><strong>Unión</strong>: <code>|</code></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h4>Ejemplos de expresiones XPath</h4>
+                    <div class="code-block">
+/librería/libro
+//título
+/librería/libro[1]
+//libro[@categoria='novela']
+//libro[precio &gt; 30]/título
+count(//libro)
+sum(//precio)
+//libro[last()]
+//libro[contains(título,'XML')]
                     </div>
                 </div>
 
-                <div class="activity-item">
-                    <h4>Actividad 3: Esquema XSD</h4>
-                    <p><strong>Duración:</strong> 30 minutos</p>
-                    <p>Convierte el DTD anterior a un esquema XSD más robusto que incluya:</p>
-                    <ul>
-                        <li>Tipos de datos específicos</li>
-                        <li>Restricciones de patrón</li>
-                        <li>Validación de rangos</li>
-                        <li>Definición de tipos complejos</li>
-                    </ul>
-                    <div class="activity-duration">
-                        <i class="fas fa-clock"></i> 30 min
+                <div class="concept-card" id="xx-s3">
+                    <h3>3. Ejes de navegación XPath</h3>
+                    <p>Los ejes definen la dirección de navegación desde el nodo de contexto actual dentro del árbol XML y permiten moverse en cualquier dirección.</p>
+
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>Ejes comunes</h4>
+                            <ul>
+                                <li><code>parent::</code> Padre directo</li>
+                                <li><code>child::</code> Hijos directos (abreviado con <code>/</code>)</li>
+                                <li><code>ancestor::</code> Ancestros</li>
+                                <li><code>descendant::</code> Descendientes (abreviado con <code>//</code>)</li>
+                                <li><code>following-sibling::</code> Hermanos siguientes</li>
+                                <li><code>preceding-sibling::</code> Hermanos anteriores</li>
+                                <li><code>attribute::</code> Atributos (abreviado <code>@</code>)</li>
+                                <li><code>self::</code> El nodo actual (abreviado <code>.</code>)</li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>Ejemplos</h4>
+                            <div class="code-block">
+/librería/libro[last()]/autor
+//precio/parent::libro
+//título/following-sibling::*
+//libro/attribute::categoria
+//libro/@categoria
+//descendant::libro[precio &gt; 20]
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="activity-item">
-                    <h4>Actividad 4: Consultas XPath</h4>
-                    <p><strong>Duración:</strong> 25 minutos</p>
-                    <p>Escribe consultas XPath para extraer información específica del documento de empleados:</p>
-                    <ul>
-                        <li>Empleados de un departamento específico</li>
-                        <li>Empleados con salario mayor a una cantidad</li>
-                        <li>Empleados contratados en un año específico</li>
-                        <li>Proyectos de un empleado específico</li>
-                    </ul>
-                    <div class="activity-duration">
-                        <i class="fas fa-clock"></i> 25 min
+                <div class="concept-card" id="xx-s4">
+                    <h3>4. XQuery — lenguaje de consulta completo</h3>
+                    <p><strong>XQuery</strong> es un lenguaje de consulta funcional para XML estandarizado por el W3C. Usa XPath internamente y añade capacidades para filtrar, combinar y <strong>transformar</strong> datos, generando nuevo XML como resultado.</p>
+
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>XPath</h4>
+                            <ul>
+                                <li>Selecciona y navega nodos XML</li>
+                                <li>Expresiones de ruta con ejes</li>
+                                <li>No crea nuevo XML</li>
+                                <li>Ideal para filtros y selecciones simples</li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>XQuery</h4>
+                            <ul>
+                                <li>Superconjunto de XPath</li>
+                                <li>Genera nuevo XML como salida</li>
+                                <li>Soporta joins entre documentos</li>
+                                <li>Funciones y modularidad</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h4>Funciones integradas (ejemplos)</h4>
+                    <div class="code-block">
+count(//libro)
+sum(//precio)
+avg(//precio)
+min(//precio), max(//precio)
+string(//autor[1])
+concat($a, ' - ', $b)
+contains(título, 'XML')
+doc('librería.xml')
+position() = 1
                     </div>
                 </div>
 
-                <div class="activity-item">
-                    <h4>Actividad 5: XML en Bases de Datos</h4>
-                    <p><strong>Duración:</strong> 30 minutos</p>
-                    <p>Implementa un sistema de facturación con almacenamiento XML en base de datos:</p>
-                    <ul>
-                        <li>Crear tabla con tipo de datos XML nativo</li>
-                        <li>Insertar documentos XML de facturas</li>
-                        <li>Implementar consultas XPath en SQL</li>
-                        <li>Desarrollar consultas híbridas SQL/XML</li>
-                        <li>Validar documentos XML con esquemas</li>
-                        <li>Crear índices XML para optimización</li>
-                    </ul>
-                    <div class="activity-duration">
-                        <i class="fas fa-clock"></i> 30 min
+                <div class="concept-card" id="xx-s5">
+                    <h3>5. La expresión FLWOR</h3>
+                    <p>FLWOR (pronunciado “flower”) es la estructura central de XQuery: permite iterar, filtrar, ordenar y transformar colecciones de nodos XML (similar al flujo de una consulta SQL).</p>
+
+                    <h4>Consulta básica con FLWOR</h4>
+                    <div class="code-block">
+for $libro in /librería/libro
+where $libro/@categoria = 'novela' and $libro/precio &lt; 30
+order by $libro/precio ascending
+return $libro/título
                     </div>
+
+                    <h4>Transformación (generar nuevo XML)</h4>
+                    <div class="code-block">
+&lt;catálogo-filtrado&gt;
+{
+  for $b in /librería/libro
+  let $descuento := $b/precio * 0.9
+  where $b/@categoria = 'novela'
+  order by $b/autor
+  return
+    &lt;item&gt;
+      &lt;nombre&gt;{ $b/título/text() }&lt;/nombre&gt;
+      &lt;escritor&gt;{ $b/autor/text() }&lt;/escritor&gt;
+      &lt;precio-oferta&gt;{ $descuento }&lt;/precio-oferta&gt;
+    &lt;/item&gt;
+}
+&lt;/catálogo-filtrado&gt;
+                    </div>
+                </div>
+
+                <div class="concept-card" id="xx-s6">
+                    <h3>6. Comparativa: XPath vs XQuery</h3>
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>XPath</h4>
+                            <ul>
+                                <li><strong>Propósito</strong>: navegar y seleccionar nodos</li>
+                                <li><strong>Salida</strong>: nodos o valores escalares</li>
+                                <li><strong>Joins</strong>: no</li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>XQuery</h4>
+                            <ul>
+                                <li><strong>Propósito</strong>: consultar y transformar XML</li>
+                                <li><strong>Salida</strong>: nuevo XML / texto / tipos</li>
+                                <li><strong>Joins</strong>: sí</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card" id="xx-s7">
+                    <h3>7. XQuery como equivalente a SQL</h3>
+                    <p>XQuery cumple para XML un rol similar al de SQL en el mundo relacional, con diferencias importantes por el modelo de datos jerárquico.</p>
+
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>Equivalencias rápidas</h4>
+                            <ul>
+                                <li><code>SELECT</code> ≈ <code>return</code></li>
+                                <li><code>FROM</code> ≈ <code>for ... in</code></li>
+                                <li><code>WHERE</code> ≈ <code>where</code></li>
+                                <li><code>ORDER BY</code> ≈ <code>order by</code></li>
+                                <li><code>JOIN</code> ≈ <code>for</code> múltiple + <code>where</code></li>
+                                <li><code>COUNT/SUM</code> ≈ <code>count()</code>/<code>sum()</code></li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>Diferencias clave</h4>
+                            <ul>
+                                <li><strong>Modelo</strong>: SQL (filas/columnas) vs XQuery (árbol)</li>
+                                <li><strong>Salida</strong>: SQL proyecta; XQuery puede <em>construir</em> XML nuevo</li>
+                                <li><strong>Paradigma</strong>: XQuery es más funcional/expresivo</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card" id="xx-s8">
+                    <h3>8. Casos de uso</h3>
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>🗄️ BD XML nativas</h4>
+                            <p>BaseX, eXist-db y MarkLogic usan XQuery como lenguaje nativo.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>📊 BD relacionales + XML</h4>
+                            <p>Oracle, SQL Server y PostgreSQL integran soporte XML con funciones y extensiones.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>🌐 SOAP / WSDL</h4>
+                            <p>XPath extrae datos de mensajes y contratos XML en integraciones.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>🔁 XSLT</h4>
+                            <p>XPath es el núcleo de selección/navegación en transformaciones XSLT.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>📋 Documentos empresariales</h4>
+                            <p>Facturas electrónicas, EDI, OOXML y reportes regulatorios.</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>⚙️ APIs y configuraciones</h4>
+                            <p>Extracción de datos en integraciones y archivos de configuración XML.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Conclusión</h3>
+                    <p><strong>XPath</strong> es el lenguaje de navegación para localizar nodos dentro de un árbol XML. <strong>XQuery</strong> usa XPath y añade la capacidad de filtrar, ordenar, combinar y generar nuevo XML mediante FLWOR; por eso suele considerarse el equivalente funcional de SQL para documentos jerárquicos.</p>
                 </div>
             </section>
 
-            <!-- Recursos Adicionales -->
-            <section id="recursos" class="section">
-                <h2>
-                    <div class="section-icon">
-                        <i class="fas fa-external-link-alt"></i>
-                    </div>
-                    Recursos Adicionales
-                </h2>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Manual para el programador de XML</h4>
-                        <p>Manual completo para aprender XML desde cero con ejemplos prácticos</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Manual para el programador de XSLT</h4>
-                        <p>Guía completa de XSLT con soluciones prácticas para proyectos</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>XML para principiantes (2012)</h4>
-                        <p>Video de 1:02:29 con introducción al lenguaje XML y ejemplos en directo</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Definiendo DTDs (2013)</h4>
-                        <p>Video de 2:29 mostrando cómo crear documentos DTDs con ejemplos claros</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Seguridad en documentos XML</h4>
-                        <p>Artículo sobre técnicas de seguridad implementadas utilizando documentos XML</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Información general de servicios web XML</h4>
-                        <p>Introducción a servicios web XML, su funcionamiento e infraestructura</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Introducción a XQuery</h4>
-                        <p>Manual sobre XQuery para acceder y consultar documentos XML</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Librerías de procesamiento XML</h4>
-                        <p>Enlaces útiles para iniciarse en el procesamiento de documentos XML con Java</p>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>PostgreSQL XML Functions</h4>
-                        <p>Documentación oficial de funciones XML en PostgreSQL</p>
-                        <a href="https://www.postgresql.org/docs/current/functions-xml.html" class="resource-link">Ver documentación</a>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>Oracle XMLType</h4>
-                        <p>Guía completa de XMLType en Oracle Database</p>
-                        <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/adxdb/xmltype.html" class="resource-link">Ver guía</a>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>SQL Server XML Data Type</h4>
-                        <p>Tutorial sobre tipos de datos XML en SQL Server</p>
-                        <a href="https://docs.microsoft.com/en-us/sql/t-sql/xml/xml-data-type-and-columns" class="resource-link">Ver tutorial</a>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>XML en Bases de Datos</h4>
-                        <p>Video tutorial sobre integración XML con bases de datos</p>
-                        <a href="#" class="resource-link">Ver video</a>
-                    </div>
-                </div>
-
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h4>XML Indexing Strategies</h4>
-                        <p>Estrategias de indexación para optimizar consultas XML</p>
-                        <a href="#" class="resource-link">Leer guía</a>
-                    </div>
-                </div>
-            </section>
         </div>
     </main>
 

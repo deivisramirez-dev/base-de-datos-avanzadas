@@ -107,6 +107,11 @@ class ProgressManager {
         this.progress = JSON.parse(localStorage.getItem('courseProgress') || '{}');
     }
 
+    isIndexPage() {
+        const path = window.location.pathname;
+        return path.endsWith('index.html') || path.endsWith('/');
+    }
+
     updateTopicProgress(topic, section, completed = true) {
         if (!this.progress[topic]) {
             this.progress[topic] = {
@@ -130,7 +135,7 @@ class ProgressManager {
         localStorage.setItem('courseProgress', JSON.stringify(this.progress));
         
         // Actualizar display si estamos en la página principal
-        if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+        if (this.isIndexPage()) {
             const navManager = new NavigationManager();
             navManager.updateProgressDisplay(this.progress);
         }
@@ -274,7 +279,7 @@ class Utils {
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializar navegación principal
-    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+    if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
         new NavigationManager();
     } else {
         // Inicializar gestor de página de tema
