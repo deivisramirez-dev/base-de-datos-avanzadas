@@ -3,7 +3,7 @@
 ## 📋 Información General
 - **Tema:** Introducción a los Diferentes Sistemas de Bases de Datos
 - **Duración:** 2-3 horas
-- **Modalidad:** Individual o en equipos de 2-3 personas
+- **Modalidad:** Individual o en equipos de 2-3 personas - No evaluable
 - **Objetivos:** Aplicar conceptos de modelado de bases de datos, abstracción, MER y diagramas E-R
 
 ---
@@ -22,9 +22,9 @@ Al finalizar esta actividad, el estudiante será capaz de:
 
 ## 🏫 Contexto del Caso de Uso
 
-### Sistema de Gestión Universitaria "EduTech"
+### Sistema de Gestión Universitaria "LearningTech"
 
-La Universidad Tecnológica "EduTech" necesita implementar un sistema integral de gestión académica que permita administrar todos los aspectos de la vida universitaria. La universidad cuenta con:
+La Universidad Tecnológica "LearningTech" necesita implementar un sistema integral de gestión académica que permita administrar aspectos administrativos y académicos de la vida universitaria. La universidad cuenta con:
 
 - **15,000 estudiantes** distribuidos en 8 facultades
 - **800 profesores** de tiempo completo y medio tiempo
@@ -68,7 +68,7 @@ La Universidad Tecnológica "EduTech" necesita implementar un sistema integral d
 ### Fase 1: Análisis y Abstracción (45 minutos)
 
 #### 1.1 Identificación de Entidades
-Identifica y lista todas las entidades principales del sistema. Para cada entidad, especifica:
+Identificar y listar todas las entidades principales del sistema. Para cada entidad, especifica:
 - **Nombre de la entidad**
 - **Descripción de su propósito**
 - **Justificación de por qué es una entidad independiente**
@@ -213,11 +213,6 @@ Prepara una presentación de 10 minutos que cubra:
 - **Diagrama E-R** en formato digital
 - **Diccionario de datos** detallado
 - **Justificación de decisiones** técnicas
-
-### Presentación
-- **Slides** con diagramas y conclusiones
-- **Tiempo:** 10 minutos + 5 minutos de preguntas
-- **Formato:** PowerPoint, Google Slides, o similar
 
 ### Código (Opcional)
 - **Scripts SQL** para crear las tablas
